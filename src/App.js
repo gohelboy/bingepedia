@@ -1,10 +1,12 @@
-import Header from "./components/Header/Header.js";
+import Header from "./components/Header/Header";
+
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
       <Header />
-      <h1>Hello</h1>
+      <div className="container">Hello</div>
     </div>
   );
 }
