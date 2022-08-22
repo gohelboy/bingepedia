@@ -4,6 +4,7 @@ import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 
 import { makeStyles } from "@material-ui/core";
+import { useNavigate } from "react-router-dom";
 
 import WhatshotIcon from "@mui/icons-material/Whatshot";
 import MovieIcon from "@mui/icons-material/Movie";
@@ -23,6 +24,14 @@ const useStyle = makeStyles({
 export default function SimpleBottomNavigation() {
   const classes = useStyle();
   const [value, setValue] = React.useState(0);
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (value === 0) navigate("/");
+    else if (value === 1) navigate("/Movie");
+    else if (value === 2) navigate("/Series");
+    else if (value === 3) navigate("/Search");
+  }, [value]);
 
   return (
     <BottomNavigation

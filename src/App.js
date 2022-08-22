@@ -1,3 +1,6 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Container } from "@mui/material";
+
 import Header from "./components/Header/Header";
 import Navbar from "./components/navbar/Navbar";
 import Trending from "./Pages/Trending/Trending";
@@ -6,8 +9,6 @@ import Series from "./Pages/Series/Series";
 import Search from "./Pages/Search/Search";
 
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Container } from "@mui/material";
 
 function App() {
   return (
