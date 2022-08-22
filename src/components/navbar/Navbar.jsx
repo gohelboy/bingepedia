@@ -2,7 +2,8 @@ import * as React from 'react';
 
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import { makeStyles } from '@mui/material/styles';
+//import { makeStyles } from '@mui/material';
+import { makeStyles } from '@material-ui/core';
 
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import MovieIcon from '@mui/icons-material/Movie';
@@ -26,12 +27,12 @@ export default function SimpleBottomNavigation() {
   return (
 
     <BottomNavigation
-      showLabels
-      className={ classes }
       value={value}
       onChange={(event, newValue) => {
-      setValue(newValue);
-    }}
+        setValue(newValue);
+      }}
+      className={classes.root}
+      showLabels
       >
         <BottomNavigationAction label="Trending" icon={<WhatshotIcon />} />
         <BottomNavigationAction label="Movie" icon={<MovieIcon />} />
