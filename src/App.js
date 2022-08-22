@@ -6,21 +6,21 @@ import Series from "./Pages/Series/Series";
 import Search from "./Pages/Search/Search";
 
 import "./App.css";
-import { BrowserRouter } from "react-router-dom";
-import { Container, Switch } from "@mui/material";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Container } from "@mui/material";
 
 function App() {
   return (
-    <BrowserRouter className="App">
+    <BrowserRouter>
       <Header />
       <div className="container">
         <Container>
-          <Switch>
-            <Route path="/" component={Trending} exact />
-            <Route path="/movie" component={Movie} />
-            <Route path="/series" component={Series} />
-            <Route path="/search" component={Search} />
-          </Switch>
+          <Routes>
+            <Route path="/" element={<Trending />} exact />
+            <Route path="/movie" element={<Movie />} />
+            <Route path="/series" element={<Series />} />
+            <Route path="/search" element={<Search />} />
+          </Routes>
         </Container>
       </div>
       <Navbar />
