@@ -1,24 +1,42 @@
 import * as React from 'react';
+
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { makeStyles } from '@mui/material/styles';
+
+import WhatshotIcon from '@mui/icons-material/Whatshot';
+import MovieIcon from '@mui/icons-material/Movie';
+import LiveTvIcon from '@mui/icons-material/LiveTv';
+import SearchIcon from '@mui/icons-material/Search';
+
+const useStyle = makeStyles({
+  root: {
+    width: 500,
+    position: 'fixed',
+    bottom: 0,
+    zIndex: 100,
+  },
+});
 
 export default function SimpleBottomNavigation() {
+  
+  const classes = useStyle();
   const [value, setValue] = React.useState(0);
 
   return (
-      <BottomNavigation
-          showLabels
-          value={value}
-          onChange={(event, newValue) => {
-              setValue(newValue);
-          }}
+
+    <BottomNavigation
+      showLabels
+      className={ classes }
+      value={value}
+      onChange={(event, newValue) => {
+      setValue(newValue);
+    }}
       >
-        <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-        <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-        <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
+        <BottomNavigationAction label="Trending" icon={<WhatshotIcon />} />
+        <BottomNavigationAction label="Movie" icon={<MovieIcon />} />
+        <BottomNavigationAction label="TV Series" icon={<LiveTvIcon />} />
+        <BottomNavigationAction label="Search" icon={<SearchIcon />} />
       </BottomNavigation>
   );
 }
