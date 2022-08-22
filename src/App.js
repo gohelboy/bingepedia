@@ -1,9 +1,9 @@
 import Header from "./components/Header/Header";
 import Navbar from "./components/navbar/Navbar";
 import Trending from "./Pages/Trending/Trending";
-import Movie from "./Pages/Trending/Movie";
-import Series from "./Pages/Trending/Series";
-import Search from "./Pages/Trending/Search";
+import Movie from "./Pages/Movie/Movie";
+import Series from "./Pages/Series/Series";
+import Search from "./Pages/Search/Search";
 
 import "./App.css";
 import { BrowserRouter } from "react-router-dom";
