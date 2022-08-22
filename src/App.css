@@ -1,15 +1,17 @@
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-    transition: 0.3s;
-}
-
 .container {
+    padding-top: 100px;
     width: 100%;
     background-color: var(--background-color-primary);
     color: var(--text-color);
-    text-align: center;
-    font-size: 2rem;
+}
+
+.pageTitle {
+
+    padding: 16px;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding-top: 80px;
+    }
 }

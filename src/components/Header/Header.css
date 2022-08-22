@@ -1,18 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700&display=swap');
-
-:root {
-    --background-color-primary: #082032;
-    --text-color: #E7F6F2;
-    --cta-color: #FF4C29;
-    --background-color-secondary: #2C394B;
-}
-
 .header {
+
     width: 100%;
     padding: 24px;
 
-    cursor: pointer;
-    position: sticky;
+    position: fixed;
 
     display: flex;
     align-items: center;
@@ -20,10 +11,16 @@
 
     background-color: var(--background-color-primary);
     color: var(--text-color);
-    box-shadow: 0px 1px 10px black;
+    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.3);
 
     z-index: 100;
 }
+
+.header img {
+    cursor: pointer;
+}
+
+
 
 @media (max-width:480px) {
     .header {

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+import "./Trending.css";
 import Card from "../../components/Card/Card";
 
 //6072e56555742bd0feaf1f7249e65a87
@@ -20,7 +21,7 @@ const Trending = () => {
 
   return (
     <div>
-      <span className="pageTitle">Trending</span>
+      <h1 className="pageTitle">Trending</h1>
       <div className="trending">
         {movie &&
           movie.map((c) => {

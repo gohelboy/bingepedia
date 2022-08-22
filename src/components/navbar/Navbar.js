@@ -16,7 +16,10 @@ const useStyle = makeStyles({
     width: "100%",
     position: "fixed",
     bottom: 0,
-    backgroundColor: "#2C394B",
+    backgroundColor: "#082032",
+    boxShadow: "0px -1px 10px rgba(0, 0, 0, 0.3)",
+    borderTopLeftRadius: 28,
+    borderTopRightRadius: 28,
     zIndex: 100,
   },
 });

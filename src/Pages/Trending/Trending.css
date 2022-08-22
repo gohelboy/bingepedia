@@ -1,0 +1,14 @@
+.pageTitle {
+    font-size: 1.5rem;
+    width: fit-content;
+    text-align: left;
+    color: var(--text-color);
+}
+
+.trending {
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding-bottom: 70px;
+}

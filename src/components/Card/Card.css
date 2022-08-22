@@ -1,0 +1,56 @@
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    width: 200px;
+    padding: 8px;
+    margin: 8px 0px;
+
+    border-radius: 14px;
+    background-color: var(--background-color-secondary);
+    color: var(--text-color);
+}
+
+.card:hover {
+    background-color: var(--text-color);
+    color: #2f2f2f;
+}
+
+.card img {
+    filter: brightness(0.8);
+    border-radius: 14px;
+}
+
+.card:hover .poster {
+    transform: scale(1.02);
+    filter: brightness(1);
+    box-shadow: 0px 5px 10px 1px rgb(70, 70, 70);
+}
+
+.card .title {
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.card .title {
+    width: 100%;
+    font-weight: 700;
+    padding: 8px 0px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.card .info {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 10px;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+@media (max-width: 480px) {
+    .card {
+        width: 170px;
+    }
+}
