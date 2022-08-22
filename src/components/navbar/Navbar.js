@@ -31,12 +31,28 @@ export default function SimpleBottomNavigation() {
         setValue(newValue);
       }}
       className={classes.root}
-      showLabels
+      //showLabels
     >
-      <BottomNavigationAction label="Trending" icon={<WhatshotIcon />} />
-      <BottomNavigationAction label="Movie" icon={<MovieIcon />} />
-      <BottomNavigationAction label="TV Series" icon={<LiveTvIcon />} />
-      <BottomNavigationAction label="Search" icon={<SearchIcon />} />
+      <BottomNavigationAction
+        style={{ color: "white" }}
+        label="Trending"
+        icon={<WhatshotIcon />}
+      />
+      <BottomNavigationAction
+        style={{ color: "white" }}
+        label="Movie"
+        icon={<MovieIcon />}
+      />
+      <BottomNavigationAction
+        style={{ color: "white" }}
+        label="TV Series"
+        icon={<LiveTvIcon />}
+      />
+      <BottomNavigationAction
+        style={{ color: "white" }}
+        label="Search"
+        icon={<SearchIcon />}
+      />
     </BottomNavigation>
   );
 }
