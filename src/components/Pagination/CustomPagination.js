@@ -29,7 +29,7 @@ const CustomPagination = ({ setPage }) => {
     >
       <Pagination
         classes={{ ul: classes.ul }}
-        count={10}
+        count={1000}
         shape="rounded"
         color="primary"
         onChange={(event) => {
