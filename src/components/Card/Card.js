@@ -8,7 +8,7 @@ const Card = ({ id, title, date, poster, type, vote }) => {
       <Badge
         badgeContent={Math.round(vote)}
         overlap="rectangular"
-        color={vote > 6.5 ? "primary" : "secondary"}
+        color={vote > 6 ? "primary" : "secondary"}
       />
       <img className="poster" src={`${img_300}/${poster}`} alt={title} />
       <div className="title">{title}</div>
