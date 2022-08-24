@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const CustomPagination = ({ setPage }) => {
+const CustomPagination = ({ setPage, NoOfPage }) => {
   const classes = useStyles();
   // change page behaviour
   const handlePageChange = (page) => {
@@ -29,7 +29,7 @@ const CustomPagination = ({ setPage }) => {
     >
       <Pagination
         classes={{ ul: classes.ul }}
-        count={1000}
+        count={NoOfPage}
         shape="rounded"
         color="primary"
         onChange={(event) => {

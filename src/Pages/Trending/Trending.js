@@ -9,17 +9,19 @@ import CustomPagination from "../../components/Pagination/CustomPagination";
 const Trending = () => {
   const [page, setPage] = useState(1);
   const [movie, setMovie] = useState([]);
+  const [noOfPage, setNoOfPage] = useState();
 
   const fetchTrending = async () => {
     const { data } = await axios.get(
       `https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`
     );
     setMovie(data.results);
-    console.log(data.total_pages);
+    setNoOfPage(data.total_pages);
   };
 
   useEffect(() => {
     fetchTrending();
+    // eslint-disable-next-line
   }, [page]);
 
   return (
@@ -41,7 +43,7 @@ const Trending = () => {
             );
           })}
       </div>
-      <CustomPagination setPage={setPage} />
+      <CustomPagination setPage={setPage} NoOfPage={noOfPage} />
     </div>
   );
 };
