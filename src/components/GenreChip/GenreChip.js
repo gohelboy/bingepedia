@@ -4,33 +4,66 @@ import { useEffect } from "react";
 
 const GenreChip = ({
   type,
-  selctedGernre,
-  setSelectedGenre,
-  genre,
-  setGenre,
+  selectedGenres,
+  setSelectedGenres,
+  genres,
+  setGenres,
   setPage,
 }) => {
   const fetchGenres = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/genre/${type}}/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
+      `https://api.themoviedb.org/3/genre/${type}/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
     );
 
-    setGenre(data.genres);
+    setGenres(data.genres);
+    console.log(data);
+  };
+
+  const handleAddGenre = (genre) => {
+    setSelectedGenres([...selectedGenres, genre]);
+    setGenres(genres.filter((g) => g.id !== genre.id));
+    setPage(1);
+  };
+
+  const handleRemoveGenre = (genre) => {
+    setSelectedGenres(selectedGenres.filter((g) => g.id !== genre.id));
+    setGenres([...genres, genre]);
+    setPage(1);
   };
 
   useEffect(() => {
     fetchGenres();
     return () => {
-      setGenre({});
+      setGenres({});
     };
     // eslint-disable-next-line
   }, []);
 
   return (
-    <div>
-      {genre.map((genre) => {
-        <Chip label={genre.name} />;
-      })}
+    <div style={{ margin: 14 }}>
+      {selectedGenres &&
+        selectedGenres.map((ge) => (
+          <Chip
+            size="small"
+            label={ge.name}
+            color="primary"
+            clickable
+            key={ge.id}
+            style={{ margin: 2 }}
+            onDelete={() => handleRemoveGenre(ge)}
+          />
+        ))}
+      {genres &&
+        genres.map((g) => (
+          <Chip
+            size="small"
+            label={g.name}
+            clickable
+            key={g.id}
+            style={{ margin: 2 }}
+            onClick={() => handleAddGenre(g)}
+          />
+        ))}
     </div>
   );
 };

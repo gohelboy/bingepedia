@@ -1,7 +1,7 @@
 const Search = () => {
   return (
     <div>
-      <span className="pageTitle">Search</span>
+      <h1 className="pageTitle">Search</h1>
     </div>
   );
 };

@@ -6,12 +6,18 @@
 }
 
 .pageTitle {
-
     padding: 16px;
+    font-size: 1.5rem;
+    text-align: left;
+    color: var(--text-color);
 }
 
 @media (max-width: 480px) {
     .container {
         padding-top: 80px;
+    }
+
+    .pageTitle {
+        padding: 16px 8px;
     }
 }

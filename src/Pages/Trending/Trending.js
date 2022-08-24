@@ -27,7 +27,7 @@ const Trending = () => {
   return (
     <div>
       <h1 className="pageTitle">Trending</h1>
-      <div className="trending">
+      <div className="movie_tv_list">
         {movie &&
           movie.map((m) => {
             return (

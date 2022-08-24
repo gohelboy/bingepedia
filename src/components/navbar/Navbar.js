@@ -52,7 +52,7 @@ export default function SimpleBottomNavigation() {
       />
       <BottomNavigationAction
         style={{ color: "white" }}
-        label="Movie"
+        label="Movies"
         icon={<MovieIcon />}
       />
       <BottomNavigationAction
