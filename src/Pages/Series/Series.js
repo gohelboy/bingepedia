@@ -56,12 +56,7 @@ const Series = () => {
             );
           })}
       </div>
-      {noOfPage > 1 && (
-        <CustomPagination
-          setPage={setPage}
-          NoOfPage={noOfPage > 500 ? 500 : noOfPage}
-        />
-      )}
+      <CustomPagination setPage={setPage} NoOfPage={noOfPage} />
     </div>
   );
 };
