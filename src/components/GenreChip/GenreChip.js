@@ -16,7 +16,6 @@ const GenreChip = ({
     );
 
     setGenres(data.genres);
-    console.log(data);
   };
 
   const handleAddGenre = (genre) => {
