@@ -1,10 +1,10 @@
 import "./Header.css";
-import logo from "./white-logo.png";
+import logo from "./logo.svg";
 
 const Header = () => {
   return (
     <div className="header">
-      <img onClick={() => window.scrollTo(0, 0)} src={logo} alt="Bingpedia" />
+      <img onClick={() => window.scrollTo(0, 0)} src={logo} alt="Bingepedia" />
     </div>
   );
 };
