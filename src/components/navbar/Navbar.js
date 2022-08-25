@@ -14,6 +14,7 @@ import SearchIcon from "@mui/icons-material/Search";
 const useStyle = makeStyles({
   root: {
     width: "100%",
+    height: "8vh",
     position: "fixed",
     bottom: 0,
     backgroundColor: "#082032",

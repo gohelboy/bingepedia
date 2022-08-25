@@ -1,5 +1,5 @@
 import { Badge } from "@material-ui/core";
-import { img_300 } from "../../config/config";
+import { img_300, unavialable } from "../../config/config";
 import "./Card.css";
 
 const Card = ({ id, title, date, poster, type, vote }) => {
@@ -10,7 +10,11 @@ const Card = ({ id, title, date, poster, type, vote }) => {
         overlap="rectangular"
         color={vote > 6 ? "primary" : "secondary"}
       />
-      <img className="poster" src={`${img_300}/${poster}`} alt={title} />
+      <img
+        className="poster"
+        src={poster ? `${img_300}/${poster}` : unavialable}
+        alt={title}
+      />
       <div className="title">{title}</div>
       <div className="info">
         <span>{type === "tv" ? "TV Series" : "Movie"}</span>
