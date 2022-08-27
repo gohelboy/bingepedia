@@ -16,6 +16,7 @@ const Trending = () => {
       `https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`
     );
     setMovie(data.results);
+    console.log(data);
     setNoOfPage(data.total_pages);
   };
 
@@ -36,7 +37,7 @@ const Trending = () => {
                 id={m.id}
                 title={m.title || m.name}
                 poster={m.poster_path}
-                date={m.first_air_date || m.relese_data}
+                date={m.first_air_date || m.release_date}
                 type={m.media_type}
                 vote={m.vote_average}
               />

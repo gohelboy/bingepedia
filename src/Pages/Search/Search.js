@@ -90,7 +90,7 @@ const Search = () => {
                 id={m.id}
                 title={m.title || m.name}
                 poster={m.poster_path}
-                date={m.first_air_date || m.relese_data}
+                date={m.first_air_date || m.release_date}
                 type={type ? "tv" : "movie"}
                 vote={m.vote_average}
               />

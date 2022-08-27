@@ -3,7 +3,6 @@ import { img_300, unavialable } from "../../config/config";
 import "./Card.css";
 
 const Card = ({ id, title, date, poster, type, vote }) => {
-  console.log(type);
   return (
     <div className="card">
       <Badge
@@ -19,7 +18,7 @@ const Card = ({ id, title, date, poster, type, vote }) => {
       <b className="title">{title}</b>
       <div className="info">
         <span>{type === "tv" ? "TV Series" : "Movie"}</span>
-        <span>{date ? date.split("-")[0] : "N/A"}</span>
+        <span>{date ? date : "N/A"}</span>
       </div>
     </div>
   );
