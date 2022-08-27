@@ -96,8 +96,11 @@ const Search = () => {
               />
             );
           })}
+        {searchText &&
+          !movie &&
+          (type ? <h1>No result Found!</h1> : <h1>No result found!</h1>)}
       </div>
-      <CustomPagination setPage={setPage} NoOfPage={noOfPage} />
+      {page > 1 && <CustomPagination setPage={setPage} NoOfPage={noOfPage} />}
     </div>
   );
 };

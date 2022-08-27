@@ -18,7 +18,7 @@ const Card = ({ id, title, date, poster, type, vote }) => {
       <div className="title">{title}</div>
       <div className="info">
         <span>{type === "tv" ? "TV Series" : "Movie"}</span>
-        <span className="date">{date ? date : "N/A"}</span>
+        <span className="date">{date ? date.substring(4) : "N/A"}</span>
       </div>
     </div>
   );
