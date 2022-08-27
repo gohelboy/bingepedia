@@ -3,6 +3,7 @@ import { img_300, unavialable } from "../../config/config";
 import "./Card.css";
 
 const Card = ({ id, title, date, poster, type, vote }) => {
+  console.log(type);
   return (
     <div className="card">
       <Badge

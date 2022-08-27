@@ -21,7 +21,6 @@ const Search = () => {
     );
     setMovie(data.results);
     setNoOfPage(data.total_pages);
-    console.log(data.media_type);
   };
 
   useEffect(() => {
@@ -92,7 +91,7 @@ const Search = () => {
                 title={m.title || m.name}
                 poster={m.poster_path}
                 date={m.first_air_date || m.relese_data}
-                type={m.media_type}
+                type={type ? "tv" : "movie"}
                 vote={m.vote_average}
               />
             );
