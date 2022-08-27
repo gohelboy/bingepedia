@@ -15,10 +15,10 @@ const Card = ({ id, title, date, poster, type, vote }) => {
         src={poster ? `${img_300}/${poster}` : unavialable}
         alt={title}
       />
-      <div className="title">{title}</div>
+      <b className="title">{title}</b>
       <div className="info">
         <span>{type === "tv" ? "TV Series" : "Movie"}</span>
-        <span className="date">{date ? date.substring(4) : "N/A"}</span>
+        <span>{date ? date : "N/A"}</span>
       </div>
     </div>
   );
