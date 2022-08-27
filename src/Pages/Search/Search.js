@@ -21,6 +21,7 @@ const Search = () => {
     );
     setMovie(data.results);
     setNoOfPage(data.total_pages);
+    console.log(data.media_type);
   };
 
   useEffect(() => {
@@ -97,7 +98,9 @@ const Search = () => {
             );
           })}
       </div>
-      {page > 1 && <CustomPagination setPage={setPage} NoOfPage={noOfPage} />}
+      {noOfPage > 1 && (
+        <CustomPagination setPage={setPage} NoOfPage={noOfPage} />
+      )}
     </div>
   );
 };
