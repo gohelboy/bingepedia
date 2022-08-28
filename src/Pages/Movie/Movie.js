@@ -57,7 +57,10 @@ const Movie = () => {
             );
           })}
       </div>
-      <CustomPagination setPage={setPage} NoOfPage={noOfPage} />
+      <CustomPagination
+        setPage={setPage}
+        NoOfPage={noOfPage > 500 ? 500 : noOfPage}
+      />
     </div>
   );
 };
