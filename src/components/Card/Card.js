@@ -1,10 +1,11 @@
 import { Badge } from "@material-ui/core";
 import { img_300, unavialable } from "../../config/config";
 import "./Card.css";
+import ContentDetailModal from "../ContentDetailModal/ContentDetailModal";
 
 const Card = ({ id, title, date, poster, type, vote }) => {
   return (
-    <div className="card">
+    <ContentDetailModal type={type} id={id}>
       <Badge
         badgeContent={Math.round(vote)}
         overlap="rectangular"
@@ -20,7 +21,7 @@ const Card = ({ id, title, date, poster, type, vote }) => {
         <span>{type === "tv" ? "TV Series" : "Movie"}</span>
         <span>{date ? date.split("-")[0] : "N/A"}</span>
       </div>
-    </div>
+    </ContentDetailModal>
   );
 };
 export default Card;

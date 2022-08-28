@@ -46,7 +46,7 @@ const Trending = () => {
       </div>
       <CustomPagination
         setPage={setPage}
-        NoOfPage={noOfPage > 500 ? 500 : noOfPage}
+        NoOfPage={noOfPage > 1000 ? 1000 : noOfPage}
       />
     </div>
   );
