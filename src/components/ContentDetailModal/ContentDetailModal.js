@@ -1,19 +1,19 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import "./ContentDetailModal";
-import { img_500, unavialable } from "../../config/config";
+import { img_300, img_500, unavialable } from "../../config/config";
+import { YouTube } from "@mui/icons-material";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "80%",
+  width: "90%",
   height: "80%",
   bgcolor: "#082032",
   border: "2px solid #000",
@@ -29,16 +29,17 @@ const ContentDetailModal = ({ children, type, id }) => {
   const handleClose = () => setOpen(false);
 
   const fetchdata = async () => {
-    const { data } = axios.get(
+    const { data } = await axios.get(
       `https://api.themoviedb.org/3/${type}/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
     );
     setContent(data);
   };
+
   const fetchvideo = async () => {
-    const { data } = axios.get(
+    const { data } = await axios.get(
       `https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
     );
-    setVideo(data.results[0]?.key);
+    setVideo(data.results[0].key);
   };
 
   useEffect(() => {
@@ -52,21 +53,48 @@ const ContentDetailModal = ({ children, type, id }) => {
       <Button className="card" onClick={handleOpen}>
         {children}
       </Button>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
+
+      <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
           <div className="ContentDetailModel">
-            <img src="data.poster_path" />
-            <h2></h2>
+            {/*<img
+              className="portrait"
+              src={
+                content.poster_path
+                  ? `${img_500}/${content.poster_path}`
+                  : unavialable
+              }
+              alt={content.name || content.title}
+            />*/}
+            <img
+              className="landscape"
+              src={
+                content.poster_path
+                  ? `${img_500}/${content.backdrop_path}`
+                  : unavialable
+              }
+              alt={content.name || content.title}
+            />
+            <div className="about-movie">
+              <span>
+                {content.name || content.title}(
+                {(
+                  content.first_air_date ||
+                  content.release_date ||
+                  "-----"
+                ).substring(0, 4)}
+                )
+                {content.tagline && (
+                  <i className="tagline">{content.tagline}</i>
+                )}
+                <span className="discription">{content.overview}</span>
+                <Button
+                  color="secondary"
+                  startIcon={YouTube}
+                  href={`https://www.youtube.com/watch?v=${video}`}
+                ></Button>
+              </span>
+            </div>
           </div>
         </Box>
       </Modal>
