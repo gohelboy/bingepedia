@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import "./ContentDetailModal";
 import { img_300, img_500, unavialable } from "../../config/config";
 import { YouTube } from "@mui/icons-material";
+import "./ContentDetailModal.css";
 
 const style = {
   position: "absolute",
@@ -14,11 +15,11 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "90%",
-  height: "80%",
-  bgcolor: "#082032",
-  border: "2px solid #000",
+  height: "75%",
+  bgcolor: "#090F2C",
+  borderRadius: "14px",
   boxShadow: 24,
-  p: 4,
+  p: 1.5,
 };
 
 const ContentDetailModal = ({ children, type, id }) => {
@@ -50,9 +51,9 @@ const ContentDetailModal = ({ children, type, id }) => {
 
   return (
     <div>
-      <Button className="card" onClick={handleOpen}>
+      <div className="card" onClick={handleOpen}>
         {children}
-      </Button>
+      </div>
 
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
@@ -66,35 +67,43 @@ const ContentDetailModal = ({ children, type, id }) => {
               }
               alt={content.name || content.title}
             />*/}
-            <img
-              className="landscape"
-              src={
-                content.poster_path
-                  ? `${img_500}/${content.backdrop_path}`
-                  : unavialable
-              }
-              alt={content.name || content.title}
-            />
-            <div className="about-movie">
-              <span>
-                {content.name || content.title}(
-                {(
-                  content.first_air_date ||
-                  content.release_date ||
-                  "-----"
-                ).substring(0, 4)}
-                )
+            {content && (
+              <img
+                className="landscape"
+                src={
+                  content.poster_path
+                    ? `${img_500}/${content.backdrop_path}`
+                    : unavialable
+                }
+                alt={content.name || content.title}
+              />
+            )}
+            {content && (
+              <div className="about-movie">
+                <span className="content_title">
+                  {content.name || content.title}(
+                  {(
+                    content.first_air_date ||
+                    content.release_date ||
+                    "-----"
+                  ).substring(0, 4)}
+                  )
+                </span>
                 {content.tagline && (
-                  <i className="tagline">{content.tagline}</i>
+                  <i className="content_tagline">{content.tagline}</i>
                 )}
-                <span className="discription">{content.overview}</span>
+                <span className="content_discription">{content.overview}</span>
                 <Button
+                  className="trailer-btn"
+                  variant="contained"
                   color="secondary"
-                  startIcon={YouTube}
+                  startIcon={<YouTube />}
                   href={`https://www.youtube.com/watch?v=${video}`}
-                ></Button>
-              </span>
-            </div>
+                >
+                  Watch Trailer
+                </Button>
+              </div>
+            )}
           </div>
         </Box>
       </Modal>
