@@ -16,7 +16,6 @@ const Trending = () => {
       `https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`
     );
     setMovie(data.results);
-    console.log(data);
     setNoOfPage(data.total_pages);
   };
 

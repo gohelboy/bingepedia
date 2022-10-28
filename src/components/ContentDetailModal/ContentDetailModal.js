@@ -32,7 +32,7 @@ const ContentDetailModal = ({ children, type, id }) => {
     const { data } = axios.get(
       `https://api.themoviedb.org/3/${type}/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
     );
-    setContent(data.results);
+    setContent(data);
   };
   const fetchvideo = async () => {
     const { data } = axios.get(
@@ -64,7 +64,10 @@ const ContentDetailModal = ({ children, type, id }) => {
         }}
       >
         <Box sx={style}>
-          <div className="details"></div>
+          <div className="ContentDetailModel">
+            <img src="data.poster_path" />
+            <h2></h2>
+          </div>
         </Box>
       </Modal>
     </div>
