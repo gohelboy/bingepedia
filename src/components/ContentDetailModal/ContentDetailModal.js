@@ -19,7 +19,7 @@ const style = {
   bgcolor: "#090F2C",
   borderRadius: "14px",
   boxShadow: 24,
-  p: 1.5,
+  p: 2,
 };
 
 const ContentDetailModal = ({ children, type, id }) => {
@@ -61,13 +61,13 @@ const ContentDetailModal = ({ children, type, id }) => {
             {content && (
               <div className="content_poster">
                 <img
-                    className="portrait"
-                    src={
-                      content.poster_path
-                        ? `${img_500}/${content.poster_path}`
-                        : unavialable
-                    }
-                    alt={content.name || content.title}
+                  className="portrait"
+                  src={
+                    content.poster_path
+                      ? `${img_500}/${content.poster_path}`
+                      : unavialable
+                  }
+                  alt={content.name || content.title}
                 />
                 <img
                   className="landscape"
@@ -78,7 +78,7 @@ const ContentDetailModal = ({ children, type, id }) => {
                   }
                   alt={content.name || content.title}
                 />
-              </div>   
+              </div>
             )}
             {content && (
               <div className="about-movie">

@@ -1,4 +1,5 @@
 import { Badge } from "@material-ui/core";
+
 import { img_300, unavialable } from "../../config/config";
 import "./Card.css";
 import ContentDetailModal from "../ContentDetailModal/ContentDetailModal";

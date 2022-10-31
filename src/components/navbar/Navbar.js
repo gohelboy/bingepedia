@@ -2,8 +2,8 @@ import * as React from "react";
 
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-
 import { makeStyles } from "@material-ui/core";
+
 import { useNavigate } from "react-router-dom";
 
 import WhatshotIcon from "@mui/icons-material/Whatshot";
