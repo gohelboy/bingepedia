@@ -1,0 +1,28 @@
+.carouselItem {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    object-fit: contain;
+    padding: 10px;
+}
+
+.carouselItem_img {
+    border-radius: 14px;
+    width: 100%;
+    box-shadow: 0 0 5px black;
+}
+
+.carouselItem_name {
+    text-align: center;
+    font-weight: 500;
+}
+
+@media (max-width : 470px) {
+    .carouselItem_name {
+        font-weight: 300;
+        font-size: 3vw;
+        padding: 8px 0px;
+    }
+}

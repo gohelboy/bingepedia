@@ -8,6 +8,7 @@ import "./ContentDetailModal";
 import { img_300, img_500, unavialable } from "../../config/config";
 import { YouTube } from "@mui/icons-material";
 import "./ContentDetailModal.css";
+import Carousel from "../Carousel/Carousel";
 
 const style = {
   position: "absolute",
@@ -95,6 +96,7 @@ const ContentDetailModal = ({ children, type, id }) => {
                   <i className="content_tagline">{content.tagline}</i>
                 )}
                 <span className="content_discription">{content.overview}</span>
+                <Carousel type={type} id={id} />
                 <Button
                   className="trailer-btn"
                   variant="contained"
