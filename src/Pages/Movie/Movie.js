@@ -21,6 +21,7 @@ const Movie = () => {
     );
     setMovie(data.results);
     setNoOfPage(data.total_pages);
+    console.log(data.results);
   };
 
   useEffect(() => {
@@ -51,7 +52,7 @@ const Movie = () => {
                 title={m.title || m.name}
                 poster={m.poster_path}
                 date={m.first_air_date || m.release_date}
-                type={m.media_type}
+                type="movie"
                 vote={m.vote_average}
               />
             );
