@@ -1,12 +1,11 @@
 .ContentDetailModel {
     height: 100%;
     width: 100%;
-    overflow-y: scroll;
     display: flex;
 }
 
 .content_poster {
-    width: 40%;
+    width: 30%;
 }
 
 .landscape {
@@ -17,15 +16,15 @@
 }
 
 .portrait {
-    display: flex;
-    width: 100%;
-    object-fit: contain;
+    width: 25vw;
+    object-fit: cover;
     border-radius: 14px;
+    display: flex;
 }
 
 .about-movie {
     color: var(--text-color);
-    width: 100%;
+    width: 70%;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -76,7 +75,12 @@
     }
 
     .ContentDetailModel {
+        overflow-y: scroll;
         flex-direction: column;
+    }
+
+    .about-movie {
+        width: 100%;
     }
 
     .content_title {
