@@ -15,7 +15,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "90%",
-  height: "75%",
+  height: "77%",
   bgcolor: "#090F2C",
   borderRadius: "14px",
   boxShadow: 24,
@@ -58,25 +58,27 @@ const ContentDetailModal = ({ children, type, id }) => {
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
           <div className="ContentDetailModel">
-            {/*<img
-              className="portrait"
-              src={
-                content.poster_path
-                  ? `${img_500}/${content.poster_path}`
-                  : unavialable
-              }
-              alt={content.name || content.title}
-            />*/}
             {content && (
-              <img
-                className="landscape"
-                src={
-                  content.poster_path
-                    ? `${img_500}/${content.backdrop_path}`
-                    : unavialable
-                }
-                alt={content.name || content.title}
-              />
+              <div className="content_poster">
+                <img
+                    className="portrait"
+                    src={
+                      content.poster_path
+                        ? `${img_500}/${content.poster_path}`
+                        : unavialable
+                    }
+                    alt={content.name || content.title}
+                />
+                <img
+                  className="landscape"
+                  src={
+                    content.poster_path
+                      ? `${img_500}/${content.backdrop_path}`
+                      : unavialable
+                  }
+                  alt={content.name || content.title}
+                />
+              </div>   
             )}
             {content && (
               <div className="about-movie">

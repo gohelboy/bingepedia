@@ -2,26 +2,25 @@
     height: 100%;
     width: 100%;
     overflow-y: scroll;
+    display: flex;
+}
+
+.content_poster {
+    width: 40%;
 }
 
 .landscape {
-    width: 100%;
-    object-fit: contain;
-    border-radius: 10px;
-}
-
-.portarit {
     display: none;
     width: 100%;
     object-fit: contain;
-    border-radius: 10px;
+    border-radius: 14px;
 }
 
-.content_tagline {
-    align-self: center;
-    font-size: 3vw;
-    padding-bottom: 10px;
-    font-weight: 300;
+.portrait {
+    display: flex;
+    width: 100%;
+    object-fit: contain;
+    border-radius: 14px;
 }
 
 .about-movie {
@@ -34,15 +33,22 @@
 }
 
 .content_title {
-    font-size: 5vw;
+    font-size: 3.5vw;
     font-weight: 700;
+}
+
+.content_tagline {
+    font-size: 1.2vw;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    font-weight: 300;
 }
 
 .content_discription {
     display: flex;
     flex-direction: column;
     text-align: center;
-    font-size: 4vw;
+    font-size: 1.5vw;
     border-radius: 14px;
     padding: 10px;
     margin-bottom: 14px;
@@ -52,4 +58,36 @@
 
 .trailer-btn {
     width: 100%;
+}
+
+@media (max-width: 470px) {
+
+    .content_poster {
+        width: 100%;
+    }
+
+    .landscape {
+        display: flex;
+    }
+
+    .portrait {
+        display: none;
+    }
+
+    .ContentDetailModel {
+        flex-direction: column;
+    }
+
+    .content_title {
+        font-size: 5vw;
+    }
+
+    .content_tagline {
+        padding-top: 10px;
+        font-size: 4vw;
+    }
+
+    .content_discription {
+        font-size: 3vw;
+    }
 }
