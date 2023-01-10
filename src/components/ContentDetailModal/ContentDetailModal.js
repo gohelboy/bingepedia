@@ -1,15 +1,17 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import "./ContentDetailModal";
-import { img_300, img_500, unavialable } from "../../config/config";
 import { YouTube, LibraryAddCheck } from "@mui/icons-material";
 import PlaylistAdd from "@mui/icons-material/PlaylistAdd";
+
 import "./ContentDetailModal.css";
 import Carousel from "../Carousel/Carousel";
+import { img_300, img_500, unavialable } from "../../config/config";
 
 const style = {
   position: "absolute",
