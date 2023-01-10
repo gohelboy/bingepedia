@@ -1,5 +1,4 @@
 import { createContext, useReducer } from "react";
-/* import Reducer from "./Reducer"; */
 
 // initial data
 const lists = {
@@ -10,20 +9,24 @@ const lists = {
 //create context to use globally
 export const GlobalContext = createContext(lists);
 
+// create global provider function
 export const GlobalProvider = (props) => {
-  //
-
-  const reducer = (data, action) => {
+  //reducer
+  const reducer = (list_obj, action) => {
     switch (action.type) {
       case "ADD_TO_WATCHLIST":
         return {
-          ...data,
-          watchlist: [action.payload, ...data.watchlist],
+          ...list_obj,
+          watchlist: [action.payload, ...list_obj.watchlist],
+        };
+      case "ADD_TO_WATCHED":
+        return {
+          ...list_obj,
+          watched: [action.payload, ...list_obj.watched],
         };
       default:
-        return data;
+        return list_obj;
     }
-    /* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
   };
 
   const [store, call] = useReducer(reducer, lists);
@@ -37,6 +40,7 @@ export const GlobalProvider = (props) => {
   };
 
   return (
+    // globally available to access and use
     <GlobalContext.Provider
       value={{
         watchlist: store.watchlist,

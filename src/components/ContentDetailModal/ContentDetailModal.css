@@ -94,7 +94,6 @@
 
     .content_tagline {
         padding-top: 10px;
-
         font-size: 3vw;
     }
 
@@ -104,10 +103,11 @@
 
     .model-buttons {
         flex-direction: column;
+        gap: 14px;
+        margin-bottom: 14px;
     }
 
     .btn-width {
-        margin: 8px 0px;
         width: 100%;
     }
 }

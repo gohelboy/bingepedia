@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Container } from "@mui/material";
 
-import { GlobalProvider } from "./context/ContentListContext";
+import { GlobalProvider } from "./context/GlobalContextAccess";
 
 import Header from "./components/Header/Header";
 import Navbar from "./components/navbar/Navbar";

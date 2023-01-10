@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
-import { GlobalContext } from "../../context/ContentListContext";
+import { GlobalContext } from "../../context/GlobalContextAccess";
 import axios from "axios";
 
 import Box from "@mui/material/Box";
@@ -12,7 +12,7 @@ import PlaylistAdd from "@mui/icons-material/PlaylistAdd";
 
 import "./ContentDetailModal.css";
 import Carousel from "../Carousel/Carousel";
-import { /* img_300, */ img_500, unavialable } from "../../config/config";
+import { img_300, img_500, unavialable } from "../../config/config";
 
 const style = {
   position: "absolute",
@@ -48,7 +48,14 @@ const ContentDetailModal = ({ children, type, id }) => {
     setVideo(data.results[0].key);
   };
 
-  const { addToWatchList } = useContext(GlobalContext);
+  const { addToWatchList, watchlist, addToWatched, watched } =
+    useContext(GlobalContext);
+
+  let alreadyWatchlisted = watchlist.find((Object) => Object.id === content.id);
+  const watchlistDisabled = alreadyWatchlisted ? true : false;
+
+  let alreadyWatched = watched.find((Object) => Object.id === content.id);
+  const watchedDisabled = alreadyWatched ? true : false;
 
   useEffect(() => {
     fetchdata();
@@ -80,7 +87,7 @@ const ContentDetailModal = ({ children, type, id }) => {
                   className="landscape"
                   src={
                     content.poster_path
-                      ? `${img_500}/${content.backdrop_path}`
+                      ? `${img_300}/${content.backdrop_path}`
                       : unavialable
                   }
                   alt={content.name || content.title}
@@ -116,6 +123,7 @@ const ContentDetailModal = ({ children, type, id }) => {
                     variant="contained"
                     color="success"
                     startIcon={<PlaylistAdd />}
+                    disabled={watchlistDisabled}
                     onClick={() => addToWatchList(content)}
                   >
                     Add to Watchlist
@@ -125,6 +133,8 @@ const ContentDetailModal = ({ children, type, id }) => {
                     variant="contained"
                     color="primary"
                     startIcon={<LibraryAddCheck />}
+                    disabled={watchedDisabled}
+                    onClick={() => addToWatched(content)}
                   >
                     Watched
                   </Button>
