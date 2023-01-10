@@ -1,5 +1,6 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { GlobalContext } from "../../context/ContentListContext";
 import axios from "axios";
 
 import Box from "@mui/material/Box";
@@ -11,7 +12,7 @@ import PlaylistAdd from "@mui/icons-material/PlaylistAdd";
 
 import "./ContentDetailModal.css";
 import Carousel from "../Carousel/Carousel";
-import { img_300, img_500, unavialable } from "../../config/config";
+import { /* img_300, */ img_500, unavialable } from "../../config/config";
 
 const style = {
   position: "absolute",
@@ -46,6 +47,8 @@ const ContentDetailModal = ({ children, type, id }) => {
     );
     setVideo(data.results[0].key);
   };
+
+  const { addToWatchList } = useContext(GlobalContext);
 
   useEffect(() => {
     fetchdata();
@@ -113,6 +116,7 @@ const ContentDetailModal = ({ children, type, id }) => {
                     variant="contained"
                     color="success"
                     startIcon={<PlaylistAdd />}
+                    onClick={() => addToWatchList(content)}
                   >
                     Add to Watchlist
                   </Button>
