@@ -6,7 +6,8 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import "./ContentDetailModal";
 import { img_300, img_500, unavialable } from "../../config/config";
-import { YouTube } from "@mui/icons-material";
+import { YouTube, LibraryAddCheck } from "@mui/icons-material";
+import PlaylistAdd from "@mui/icons-material/PlaylistAdd";
 import "./ContentDetailModal.css";
 import Carousel from "../Carousel/Carousel";
 
@@ -58,8 +59,8 @@ const ContentDetailModal = ({ children, type, id }) => {
 
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
-          <div className="ContentDetailModel">
-            {content && (
+          {content && (
+            <div className="ContentDetailModel">
               <div className="content_poster">
                 <img
                   className="portrait"
@@ -80,8 +81,6 @@ const ContentDetailModal = ({ children, type, id }) => {
                   alt={content.name || content.title}
                 />
               </div>
-            )}
-            {content && (
               <div className="about-movie">
                 <span className="content_title">
                   {content.name || content.title}(
@@ -96,19 +95,39 @@ const ContentDetailModal = ({ children, type, id }) => {
                   <i className="content_tagline">{content.tagline}</i>
                 )}
                 <span className="content_discription">{content.overview}</span>
+
+                <div className="model-buttons">
+                  <Button
+                    className="btn-width"
+                    variant="contained"
+                    color="error"
+                    startIcon={<YouTube />}
+                    href={`https://www.youtube.com/watch?v=${video}`}
+                  >
+                    Watch Trailer
+                  </Button>
+                  <Button
+                    className="btn-width"
+                    variant="contained"
+                    color="success"
+                    startIcon={<PlaylistAdd />}
+                  >
+                    Add to Watchlist
+                  </Button>
+                  <Button
+                    className="btn-width"
+                    variant="contained"
+                    color="primary"
+                    startIcon={<LibraryAddCheck />}
+                  >
+                    Watched
+                  </Button>
+                </div>
+
                 <Carousel type={type} id={id} />
-                <Button
-                  className="trailer-btn"
-                  variant="contained"
-                  color="secondary"
-                  startIcon={<YouTube />}
-                  href={`https://www.youtube.com/watch?v=${video}`}
-                >
-                  Watch Trailer
-                </Button>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </Box>
       </Modal>
     </div>
