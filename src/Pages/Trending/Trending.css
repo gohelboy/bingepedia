@@ -1,6 +1,0 @@
-.movie_tv_list {
-    overflow: hidden;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}

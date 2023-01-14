@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-import "./Trending.css";
 import Card from "../../components/Card/Card";
 import CustomPagination from "../../components/Pagination/CustomPagination";
 

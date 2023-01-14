@@ -43,7 +43,6 @@ const Series = () => {
       <div className="movie_tv_list">
         {movie &&
           movie.map((m) => {
-            console.log(m.backdrop_path);
             return (
               <Card
                 key={m.id}

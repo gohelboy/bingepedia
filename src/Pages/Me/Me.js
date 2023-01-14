@@ -22,7 +22,7 @@ export default function Me() {
         <Tab label="Movie" />
         <Tab label="Series" />
       </Tabs>
-      <div>
+      <div className="movie_tv_list">
         {watchlist.map((data) => {
           if (data.title && type === 0) {
             return (
@@ -48,8 +48,6 @@ export default function Me() {
                 vote={data.vote_average}
               />
             );
-          } else {
-            return <span key={data.id}></span>;
           }
         })}
       </div>
