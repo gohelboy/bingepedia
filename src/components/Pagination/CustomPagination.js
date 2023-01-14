@@ -1,17 +1,7 @@
 import { Pagination } from "@mui/material";
 import React from "react";
-import { makeStyles } from "@material-ui/core";
-
-const useStyles = makeStyles(() => ({
-  ul: {
-    "& .MuiPaginationItem-root": {
-      color: "#fff",
-    },
-  },
-}));
 
 const CustomPagination = ({ setPage, NoOfPage }) => {
-  const classes = useStyles();
   // change page behaviour
   const handlePageChange = (page) => {
     setPage(page);
@@ -24,11 +14,13 @@ const CustomPagination = ({ setPage, NoOfPage }) => {
         width: "100%",
         display: "flex",
         justifyContent: "center",
+        alignItems: "center",
         marginTop: 20,
       }}
     >
       <Pagination
-        classes={{ ul: classes.ul }}
+        sx={{ button: { color: "#ffffff" } }}
+        style={{ color: "red" }}
         count={NoOfPage}
         shape="rounded"
         color="primary"

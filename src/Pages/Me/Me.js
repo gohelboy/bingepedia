@@ -30,6 +30,7 @@ export default function Me() {
   return (
     <div>
       <Tabs
+        sx={{ button: { color: "#808080" } }}
         centered
         indicatorColor="primary"
         value={list}
@@ -41,6 +42,7 @@ export default function Me() {
         <Tab label="Watched" style={{ width: "50%" }} />
       </Tabs>
       <Tabs
+        sx={{ button: { color: "#808080" } }}
         indicatorColor="secondary"
         value={type}
         onChange={(event, newValue) => {

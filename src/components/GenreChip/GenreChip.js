@@ -1,4 +1,4 @@
-import { Chip } from "@material-ui/core";
+import { Chip } from "@mui/material";
 
 import axios from "axios";
 import { useEffect } from "react";
@@ -46,8 +46,8 @@ const GenreChip = ({
           <Chip
             size="small"
             label={ge.name}
-            color="primary"
             clickable
+            color="primary"
             key={ge.id}
             style={{ margin: 2 }}
             onDelete={() => handleRemoveGenre(ge)}
@@ -59,6 +59,8 @@ const GenreChip = ({
             size="small"
             label={g.name}
             clickable
+            color="success"
+            variant="outlined"
             key={g.id}
             style={{ margin: 2 }}
             onClick={() => handleAddGenre(g)}

@@ -10,14 +10,18 @@
   overflow: hidden;
   display: flex;
   flex-wrap: wrap;
-  justify-content: start;
+  justify-content: flex-start;
   column-gap: 3.29%;
+}
+
+.li {
+  color: rgb(199, 199, 199);
 }
 
 .contentNoBadge {
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
 }
 

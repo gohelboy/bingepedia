@@ -41,7 +41,7 @@ export default function SimpleBottomNavigation() {
       }}
     >
       <BottomNavigationAction
-        style={{ color: "white", padding: 20 }}
+        style={{ color: "white" }}
         label="Trending"
         icon={<WhatshotIcon />}
       />

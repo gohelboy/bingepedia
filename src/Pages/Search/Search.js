@@ -1,5 +1,4 @@
-import { Tab, Tabs } from "@material-ui/core";
-
+import { Tab, Tabs } from "@mui/material";
 import { SearchRounded } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { useState, useEffect } from "react";
