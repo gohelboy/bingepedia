@@ -2,12 +2,12 @@ import { createContext, useReducer, useEffect } from "react";
 
 // initial data
 const lists = {
-  watchlist: localStorage.getItem('watchlist')
-    ? JSON.parse(localStorage.getItem('watchlist'))
+  watchlist: localStorage.getItem("watchlist")
+    ? JSON.parse(localStorage.getItem("watchlist"))
     : [],
   watched: localStorage.getItem("watched")
     ? JSON.parse(localStorage.getItem("watched"))
-    :  [],
+    : [],
 };
 
 //create context to use globally

@@ -1,25 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Tab, Tabs } from "@material-ui/core";
+import Card from "../../components/Card/Card";
+import { GlobalContext } from "../../context/GlobalContextAccess";
 
 export default function Me() {
-  const [value, setValue] = useState(0);
   const [type, setType] = useState(0);
+
+  const { watchlist } = useContext(GlobalContext);
 
   return (
     <div>
-      <Tabs
-        centered
-        indicatorColor="primary"
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-      >
-        <Tab label="Watchlist" style={{ width: "50%" }} />
-        <Tab label="Watched" style={{ width: "50%" }} />
-      </Tabs>
-
-      {/* movie & seriese tabs */}
       <Tabs
         centered
         indicatorColor="secondary"
@@ -32,6 +22,37 @@ export default function Me() {
         <Tab label="Movie" />
         <Tab label="Series" />
       </Tabs>
+      <div>
+        {watchlist.map((data) => {
+          if (data.title && type === 0) {
+            return (
+              <Card
+                key={data.id}
+                id={data.id}
+                title={data.title || data.name}
+                poster={data.poster_path}
+                date={data.first_air_date || data.release_date}
+                type="movie"
+                vote={data.vote_average}
+              />
+            );
+          } else if (data.name && type === 1) {
+            return (
+              <Card
+                key={data.id}
+                id={data.id}
+                title={data.title || data.name}
+                poster={data.poster_path}
+                date={data.first_air_date || data.release_date}
+                type="tv"
+                vote={data.vote_average}
+              />
+            );
+          } else {
+            return <span key={data.id}></span>;
+          }
+        })}
+      </div>
     </div>
   );
 }

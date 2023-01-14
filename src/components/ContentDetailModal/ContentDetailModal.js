@@ -52,7 +52,10 @@ const ContentDetailModal = ({ children, type, id }) => {
     const { data } = await axios.get(
       `https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
     );
-    setVideo(data.results[0].key);
+
+    setVideo(
+      data.results[0]?.key || data.results[1]?.key || data.results[2]?.key
+    );
   };
 
   const { addToWatchList, watchlist, addToWatched, watched } =
