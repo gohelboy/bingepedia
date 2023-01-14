@@ -23,10 +23,22 @@ export const GlobalProvider = (props) => {
           ...list_obj,
           watchlist: [action.payload, ...list_obj.watchlist],
         };
+      case "REMOVE_FROM_WATCHEDLIST":
+        return {
+          ...list_obj,
+          watchlist: list_obj.watchlist.filter(
+            (obj) => obj.id !== action.payload
+          ),
+        };
       case "ADD_TO_WATCHED":
         return {
           ...list_obj,
           watched: [action.payload, ...list_obj.watched],
+        };
+      case "REMOVE_FROM_WATCHED":
+        return {
+          ...list_obj,
+          watched: list_obj.watched.filter((obj) => obj.id !== action.payload),
         };
       default:
         return list_obj;
@@ -49,6 +61,14 @@ export const GlobalProvider = (props) => {
     call({ type: "ADD_TO_WATCHED", payload: movie });
   };
 
+  const removeFromWatchlist = (id) => {
+    call({ type: "REMOVE_FROM_WATCHEDLIST", payload: id });
+  };
+
+  const removeFromWatched = (id) => {
+    call({ type: "REMOVE_FROM_WATCHED", payload: id });
+  };
+
   return (
     // globally available to access and use
     <GlobalContext.Provider
@@ -57,6 +77,8 @@ export const GlobalProvider = (props) => {
         watched: store.watched,
         addToWatchList,
         addToWatched,
+        removeFromWatchlist,
+        removeFromWatched,
       }}
     >
       {props.children}

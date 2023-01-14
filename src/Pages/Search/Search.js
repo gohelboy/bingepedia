@@ -28,7 +28,7 @@ const Search = () => {
     window.scrollTo(0, 0);
     fetchSearch();
     // eslint-disable-next-line
-  }, [page, type]);
+  }, [page, type, searchText]);
 
   return (
     <div>
@@ -50,13 +50,15 @@ const Search = () => {
             border: "#2C394B 2px solid",
             borderRadius: "5px",
             backgroundColor: "#2C394B",
-            margin: "0px 14px",
+            marginRight: "14px",
             padding: "14px",
             fontWeight: "700",
             boxShadow:
               "0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)",
             color: "#E7F6F2",
             letterSpacing: "0.5px",
+            position: "sticky",
+            zIndex: 5,
           }}
           onChange={(e) => setSearchText(e.target.value)}
         />

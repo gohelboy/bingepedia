@@ -6,7 +6,6 @@ import axios from "axios";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
-import { styled } from "@mui/material/styles";
 import "./ContentDetailModal";
 import { YouTube, LibraryAddCheck } from "@mui/icons-material";
 import PlaylistAdd from "@mui/icons-material/PlaylistAdd";
@@ -15,12 +14,6 @@ import "./ContentDetailModal.css";
 import Carousel from "../Carousel/Carousel";
 import { img_300, img_500, unavialable } from "../../config/config";
 
-const CustomBtn = styled(Button)`
-  :disabled {
-    color: rgba(100, 100, 100, 0.5);
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-`;
 const style = {
   position: "absolute",
   top: "50%",
@@ -58,14 +51,36 @@ const ContentDetailModal = ({ children, type, id }) => {
     );
   };
 
-  const { addToWatchList, watchlist, addToWatched, watched } =
-    useContext(GlobalContext);
+  const {
+    addToWatchList,
+    watchlist,
+    addToWatched,
+    watched,
+    removeFromWatchlist,
+    removeFromWatched,
+  } = useContext(GlobalContext);
 
   let alreadyWatchlisted = watchlist.find((o) => o.id === id);
   const watchlistDisabled = alreadyWatchlisted ? true : false;
 
   let alreadyWatched = watched.find((o) => o.id === id);
   const watchedDisabled = alreadyWatched ? true : false;
+
+  function AddorRemoveWatchlist(content) {
+    if (!watchlistDisabled) {
+      addToWatchList(content);
+    } else {
+      removeFromWatchlist(content.id);
+    }
+  }
+
+  function AddorRemoveWatched(content) {
+    if (!watchedDisabled) {
+      addToWatched(content);
+    } else {
+      removeFromWatched(content.id);
+    }
+  }
 
   useEffect(() => {
     fetchdata();
@@ -119,7 +134,7 @@ const ContentDetailModal = ({ children, type, id }) => {
                 <span className="content_discription">{content.overview}</span>
 
                 <div className="model-buttons">
-                  <CustomBtn
+                  <Button
                     className="btn-width"
                     variant="contained"
                     color="error"
@@ -127,27 +142,27 @@ const ContentDetailModal = ({ children, type, id }) => {
                     href={`https://www.youtube.com/watch?v=${video}`}
                   >
                     Watch Trailer
-                  </CustomBtn>
-                  <CustomBtn
+                  </Button>
+                  <Button
                     className="btn-width"
                     variant="contained"
                     color="success"
                     startIcon={<PlaylistAdd />}
-                    disabled={watchlistDisabled}
-                    onClick={() => addToWatchList(content)}
+                    onClick={() => AddorRemoveWatchlist(content)}
                   >
-                    Add to Watchlist
-                  </CustomBtn>
-                  <CustomBtn
+                    {watchlistDisabled
+                      ? "Remove from Watchlist"
+                      : "Add to watchlist"}
+                  </Button>
+                  <Button
                     className="btn-width"
                     variant="contained"
                     color="primary"
                     startIcon={<LibraryAddCheck />}
-                    disabled={watchedDisabled}
-                    onClick={() => addToWatched(content)}
+                    onClick={() => AddorRemoveWatched(content)}
                   >
-                    Watched
-                  </CustomBtn>
+                    {watchedDisabled ? "Remove From Watched" : "Watched"}
+                  </Button>
                 </div>
 
                 <Carousel type={type} id={id} />
