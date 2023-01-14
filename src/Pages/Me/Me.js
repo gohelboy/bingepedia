@@ -1,10 +1,9 @@
 import { useState, useContext } from "react";
-import { Tab, Tabs } from "@material-ui/core";
+import { Tab, Tabs } from "@mui/material";
 import MovieIcon from "@mui/icons-material/Movie";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
 import Card from "../../components/Card/Card";
 import { GlobalContext } from "../../context/GlobalContextAccess";
-import { render } from "@testing-library/react";
 
 export default function Me() {
   const [list, setList] = useState(0);
@@ -40,6 +39,16 @@ export default function Me() {
       >
         <Tab label="Watchlist" style={{ width: "50%" }} />
         <Tab label="Watched" style={{ width: "50%" }} />
+      </Tabs>
+      <Tabs
+        indicatorColor="secondary"
+        value={type}
+        onChange={(event, newValue) => {
+          setType(newValue);
+        }}
+      >
+        <Tab icon={<MovieIcon />} />
+        <Tab icon={<LiveTvIcon />} />
         <div className="contentNoBadge">
           {watchlist.map((data) => {
             if (data.title && type === 0) {
@@ -58,16 +67,6 @@ export default function Me() {
           })}
           {renderBadge()}
         </div>
-      </Tabs>
-      <Tabs
-        indicatorColor="secondary"
-        value={type}
-        onChange={(event, newValue) => {
-          setType(newValue);
-        }}
-      >
-        <Tab icon={<MovieIcon />} />
-        <Tab icon={<LiveTvIcon />} />
       </Tabs>
       {list === 0 ? (
         <div className="movie_tv_list">

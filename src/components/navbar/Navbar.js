@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 
-import BottomNavigation from "@material-ui/core/BottomNavigation";
-import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import { makeStyles } from "@material-ui/core";
+import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
 
@@ -12,22 +10,7 @@ import LiveTvIcon from "@mui/icons-material/LiveTv";
 import SearchIcon from "@mui/icons-material/Search";
 import Person from "@mui/icons-material/Person";
 
-const useStyle = makeStyles({
-  root: {
-    width: "100%",
-    height: "8vh",
-    position: "fixed",
-    bottom: 0,
-    backgroundColor: "#082032",
-    boxShadow: "0px -1px 10px rgba(0, 0, 0, 0.3)",
-    borderTopLeftRadius: 28,
-    borderTopRightRadius: 28,
-    zIndex: 100,
-  },
-});
-
 export default function SimpleBottomNavigation() {
-  const classes = useStyle();
   const [value, setValue] = useState(0);
   const navigate = useNavigate();
 
@@ -45,7 +28,17 @@ export default function SimpleBottomNavigation() {
       onChange={(event, newValue) => {
         setValue(newValue);
       }}
-      className={classes.root}
+      style={{
+        width: "100%",
+        height: "8vh",
+        position: "fixed",
+        bottom: 0,
+        backgroundColor: "#082032",
+        boxShadow: "0px -1px 10px rgba(0, 0, 0, 0.3)",
+        borderTopLeftRadius: 28,
+        borderTopRightRadius: 28,
+        zIndex: 100,
+      }}
     >
       <BottomNavigationAction
         style={{ color: "white", padding: 20 }}
