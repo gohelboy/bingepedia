@@ -9,7 +9,8 @@
   overflow: hidden;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: start;
+  column-gap: 3.29%;
 }
 
 .pageTitle {
@@ -26,5 +27,10 @@
 
   .pageTitle {
     padding: 16px 8px;
+  }
+
+  .movie_tv_list {
+    justify-content: space-between;
+    column-gap: 0%;
   }
 }
