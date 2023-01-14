@@ -3,7 +3,7 @@
     width: 100%;
     display: flex;
     text-align: center;
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
 }
 
 .content_poster {
@@ -109,5 +109,6 @@
 
     .btn-width {
         width: 100%;
+
     }
 }

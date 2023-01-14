@@ -1,9 +1,13 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useEffect } from "react";
 
 // initial data
 const lists = {
-  watchlist: [],
-  watched: [],
+  watchlist: localStorage.getItem('watchlist')
+    ? JSON.parse(localStorage.getItem('watchlist'))
+    : [],
+  watched: localStorage.getItem("watched")
+    ? JSON.parse(localStorage.getItem("watched"))
+    :  [],
 };
 
 //create context to use globally
@@ -30,6 +34,12 @@ export const GlobalProvider = (props) => {
   };
 
   const [store, call] = useReducer(reducer, lists);
+
+  useEffect(() => {
+    localStorage.setItem("watchlist", JSON.stringify(store.watchlist));
+    localStorage.setItem("watched", JSON.stringify(store.watched));
+    // eslint-disable-next-line
+  }, [store]);
 
   //actions -> name of action and payload(data)
   const addToWatchList = (movie) => {
