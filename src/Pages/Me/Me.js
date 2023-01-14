@@ -10,9 +10,6 @@ export default function Me() {
   const [type, setType] = useState(0);
   const { watchlist, watched } = useContext(GlobalContext);
 
-  console.log("list : %d", list);
-  console.log("type : %d", type);
-
   return (
     <div>
       <Tabs
