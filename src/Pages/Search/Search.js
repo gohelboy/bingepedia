@@ -73,6 +73,7 @@ const Search = () => {
         value={type}
         indicatorColor="secondary"
         centered
+        sx={{ button: { color: "#808080" } }}
         onChange={(event, newValue) => {
           setType(newValue);
           setPage(1);
