@@ -7,15 +7,11 @@
 }
 
 .movie_tv_list {
-  /* overflow: hidden;
+  overflow: hidden;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start; */
-
-
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-
+  justify-content: flex-start;
+  column-gap: 3%;
 }
 
 .li {
@@ -55,11 +51,7 @@
   }
 
   .movie_tv_list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    column-gap: 5%;
-    /* justify-content: space-between;
-    padding: 0% 0.5%; */
+    justify-content: space-between;
+    padding: 0% 0.5%;
   }
 }
