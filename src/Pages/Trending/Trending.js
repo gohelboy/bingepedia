@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-
 import Card from "../../components/Card/Card";
 import CustomPagination from "../../components/Pagination/CustomPagination";
 
@@ -28,20 +27,19 @@ const Trending = () => {
     <div>
       <h1 className="pageTitle">Trending</h1>
       <div className="movie_tv_list">
-        {movie &&
-          movie.map((m) => {
-            return (
-              <Card
-                key={m.id}
-                id={m.id}
-                title={m.title || m.name}
-                poster={m.poster_path}
-                date={m.first_air_date || m.release_date}
-                type={m.media_type}
-                vote={m.vote_average}
-              />
-            );
-          })}
+        {movie?.map((m) => {
+          return (
+            <Card
+              key={m.id}
+              id={m.id}
+              title={m.title || m.name}
+              poster={m.poster_path}
+              date={m.first_air_date || m.release_date}
+              type={m.media_type}
+              vote={m.vote_average}
+            />
+          );
+        })}
       </div>
       <CustomPagination
         setPage={setPage}

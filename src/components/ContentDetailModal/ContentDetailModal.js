@@ -104,7 +104,6 @@ const ContentDetailModal = ({ children, type, id }) => {
           {content && (
             <div className="ContentDetailModel">
               <div className="content_poster">
-                {console.log(content.poster_path)}
                 <img
                   className="portrait"
                   src={

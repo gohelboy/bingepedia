@@ -19,6 +19,9 @@
 }
 
 .card img {
+    background-color: #696969;
+    width: 100%;
+    height: 276px;
     filter: brightness(0.8);
     border-radius: 14px;
 }
@@ -53,6 +56,11 @@
 @media (max-width: 480px) {
     .card {
         width: 170px;
-        height: 96%;
+        height: 95%;
     }
+
+    .card img {
+        height: 231px;
+    }
+
 }
