@@ -33,7 +33,7 @@ export default function SimpleBottomNavigation() {
         height: "8vh",
         position: "fixed",
         bottom: 0,
-        backgroundColor: "#082032",
+        backgroundColor: "#061826",
         boxShadow: "0px -1px 10px rgba(0, 0, 0, 0.3)",
         borderTopLeftRadius: 28,
         borderTopRightRadius: 28,

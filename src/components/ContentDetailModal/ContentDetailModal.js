@@ -12,7 +12,12 @@ import PlaylistAdd from "@mui/icons-material/PlaylistAdd";
 
 import "./ContentDetailModal.css";
 import Carousel from "../Carousel/Carousel";
-import { img_300, img_500, unavialable } from "../../config/config";
+import {
+  img_300,
+  img_500,
+  unavialable,
+  unavialableL,
+} from "../../config/config";
 
 const style = {
   position: "absolute",
@@ -99,11 +104,12 @@ const ContentDetailModal = ({ children, type, id }) => {
           {content && (
             <div className="ContentDetailModel">
               <div className="content_poster">
+                {console.log(content.poster_path)}
                 <img
                   className="portrait"
                   src={
                     content.poster_path
-                      ? `${img_500}/${content.poster_path}`
+                      ? `${img_300}${content.poster_path}`
                       : unavialable
                   }
                   alt={content.name || content.title}
@@ -112,8 +118,8 @@ const ContentDetailModal = ({ children, type, id }) => {
                   className="landscape"
                   src={
                     content.poster_path
-                      ? `${img_300}/${content.backdrop_path}`
-                      : unavialable
+                      ? `${img_500}${content.backdrop_path}`
+                      : unavialableL
                   }
                   alt={content.name || content.title}
                 />
