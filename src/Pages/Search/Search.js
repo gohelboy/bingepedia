@@ -1,10 +1,10 @@
 import { Tab, Tabs } from "@mui/material";
 import { SearchRounded } from "@mui/icons-material";
 import { Button } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense, lazy } from "react";
 import axios from "axios";
 import CustomPagination from "../../components/Pagination/CustomPagination";
-import Card from "../../components/Card/Card";
+const Card = lazy(async () => await import("../../components/Card/Card"));
 
 const Search = () => {
   const [type, setType] = useState(0);
@@ -88,15 +88,20 @@ const Search = () => {
         {movie &&
           movie.map((m) => {
             return (
-              <Card
+              <Suspense
                 key={m.id}
-                id={m.id}
-                title={m.title || m.name}
-                poster={m.poster_path}
-                date={m.first_air_date || m.release_date}
-                type={type ? "tv" : "movie"}
-                vote={m.vote_average}
-              />
+                fallback={<span className="skeleton"></span>}
+              >
+                <Card
+                  key={m.id}
+                  id={m.id}
+                  title={m.title || m.name}
+                  poster={m.poster_path}
+                  date={m.first_air_date || m.release_date}
+                  ype={type ? "tv" : "movie"}
+                  vote={m.vote_average}
+                />
+              </Suspense>
             );
           })}
       </div>

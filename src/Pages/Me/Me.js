@@ -1,9 +1,10 @@
-import { useState, useContext } from "react";
+import { useState, useContext, Suspense, lazy } from "react";
 import { Tab, Tabs } from "@mui/material";
 import MovieIcon from "@mui/icons-material/Movie";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
-import Card from "../../components/Card/Card";
 import { GlobalContext } from "../../context/GlobalContextAccess";
+
+const Card = lazy(async () => await import("../../components/Card/Card"));
 
 export default function Me() {
   const [list, setList] = useState(0);
@@ -75,27 +76,37 @@ export default function Me() {
           {watchlist?.map((data) => {
             if (data.title && type === 0) {
               return (
-                <Card
+                <Suspense
                   key={data.id}
-                  id={data.id}
-                  title={data.title || data.name}
-                  poster={data.poster_path}
-                  date={data.first_air_date || data.release_date}
-                  type="movie"
-                  vote={data.vote_average}
-                />
+                  fallback={<span className="skeleton"></span>}
+                >
+                  <Card
+                    key={data.id}
+                    id={data.id}
+                    title={data.title || data.name}
+                    poster={data.poster_path}
+                    date={data.first_air_date || data.release_date}
+                    type="movie"
+                    vote={data.vote_average}
+                  />
+                </Suspense>
               );
             } else if (data.name && type === 1) {
               return (
-                <Card
+                <Suspense
                   key={data.id}
-                  id={data.id}
-                  title={data.title || data.name}
-                  poster={data.poster_path}
-                  date={data.first_air_date || data.release_date}
-                  type="tv"
-                  vote={data.vote_average}
-                />
+                  fallback={<span className="skeleton"></span>}
+                >
+                  <Card
+                    key={data.id}
+                    id={data.id}
+                    title={data.title || data.name}
+                    poster={data.poster_path}
+                    date={data.first_air_date || data.release_date}
+                    type="tv"
+                    vote={data.vote_average}
+                  />
+                </Suspense>
               );
             }
             return [];
@@ -106,27 +117,37 @@ export default function Me() {
           {watched?.map((data) => {
             if (data.title && type === 0) {
               return (
-                <Card
+                <Suspense
                   key={data.id}
-                  id={data.id}
-                  title={data.title || data.name}
-                  poster={data.poster_path}
-                  date={data.first_air_date || data.release_date}
-                  type="movie"
-                  vote={data.vote_average}
-                />
+                  fallback={<span className="skeleton"></span>}
+                >
+                  <Card
+                    key={data.id}
+                    id={data.id}
+                    title={data.title || data.name}
+                    poster={data.poster_path}
+                    date={data.first_air_date || data.release_date}
+                    type="movie"
+                    vote={data.vote_average}
+                  />
+                </Suspense>
               );
             } else if (data.name && type === 1) {
               return (
-                <Card
+                <Suspense
                   key={data.id}
-                  id={data.id}
-                  title={data.title || data.name}
-                  poster={data.poster_path}
-                  date={data.first_air_date || data.release_date}
-                  type="tv"
-                  vote={data.vote_average}
-                />
+                  fallback={<span className="skeleton"></span>}
+                >
+                  <Card
+                    key={data.id}
+                    id={data.id}
+                    title={data.title || data.name}
+                    poster={data.poster_path}
+                    date={data.first_air_date || data.release_date}
+                    type="tv"
+                    vote={data.vote_average}
+                  />
+                </Suspense>
               );
             }
             return [];

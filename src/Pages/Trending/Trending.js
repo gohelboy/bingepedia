@@ -1,7 +1,7 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import Card from "../../components/Card/Card";
+import { useEffect, useState, lazy, Suspense } from "react";
 import CustomPagination from "../../components/Pagination/CustomPagination";
+const Card = lazy(async () => await import("../../components/Card/Card"));
 
 //api key = 6072e56555742bd0feaf1f7249e65a87
 const Trending = () => {
@@ -29,18 +29,21 @@ const Trending = () => {
       <div className="movie_tv_list">
         {movie?.map((m) => {
           return (
-            <Card
-              key={m.id}
-              id={m.id}
-              title={m.title || m.name}
-              poster={m.poster_path}
-              date={m.first_air_date || m.release_date}
-              type={m.media_type}
-              vote={m.vote_average}
-            />
+            <Suspense key={m.id} fallback={<span className="skeleton"></span>}>
+              <Card
+                key={m.id}
+                id={m.id}
+                title={m.title || m.name}
+                poster={m.poster_path}
+                date={m.first_air_date || m.release_date}
+                type={m.media_type}
+                vote={m.vote_average}
+              />
+            </Suspense>
           );
         })}
       </div>
+
       <CustomPagination
         setPage={setPage}
         NoOfPage={noOfPage > 1000 ? 1000 : noOfPage}

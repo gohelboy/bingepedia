@@ -1,9 +1,9 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import useGenres from "../../hooks/useGenres";
 import GenreChip from "../../components/GenreChip/GenreChip";
-import Card from "../../components/Card/Card";
 import CustomPagination from "../../components/Pagination/CustomPagination";
+const Card = lazy(async () => await import("../../components/Card/Card"));
 
 const Series = () => {
   const [movie, setMovie] = useState([]);
@@ -44,15 +44,20 @@ const Series = () => {
         {movie &&
           movie.map((m) => {
             return (
-              <Card
+              <Suspense
                 key={m.id}
-                id={m.id}
-                title={m.title || m.name}
-                poster={m.poster_path}
-                date={m.first_air_date || m.release_date}
-                type="tv"
-                vote={m.vote_average}
-              />
+                fallback={<span className="skeleton"></span>}
+              >
+                <Card
+                  key={m.id}
+                  id={m.id}
+                  title={m.title || m.name}
+                  poster={m.poster_path}
+                  date={m.first_air_date || m.release_date}
+                  type="tv"
+                  vote={m.vote_average}
+                />
+              </Suspense>
             );
           })}
       </div>
