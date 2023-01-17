@@ -98,7 +98,7 @@ const Search = () => {
                   title={m.title || m.name}
                   poster={m.poster_path}
                   date={m.first_air_date || m.release_date}
-                  ype={type ? "tv" : "movie"}
+                  type={type ? "tv" : "movie"}
                   vote={m.vote_average}
                 />
               </Suspense>
