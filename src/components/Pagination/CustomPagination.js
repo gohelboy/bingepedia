@@ -1,5 +1,5 @@
 import { Pagination } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 
 const CustomPagination = ({ setPage, NoOfPage }) => {
   // change page behaviour
@@ -20,7 +20,6 @@ const CustomPagination = ({ setPage, NoOfPage }) => {
     >
       <Pagination
         sx={{ button: { color: "#ffffff" } }}
-        style={{ color: "red" }}
         count={NoOfPage}
         shape="rounded"
         color="primary"
