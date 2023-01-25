@@ -18,6 +18,7 @@ const Card = ({ id, title, date, poster, type, vote }) => {
         />
         <img
           className="poster"
+          loading="lazy"
           src={poster ? `${img_300}/${poster}` : unavialable}
           alt={title}
         />
