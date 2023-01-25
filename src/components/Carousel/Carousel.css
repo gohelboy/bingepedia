@@ -19,7 +19,7 @@
     font-weight: 500;
 }
 
-@media (max-width : 470px) {
+@media (max-width : 480px) {
     .carouselItem_name {
         font-weight: 300;
         font-size: 3vw;

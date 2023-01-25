@@ -65,7 +65,7 @@
     width: 30%;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 480px) {
 
     .content_poster {
         width: 100%;
