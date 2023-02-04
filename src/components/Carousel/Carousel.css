@@ -26,3 +26,11 @@
         padding: 8px 0px;
     }
 }
+
+@media (max-width : 380px) {
+    .carouselItem_img {
+        border-radius: 14px;
+        width: 80px;
+        box-shadow: 0 0 5px black;
+    }
+}

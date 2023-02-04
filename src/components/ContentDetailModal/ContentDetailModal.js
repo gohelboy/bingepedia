@@ -6,7 +6,6 @@ import axios from "axios";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
-import "./ContentDetailModal";
 import { YouTube, LibraryAddCheck } from "@mui/icons-material";
 import PlaylistAdd from "@mui/icons-material/PlaylistAdd";
 
@@ -169,7 +168,6 @@ const ContentDetailModal = ({ children, type, id }) => {
                     {watchedDisabled ? "Remove From Watched" : "Watched"}
                   </Button>
                 </div>
-
                 <Carousel type={type} id={id} />
               </div>
             </div>
