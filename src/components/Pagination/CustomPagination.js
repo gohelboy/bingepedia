@@ -1,5 +1,4 @@
 import { Pagination } from "@mui/material";
-import React, { useEffect } from "react";
 
 const CustomPagination = ({ setPage, NoOfPage }) => {
   // change page behaviour

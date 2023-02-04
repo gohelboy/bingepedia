@@ -29,7 +29,7 @@ const Series = () => {
 
   return (
     <div>
-      <h1 className="pageTitle">Movies</h1>
+      <h1 className="pageTitle">TV Series</h1>
 
       <GenreChip
         type="movie"
