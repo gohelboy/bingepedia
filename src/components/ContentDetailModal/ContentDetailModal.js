@@ -1,7 +1,14 @@
 import React from "react";
-import { useState, useEffect, useContext } from "react";
-import { GlobalContext } from "../../context/GlobalContextAccess";
+import { useState, useEffect } from "react";
 import axios from "axios";
+
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToWatchlist,
+  removeFromWatchlist,
+  addToWatched,
+  removeFromWatched,
+} from "../../redux/features/saveSlice";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -32,6 +39,9 @@ const style = {
 };
 
 const ContentDetailModal = ({ children, type, id }) => {
+  const dispatch = useDispatch();
+  const { watchlist, watched } = useSelector((state) => state.saveReducer);
+
   const [open, setOpen] = useState(false);
   const [content, setContent] = useState();
   const [video, setVideo] = useState();
@@ -55,14 +65,14 @@ const ContentDetailModal = ({ children, type, id }) => {
     );
   };
 
-  const {
+  /*  const {
     addToWatchList,
     watchlist,
     addToWatched,
     watched,
     removeFromWatchlist,
     removeFromWatched,
-  } = useContext(GlobalContext);
+  } = useContext(GlobalContext); */
 
   let alreadyWatchlisted = watchlist.find((o) => o.id === id);
   const watchlistDisabled = alreadyWatchlisted ? true : false;
@@ -72,7 +82,7 @@ const ContentDetailModal = ({ children, type, id }) => {
 
   function AddorRemoveWatchlist(content) {
     if (!watchlistDisabled) {
-      addToWatchList(content);
+      dispatch(addToWatchlist(content));
     } else {
       removeFromWatchlist(content.id);
     }
@@ -80,7 +90,7 @@ const ContentDetailModal = ({ children, type, id }) => {
 
   function AddorRemoveWatched(content) {
     if (!watchedDisabled) {
-      addToWatched(content);
+      dispatch(addToWatched(content));
     } else {
       removeFromWatched(content.id);
     }
@@ -154,9 +164,7 @@ const ContentDetailModal = ({ children, type, id }) => {
                     startIcon={<PlaylistAdd />}
                     onClick={() => AddorRemoveWatchlist(content)}
                   >
-                    {watchlistDisabled
-                      ? "Remove from Watchlist"
-                      : "Add to watchlist"}
+                    Add to watchlist
                   </Button>
                   <Button
                     className="btn-width"
@@ -165,7 +173,7 @@ const ContentDetailModal = ({ children, type, id }) => {
                     startIcon={<LibraryAddCheck />}
                     onClick={() => AddorRemoveWatched(content)}
                   >
-                    {watchedDisabled ? "Remove From Watched" : "Watched"}
+                    Watched
                   </Button>
                 </div>
                 <Carousel type={type} id={id} />

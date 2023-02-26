@@ -1,15 +1,14 @@
-import { useState, useContext, Suspense, lazy } from "react";
+import { useState, Suspense, lazy } from "react";
 import { Tab, Tabs } from "@mui/material";
 import MovieIcon from "@mui/icons-material/Movie";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
-import { GlobalContext } from "../../context/GlobalContextAccess";
+import { useSelector } from "react-redux";
 
 const Card = lazy(async () => await import("../../components/Card/Card"));
 
-export default function Me() {
+const Test = () => {
   const [list, setList] = useState(0);
   const [type, setType] = useState(0);
-  const { watchlist, watched } = useContext(GlobalContext);
 
   let noOfMovieWatchlist = 0;
   let noOfMovieWatched = 0;
@@ -18,15 +17,17 @@ export default function Me() {
 
   function renderBadge() {
     if (list === 0 && type === 0) {
-      return <p>{noOfMovieWatchlist} Movies</p>;
+      return <p>{noOfMovieWatchlist} Movies </p>;
     } else if (list === 0 && type === 1) {
-      return <p>{noOfSeriesWatchlist} Series</p>;
+      return <p>{noOfSeriesWatchlist} Series </p>;
     } else if (list === 1 && type === 0) {
-      return <p>{noOfMovieWatched} Movies</p>;
+      return <p>{noOfMovieWatched} Movies </p>;
     } else if (list === 1 && type === 1) {
-      return <p>{noOfSeriesWatched} Series</p>;
+      return <p>{noOfSeriesWatched} Series </p>;
     }
   }
+
+  let { watchlist, watched } = useSelector((state) => state.saveReducer);
 
   return (
     <div>
@@ -53,7 +54,7 @@ export default function Me() {
         <Tab icon={<MovieIcon />} />
         <Tab icon={<LiveTvIcon />} />
         <div className="contentNoBadge">
-          {watchlist.map((data) => {
+          {watchlist.forEach((data) => {
             if (data.title && type === 0) {
               noOfMovieWatchlist++;
             } else if (data.name && type === 1) {
@@ -61,7 +62,7 @@ export default function Me() {
             }
           })}
 
-          {watched.map((data) => {
+          {watched.forEach((data) => {
             if (data.title && type === 0) {
               noOfMovieWatched++;
             } else if (data.name && type === 1) {
@@ -156,4 +157,6 @@ export default function Me() {
       )}
     </div>
   );
-}
+};
+
+export default Test;

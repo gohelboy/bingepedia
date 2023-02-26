@@ -14,6 +14,10 @@ const saveSlice = createSlice({
   initialState,
   reducers: {
     addToWatchlist(state, action) {
+      localStorage.setItem(
+        "watchlist",
+        JSON.stringify([action.payload, ...state.watchlist])
+      );
       return {
         ...state,
         watchlist: [action.payload, ...state.watchlist],
@@ -28,6 +32,11 @@ const saveSlice = createSlice({
       };
     },
     addToWatched(state, action) {
+      console.log("work");
+      localStorage.setItem(
+        "watched",
+        JSON.stringify([action.payload, ...state.watched])
+      );
       return {
         ...state,
         watched: [action.payload, ...state.watched],

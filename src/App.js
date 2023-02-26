@@ -2,8 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Container } from "@mui/material";
 import { lazy, Suspense } from "react";
 
-import { GlobalProvider } from "./context/GlobalContextAccess";
-
 /* import Trending from "./Pages/Trending/Trending";
 import Movie from "./Pages/Movie/Movie";
 import Series from "./Pages/Series/Series";
@@ -22,25 +20,23 @@ const Me = lazy(() => import("./Pages/Me/Me"));
 
 function App() {
   return (
-    <GlobalProvider>
-      <BrowserRouter>
-        <Header />
-        <div className="container">
-          <Container>
-            <Suspense fallback={<h1 align="center">Loadning...</h1>}>
-              <Routes>
-                <Route path="/" element={<Trending />} exact />
-                <Route path="/movie" element={<Movie />} />
-                <Route path="/series" element={<Series />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="/me" element={<Me />} />
-              </Routes>
-            </Suspense>
-          </Container>
-        </div>
-        <Navbar />
-      </BrowserRouter>
-    </GlobalProvider>
+    <BrowserRouter>
+      <Header />
+      <div className="container">
+        <Container>
+          <Suspense fallback={<h1 align="center">Loadning...</h1>}>
+            <Routes>
+              <Route path="/" element={<Trending />} exact />
+              <Route path="/movie" element={<Movie />} />
+              <Route path="/series" element={<Series />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/me" element={<Me />} />
+            </Routes>
+          </Suspense>
+        </Container>
+      </div>
+      <Navbar />
+    </BrowserRouter>
   );
 }
 
