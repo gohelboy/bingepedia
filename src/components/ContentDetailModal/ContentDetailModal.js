@@ -65,15 +65,6 @@ const ContentDetailModal = ({ children, type, id }) => {
     );
   };
 
-  /*  const {
-    addToWatchList,
-    watchlist,
-    addToWatched,
-    watched,
-    removeFromWatchlist,
-    removeFromWatched,
-  } = useContext(GlobalContext); */
-
   let alreadyWatchlisted = watchlist.find((o) => o.id === id);
   const watchlistDisabled = alreadyWatchlisted ? true : false;
 
@@ -84,7 +75,7 @@ const ContentDetailModal = ({ children, type, id }) => {
     if (!watchlistDisabled) {
       dispatch(addToWatchlist(content));
     } else {
-      removeFromWatchlist(content.id);
+      dispatch(removeFromWatchlist(content));
     }
   }
 
@@ -92,7 +83,7 @@ const ContentDetailModal = ({ children, type, id }) => {
     if (!watchedDisabled) {
       dispatch(addToWatched(content));
     } else {
-      removeFromWatched(content.id);
+      dispatch(removeFromWatched(content));
     }
   }
 
@@ -164,7 +155,9 @@ const ContentDetailModal = ({ children, type, id }) => {
                     startIcon={<PlaylistAdd />}
                     onClick={() => AddorRemoveWatchlist(content)}
                   >
-                    Add to watchlist
+                    {watchlistDisabled
+                      ? "Remove from watchlist"
+                      : "Add to watchlist"}
                   </Button>
                   <Button
                     className="btn-width"
@@ -173,7 +166,7 @@ const ContentDetailModal = ({ children, type, id }) => {
                     startIcon={<LibraryAddCheck />}
                     onClick={() => AddorRemoveWatched(content)}
                   >
-                    Watched
+                    {watchedDisabled ? "Remove from watched" : "Watched"}
                   </Button>
                 </div>
                 <Carousel type={type} id={id} />

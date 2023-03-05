@@ -24,15 +24,20 @@ const saveSlice = createSlice({
       };
     },
     removeFromWatchlist(state, action) {
+      localStorage.setItem(
+        "watchlist",
+        JSON.stringify(
+          state.watchlist.filter((element) => element.id !== action.payload.id)
+        )
+      );
       return {
         ...state,
         watchlist: state.watchlist.filter(
-          (element) => element.id !== action.payload
+          (element) => element.id !== action.payload.id
         ),
       };
     },
     addToWatched(state, action) {
-      console.log("work");
       localStorage.setItem(
         "watched",
         JSON.stringify([action.payload, ...state.watched])
@@ -43,10 +48,16 @@ const saveSlice = createSlice({
       };
     },
     removeFromWatched(state, action) {
+      localStorage.setItem(
+        "watched",
+        JSON.stringify(
+          state.watched.filter((element) => element.id !== action.payload.id)
+        )
+      );
       return {
         ...state,
         watched: state.watched.filter(
-          (element) => element.id !== action.payload
+          (element) => element.id !== action.payload.id
         ),
       };
     },
