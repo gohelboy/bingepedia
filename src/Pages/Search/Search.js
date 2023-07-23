@@ -41,7 +41,7 @@ const Search = () => {
         <input
           type={"text"}
           name={"search"}
-          placeholder={"Search Movie,Seriese,TV..."}
+          placeholder={"Search Movie, Seriese, TV..."}
           autoComplete="off"
           style={{
             flex: 1,

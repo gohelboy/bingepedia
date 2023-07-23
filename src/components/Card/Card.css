@@ -7,10 +7,11 @@
     width: 200px;
     padding: 8px;
     margin: 8px 0px;
-
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 14px;
     background-color: var(--background-color-secondary);
     color: var(--text-color);
+    cursor: pointer;
 }
 
 .card:hover {

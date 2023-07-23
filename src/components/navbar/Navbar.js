@@ -30,7 +30,7 @@ export default function SimpleBottomNavigation() {
       }}
       style={{
         width: "100%",
-        height: "8vh",
+        height: "10vh",
         position: "fixed",
         bottom: 0,
         backgroundColor: "#061826",
@@ -38,6 +38,7 @@ export default function SimpleBottomNavigation() {
         borderTopLeftRadius: 28,
         borderTopRightRadius: 28,
         zIndex: 100,
+        overflow: "hidden",
       }}
     >
       <BottomNavigationAction

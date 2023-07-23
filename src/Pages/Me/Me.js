@@ -3,12 +3,22 @@ import { Tab, Tabs } from "@mui/material";
 import MovieIcon from "@mui/icons-material/Movie";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
 import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/features/authSlice";
+import AuthForm from "../Auth/AuthForm";
 
 const Card = lazy(async () => await import("../../components/Card/Card"));
 
-const Test = () => {
+const Me = () => {
+  const user = useSelector(selectUser);
+  let { watchlist, watched } = useSelector((state) => state.saveReducer);
+
   const [list, setList] = useState(0);
   const [type, setType] = useState(0);
+
+  if (!user) {
+    console.log("user not exist, login first");
+    return <AuthForm />;
+  }
 
   let noOfMovieWatchlist = 0;
   let noOfMovieWatched = 0;
@@ -26,8 +36,6 @@ const Test = () => {
       return <p>{noOfSeriesWatched} Series </p>;
     }
   }
-
-  let { watchlist, watched } = useSelector((state) => state.saveReducer);
 
   return (
     <div>
@@ -159,4 +167,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default Me;
