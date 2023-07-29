@@ -1,12 +1,41 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getLocalData } from "../../helper/quickeFunctions";
+
+export const getWatched = async () => {
+  const res = await fetch('http://localhost:5000/api/watched/get', {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": getLocalData('token'),
+    },
+  })
+  const resData = await res.json();
+  if (resData.status === 0) {
+
+  } else if (resData.status === 1) {
+    return resData.data || []
+  }
+};
+
+export const getWatchlist = async () => {
+  const res = await fetch('http://localhost:5000/api/watchlist/get', {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": getLocalData('token'),
+    },
+  })
+  const resData = await res.json();
+  if (resData.status === 0) {
+
+  } else if (resData.status === 1) {
+    return resData.data || [];
+  }
+};
 
 let initialState = {
-  watchlist: localStorage.getItem("watchlist")
-    ? JSON.parse(localStorage.getItem("watchlist"))
-    : [],
-  watched: localStorage.getItem("watched")
-    ? JSON.parse(localStorage.getItem("watched"))
-    : [],
+  watchlist: await getWatchlist(),
+  watched: await getWatched(),
 };
 
 const saveSlice = createSlice({
@@ -14,22 +43,12 @@ const saveSlice = createSlice({
   initialState,
   reducers: {
     addToWatchlist(state, action) {
-      localStorage.setItem(
-        "watchlist",
-        JSON.stringify([action.payload, ...state.watchlist])
-      );
       return {
         ...state,
         watchlist: [action.payload, ...state.watchlist],
       };
     },
     removeFromWatchlist(state, action) {
-      localStorage.setItem(
-        "watchlist",
-        JSON.stringify(
-          state.watchlist.filter((element) => element.id !== action.payload.id)
-        )
-      );
       return {
         ...state,
         watchlist: state.watchlist.filter(
@@ -38,22 +57,12 @@ const saveSlice = createSlice({
       };
     },
     addToWatched(state, action) {
-      localStorage.setItem(
-        "watched",
-        JSON.stringify([action.payload, ...state.watched])
-      );
       return {
         ...state,
         watched: [action.payload, ...state.watched],
       };
     },
     removeFromWatched(state, action) {
-      localStorage.setItem(
-        "watched",
-        JSON.stringify(
-          state.watched.filter((element) => element.id !== action.payload.id)
-        )
-      );
       return {
         ...state,
         watched: state.watched.filter(
@@ -63,6 +72,7 @@ const saveSlice = createSlice({
     },
   },
 });
+
 export const {
   addToWatchlist,
   removeFromWatchlist,

@@ -11,8 +11,8 @@ let authSlice = createSlice({
   name: "auth",
   initialState: initialValues,
   reducers: {
-    loggedin: (state, payload) => {
-      const { token, ...user } = payload.payload;
+    loggedin: (state, action) => {
+      const { token, ...user } = action.payload;
       state.user = user;
       setLocalData('token', token);
       setLocalData('user', JSON.stringify(user));

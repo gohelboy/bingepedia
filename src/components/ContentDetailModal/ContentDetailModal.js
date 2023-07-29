@@ -118,22 +118,22 @@ const ContentDetailModal = ({ children, type, id }) => {
   let alreadyWatched = watched.find((o) => o.id === id);
   const watchedDisabled = alreadyWatched ? true : false;
 
-  function AddorRemoveWatchlist(content) {
+  async function AddorRemoveWatchlist(content) {
     if (!watchlistDisabled) {
-      saveToWatchList(content)
+      await saveToWatchList(content);
       dispatch(addToWatchlist(content));
     } else {
-      removeFromSavedWatchlist(content.id)
+      await removeFromSavedWatchlist(content.id)
       dispatch(removeFromWatchlist(content));
     }
   }
 
-  function AddorRemoveWatched(content) {
+  async function AddorRemoveWatched(content) {
     if (!watchedDisabled) {
-      saveToWatched(content)
+      await saveToWatched(content)
       dispatch(addToWatched(content));
     } else {
-      removeFromSavedWatched(content.id)
+      await removeFromSavedWatched(content.id)
       dispatch(removeFromWatched(content));
     }
   }

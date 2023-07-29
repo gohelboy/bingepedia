@@ -1,19 +1,23 @@
-import { useState, Suspense, lazy } from "react";
+import { useState, Suspense, lazy, useEffect } from "react";
 import { Tab, Tabs } from "@mui/material";
 import MovieIcon from "@mui/icons-material/Movie";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/authSlice";
-import AuthForm from "../Auth/AuthForm";
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import { getLocalData } from "../../helper/quickeFunctions";
+import { getWatched, getWatchlist } from "../../redux/features/saveSlice";
 
 const Card = lazy(async () => await import("../../components/Card/Card"));
 
 const Saved = () => {
-  let { watchlist, watched } = useSelector((state) => state.saveReducer);
+
+  const user = useSelector(selectUser);
 
   const [list, setList] = useState(0);
   const [type, setType] = useState(0);
+
+  const [watchlist, setWatchlist] = useState([]);
+  const [watched, setWatched] = useState([]);
 
   let noOfMovieWatchlist = 0;
   let noOfMovieWatched = 0;
@@ -30,7 +34,16 @@ const Saved = () => {
     } else if (list === 1 && type === 1) {
       return <p>{noOfSeriesWatched} Series </p>;
     }
+  };
+
+  const getData = async () => {
+    setWatchlist(await getWatchlist());
+    setWatched(await getWatched());
   }
+
+  useEffect(() => {
+    getData();
+  }, [user]);
 
   return (
     <div>
@@ -57,7 +70,7 @@ const Saved = () => {
         <Tab icon={<MovieIcon />} />
         <Tab icon={<LiveTvIcon />} />
         <div className="contentNoBadge">
-          {watchlist.forEach((data) => {
+          {watchlist?.forEach((data) => {
             if (data.title && type === 0) {
               noOfMovieWatchlist++;
             } else if (data.name && type === 1) {
@@ -65,7 +78,7 @@ const Saved = () => {
             }
           })}
 
-          {watched.forEach((data) => {
+          {watched?.forEach((data) => {
             if (data.title && type === 0) {
               noOfMovieWatched++;
             } else if (data.name && type === 1) {
