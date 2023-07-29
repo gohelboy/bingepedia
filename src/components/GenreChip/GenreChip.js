@@ -40,7 +40,7 @@ const GenreChip = ({
   }, []);
 
   return (
-    <div style={{ margin: 14 }}>
+    <div style={{ margin: "14px 0px" }}>
       {selectedGenres &&
         selectedGenres.map((ge) => (
           <Chip

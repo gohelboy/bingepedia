@@ -16,7 +16,6 @@ const Me = () => {
   const [type, setType] = useState(0);
 
   if (!user) {
-    console.log("user not exist, login first");
     return <AuthForm />;
   }
 

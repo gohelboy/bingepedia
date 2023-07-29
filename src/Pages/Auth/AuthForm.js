@@ -12,6 +12,8 @@ import {
 import "./AuthForm.css";
 import { useFormik } from "formik";
 import SnackbarToast from "../../components/Snackbar/SnackbarToast";
+import { useDispatch } from "react-redux";
+import { loggedin } from "../../redux/features/authSlice";
 
 const AuthForm = () => {
   const [form, setForm] = useState(0);
@@ -21,6 +23,8 @@ const AuthForm = () => {
 };
 
 const Login = ({ setFormType }) => {
+
+  const dispatch = useDispatch();
   const [requestData, setRequestData] = useState({
     data: null,
     isLoading: false,
@@ -49,6 +53,7 @@ const Login = ({ setFormType }) => {
       ...requestData,
       isLoading: true,
     });
+
     const res = await fetch("http://localhost:5000/api/user/login", {
       method: "POST",
       headers: {
@@ -84,9 +89,13 @@ const Login = ({ setFormType }) => {
         message: resData.message,
         severity: "success",
       });
+
       setOpen(true);
+      dispatch(loggedin(resData.data));
     }
   };
+
+
   return (
     <div className="auth">
       <form className="form-container" onSubmit={formik.handleSubmit}>

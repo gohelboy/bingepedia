@@ -14,7 +14,7 @@ const CustomPagination = ({ setPage, NoOfPage }) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 20,
+        margin: 14,
       }}
     >
       <Pagination

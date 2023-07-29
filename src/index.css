@@ -53,7 +53,8 @@
 }
 
 .pageTitle {
-  padding: 16px;
+  display: none;
+  padding: 16px 8px;
   font-size: 1.5rem;
   text-align: left;
   color: var(--text-color);

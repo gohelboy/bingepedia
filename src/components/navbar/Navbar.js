@@ -14,6 +14,18 @@ export default function SimpleBottomNavigation() {
   const [value, setValue] = useState(0);
   const navigate = useNavigate();
 
+
+  let touch;
+
+  const createTouch = (e) => {
+    touch = setTimeout(() => {
+      alert("ok")
+    }, 1000)
+  }
+  const deleteTouch = (e) => {
+    clearTimeout(touch);
+  }
+
   useEffect(() => {
     if (value === 0) navigate("/");
     else if (value === 1) navigate("/Movie");
@@ -42,6 +54,10 @@ export default function SimpleBottomNavigation() {
       }}
     >
       <BottomNavigationAction
+        onTouchStart={(e) => createTouch(e)}
+        onTouchEnd={(e) => deleteTouch(e)}
+        onMouseDown={(e) => createTouch(e)}
+        onMouseUp={(e) => deleteTouch(e)}
         style={{ color: "white" }}
         label="Trending"
         icon={<WhatshotIcon />}
