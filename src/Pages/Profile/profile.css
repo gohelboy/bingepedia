@@ -1,0 +1,79 @@
+.me {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.me .image-name{
+    margin-top: 2rem;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+.me .image-name .image{
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    animation: lavitate 4s ease infinite;
+}
+.me .image-name .image img{
+    object-fit: cover;
+    width: 100%;
+}
+
+@keyframes lavitate {
+    0%{
+        transform:translateY(0px);
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0);
+    }
+    50%{
+        box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
+        transform:translateY(-10px);
+    }
+    0%{
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0);
+        transform:translateY(0px);
+    }
+}
+
+.me .image-name .username{
+   font-size: 2rem;
+   font-weight: 500;
+}
+.me .listview{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    font-size: 24px;
+    gap: 1rem;
+}
+.me .listview .item{
+    padding: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: var(--background-color-secondary);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 200ms ease;
+}
+.me .listview .item:last-child{
+    margin-top: 2rem;
+    background-color: #4b2c2c;
+}
+.me .listview .item:active{
+    transform: scale(1.01);
+}
+
+.me .listview .item .item-name{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+

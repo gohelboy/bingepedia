@@ -17,7 +17,10 @@ let authSlice = createSlice({
       setLocalData('token', token);
       setLocalData('user', JSON.stringify(user));
     },
-    logout: (state, payload) => { },
+    logout: (state, payload) => {
+      state.user = null;
+      localStorage.clear();
+    },
   },
 });
 
