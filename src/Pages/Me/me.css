@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 2rem;
+    gap: 3rem;
 }
 
 .me .image-name{
@@ -12,7 +12,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
 }
 .me .image-name .image{
     border: 3px solid rgba(255, 255, 255, 0.2);
