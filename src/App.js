@@ -24,9 +24,9 @@ function App() {
       <Header />
       <div className="container">
         <Container>
-          <Suspense fallback={<h1 align="center">Loadning...</h1>}>
+          <Suspense fallback={<div className="loader"></div>}>
             <Routes>
-              <Route path="/" element={<Trending />} exact />
+              <Route path="/" element={<Trending />} />
               <Route path="/movie" element={<Movie />} />
               <Route path="/series" element={<Series />} />
               <Route path="/search" element={<Search />} />

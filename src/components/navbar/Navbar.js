@@ -1,30 +1,18 @@
 import { useState, useEffect } from "react";
-
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
-
 import { useNavigate } from "react-router-dom";
-
 import WhatshotIcon from "@mui/icons-material/Whatshot";
 import MovieIcon from "@mui/icons-material/Movie";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
 import SearchIcon from "@mui/icons-material/Search";
 import Person from "@mui/icons-material/Person";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/features/authSlice"
 
 export default function SimpleBottomNavigation() {
+  const user = useSelector(selectUser)
   const [value, setValue] = useState(0);
   const navigate = useNavigate();
-
-
-  let touch;
-
-  const createTouch = (e) => {
-    touch = setTimeout(() => {
-      alert("ok")
-    }, 1000)
-  }
-  const deleteTouch = (e) => {
-    clearTimeout(touch);
-  }
 
   useEffect(() => {
     if (value === 0) navigate("/");
@@ -54,10 +42,6 @@ export default function SimpleBottomNavigation() {
       }}
     >
       <BottomNavigationAction
-        onTouchStart={(e) => createTouch(e)}
-        onTouchEnd={(e) => deleteTouch(e)}
-        onMouseDown={(e) => createTouch(e)}
-        onMouseUp={(e) => deleteTouch(e)}
         style={{ color: "white" }}
         label="Trending"
         icon={<WhatshotIcon />}
@@ -79,7 +63,7 @@ export default function SimpleBottomNavigation() {
       />
       <BottomNavigationAction
         style={{ color: "white" }}
-        label="Me"
+        label={user ? user.username : "Me"}
         icon={<Person />}
       />
     </BottomNavigation>

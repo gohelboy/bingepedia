@@ -1,5 +1,5 @@
 .container {
-  position: relative;
+  /* position: relative; */
   padding: 100px 0px;
   width: 100%;
   background-color: var(--background-color-primary);
