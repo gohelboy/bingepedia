@@ -69,7 +69,7 @@
     background-color: #4b2c2c;
 }
 .me .listview .item:active{
-    transform: scale(1.01);
+    transform: scale(.99);
 }
 
 .me .listview .item .item-name{

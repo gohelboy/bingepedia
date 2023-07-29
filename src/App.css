@@ -41,6 +41,23 @@ body {
   animation: 1.5s pulse infinite ease-in-out;
 }
 
+.back-btn {
+  background-color: var(--background-color-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  color: white;
+  padding: 24px;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.back-btn:active {
+  transform: scale(.9);
+}
+
 @keyframes pulse {
   0% {
     box-shadow: 0 0 0 0 #ffffff;

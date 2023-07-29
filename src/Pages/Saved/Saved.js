@@ -5,10 +5,11 @@ import LiveTvIcon from "@mui/icons-material/LiveTv";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/authSlice";
 import AuthForm from "../Auth/AuthForm";
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 const Card = lazy(async () => await import("../../components/Card/Card"));
 
-const Saved = () => {
+const Saved = ({ setOpenUserMenu }) => {
   const user = useSelector(selectUser);
   let { watchlist, watched } = useSelector((state) => state.saveReducer);
 
@@ -34,6 +35,7 @@ const Saved = () => {
 
   return (
     <div>
+      <button onClick={() => setOpenUserMenu('me')} className="back-btn"><ArrowBackIosNewIcon /></button>
       <Tabs
         sx={{ button: { color: "#808080" } }}
         centered
