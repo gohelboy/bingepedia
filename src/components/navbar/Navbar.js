@@ -9,7 +9,7 @@ import Person from "@mui/icons-material/Person";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/authSlice"
 
-export default function SimpleBottomNavigation() {
+export default function SimpleBottomNavigation({ setOpenUserMenu }) {
   const user = useSelector(selectUser)
   const [value, setValue] = useState(0);
   const navigate = useNavigate();
@@ -65,6 +65,7 @@ export default function SimpleBottomNavigation() {
         style={{ color: "white" }}
         label={user ? user.username : "Me"}
         icon={<Person />}
+        onClick={() => setOpenUserMenu('me')}
       />
     </BottomNavigation>
   );

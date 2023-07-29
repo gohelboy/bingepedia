@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Container } from "@mui/material";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState } from "react";
 
 /* import Trending from "./Pages/Trending/Trending";
 import Movie from "./Pages/Movie/Movie";
@@ -19,6 +19,7 @@ const Search = lazy(() => import("./Pages/Search/Search"));
 const Me = lazy(() => import("./Pages/Me/Me"));
 
 function App() {
+  const [openUserMenu, setOpenUserMenu] = useState('me');
   return (
     <BrowserRouter>
       <Header />
@@ -30,12 +31,12 @@ function App() {
               <Route path="/movie" element={<Movie />} />
               <Route path="/series" element={<Series />} />
               <Route path="/search" element={<Search />} />
-              <Route path="/me" element={<Me />} />
+              <Route path="/me" element={<Me setOpenUserMenu={setOpenUserMenu} openUserMenu={openUserMenu} />} />
             </Routes>
           </Suspense>
         </Container>
       </div>
-      <Navbar />
+      <Navbar setOpenUserMenu={setOpenUserMenu} />
     </BrowserRouter>
   );
 }

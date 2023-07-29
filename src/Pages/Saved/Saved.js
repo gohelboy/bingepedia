@@ -9,8 +9,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 const Card = lazy(async () => await import("../../components/Card/Card"));
 
-const Saved = ({ setOpenUserMenu }) => {
-  const user = useSelector(selectUser);
+const Saved = () => {
   let { watchlist, watched } = useSelector((state) => state.saveReducer);
 
   const [list, setList] = useState(0);
@@ -35,7 +34,6 @@ const Saved = ({ setOpenUserMenu }) => {
 
   return (
     <div>
-      <button onClick={() => setOpenUserMenu('me')} className="back-btn"><ArrowBackIosNewIcon /></button>
       <Tabs
         sx={{ button: { color: "#808080" } }}
         centered

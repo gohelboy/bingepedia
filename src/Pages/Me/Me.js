@@ -10,10 +10,10 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Saved from '../Saved/Saved';
 
-const Me = () => {
+const Me = ({ openUserMenu, setOpenUserMenu }) => {
     const dispatch = useDispatch();
     const user = useSelector(selectUser);
-    const [openUserMenu, setOpenUserMenu] = useState('me');
+
     if (!user) {
         return <AuthForm />;
     }
@@ -31,7 +31,7 @@ const Me = () => {
     }
 
     if (openUserMenu === 'saved') {
-        return <Saved setOpenUserMenu={setOpenUserMenu} />
+        return <Saved />
     }
 
     return (
