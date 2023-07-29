@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+import { getLocalData } from "../../helper/quickeFunctions"
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToWatchlist,
@@ -65,6 +65,53 @@ const ContentDetailModal = ({ children, type, id }) => {
     );
   };
 
+  const saveToWatchList = async (data) => {
+    const res = await fetch('http://localhost:5000/api/watchlist/add', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": getLocalData('token'),
+      },
+      body: JSON.stringify({ data: data })
+    })
+    const resData = await res.json();
+  }
+
+  const removeFromSavedWatchlist = async (id) => {
+    const res = await fetch('http://localhost:5000/api/watchlist/remove', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": getLocalData('token'),
+      },
+      body: JSON.stringify({ id: id }),
+    })
+    const resData = await res.json();
+  }
+  const saveToWatched = async (data) => {
+    const res = await fetch('http://localhost:5000/api/watched/add', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": getLocalData('token'),
+      },
+      body: JSON.stringify({ data: data })
+    })
+    const resData = await res.json();
+  }
+
+  const removeFromSavedWatched = async (id) => {
+    const res = await fetch('http://localhost:5000/api/watched/remove', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": getLocalData('token'),
+      },
+      body: JSON.stringify({ id: id }),
+    })
+    const resData = await res.json();
+  }
+
   let alreadyWatchlisted = watchlist.find((o) => o.id === id);
   const watchlistDisabled = alreadyWatchlisted ? true : false;
 
@@ -73,16 +120,20 @@ const ContentDetailModal = ({ children, type, id }) => {
 
   function AddorRemoveWatchlist(content) {
     if (!watchlistDisabled) {
+      saveToWatchList(content)
       dispatch(addToWatchlist(content));
     } else {
+      removeFromSavedWatchlist(content.id)
       dispatch(removeFromWatchlist(content));
     }
   }
 
   function AddorRemoveWatched(content) {
     if (!watchedDisabled) {
+      saveToWatched(content)
       dispatch(addToWatched(content));
     } else {
+      removeFromSavedWatched(content.id)
       dispatch(removeFromWatched(content));
     }
   }

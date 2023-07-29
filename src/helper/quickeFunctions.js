@@ -5,5 +5,5 @@ export const setLocalData = (key, value) => {
 
 export const getLocalData = (key) => {
     if (key === '' || !key) return
-    return localStorage.getItem(key) ? JSON.parse(localStorage.getItem(key)) : null;
+    return localStorage.getItem(key) ? localStorage.getItem(key) : null;
 }
