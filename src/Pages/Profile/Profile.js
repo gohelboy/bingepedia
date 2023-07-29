@@ -2,7 +2,7 @@ import React from 'react'
 import AuthForm from '../Auth/AuthForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser, logout } from '../../redux/features/authSlice';
-import testimg from "../../test.jpg"
+import testimg from "../../avatar.jpg"
 import "./profile.css"
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
