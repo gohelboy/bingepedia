@@ -1,72 +1,37 @@
-import { useState, Suspense, lazy, useEffect } from "react";
+import { useState, Suspense, lazy } from "react";
 import { Tab, Tabs } from "@mui/material";
 import MovieIcon from "@mui/icons-material/Movie";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
 import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/features/authSlice";
-import { getLocalData } from "../../helper/quickeFunctions";
-import { getWatched, getWatchlist } from "../../redux/features/saveSlice";
-
+import { selectWatched, selectWatchlist } from "../../redux/features/saveSlice";
 const Card = lazy(async () => await import("../../components/Card/Card"));
 
 const Saved = () => {
-
-  const user = useSelector(selectUser);
-
+  const watchlist = useSelector(selectWatchlist);
+  const watched = useSelector(selectWatched);
   const [list, setList] = useState(0);
   const [type, setType] = useState(0);
 
-  const [watchlist, setWatchlist] = useState([]);
-  const [watched, setWatched] = useState([]);
-
-  let noOfMovieWatchlist = 0;
-  let noOfMovieWatched = 0;
-  let noOfSeriesWatchlist = 0;
-  let noOfSeriesWatched = 0;
+  var noOfMovieWatchlist = 0;
+  var noOfMovieWatched = 0;
+  var noOfSeriesWatchlist = 0;
+  var noOfSeriesWatched = 0;
 
   function renderBadge() {
-    if (list === 0 && type === 0) {
-      return <p>{noOfMovieWatchlist} Movies </p>;
-    } else if (list === 0 && type === 1) {
-      return <p>{noOfSeriesWatchlist} Series </p>;
-    } else if (list === 1 && type === 0) {
-      return <p>{noOfMovieWatched} Movies </p>;
-    } else if (list === 1 && type === 1) {
-      return <p>{noOfSeriesWatched} Series </p>;
-    }
+    if (list === 0 && type === 0) return <p>{noOfMovieWatchlist} Movies </p>;
+    if (list === 0 && type === 1) return <p>{noOfSeriesWatchlist} Series </p>;
+    if (list === 1 && type === 0) return <p>{noOfMovieWatched} Movies </p>;
+    if (list === 1 && type === 1) return <p>{noOfSeriesWatched} Series </p>;
   };
-
-  const getData = async () => {
-    setWatchlist(await getWatchlist());
-    setWatched(await getWatched());
-  }
-
-  useEffect(() => {
-    getData();
-  }, [user]);
 
   return (
     <div>
       <Tabs
-        sx={{ button: { color: "#808080" } }}
-        centered
-        indicatorColor="primary"
-        value={list}
-        onChange={(event, newValue) => {
-          setList(newValue);
-        }}
-      >
+        sx={{ button: { color: "#808080" } }} centered indicatorColor="primary" value={list} onChange={(event, newValue) => { setList(newValue); }} >
         <Tab label="Watchlist" style={{ width: "50%" }} />
         <Tab label="Watched" style={{ width: "50%" }} />
       </Tabs>
-      <Tabs
-        sx={{ button: { color: "#808080" } }}
-        indicatorColor="secondary"
-        value={type}
-        onChange={(event, newValue) => {
-          setType(newValue);
-        }}
-      >
+      <Tabs sx={{ button: { color: "#808080" } }} indicatorColor="secondary" value={type} onChange={(event, newValue) => { setType(newValue); }} >
         <Tab icon={<MovieIcon />} />
         <Tab icon={<LiveTvIcon />} />
         <div className="contentNoBadge">
@@ -93,36 +58,14 @@ const Saved = () => {
           {watchlist?.map((data) => {
             if (data.title && type === 0) {
               return (
-                <Suspense
-                  key={data.id}
-                  fallback={<span className="skeleton"></span>}
-                >
-                  <Card
-                    key={data.id}
-                    id={data.id}
-                    title={data.title || data.name}
-                    poster={data.poster_path}
-                    date={data.first_air_date || data.release_date}
-                    type="movie"
-                    vote={data.vote_average}
-                  />
+                <Suspense key={data.id} fallback={<span className="skeleton"></span>} >
+                  <Card key={data.id} id={data.id} title={data.title || data.name} poster={data.poster_path} date={data.first_air_date || data.release_date} type="movie" vote={data.vote_average} />
                 </Suspense>
               );
             } else if (data.name && type === 1) {
               return (
-                <Suspense
-                  key={data.id}
-                  fallback={<span className="skeleton"></span>}
-                >
-                  <Card
-                    key={data.id}
-                    id={data.id}
-                    title={data.title || data.name}
-                    poster={data.poster_path}
-                    date={data.first_air_date || data.release_date}
-                    type="tv"
-                    vote={data.vote_average}
-                  />
+                <Suspense key={data.id} fallback={<span className="skeleton"></span>} >
+                  <Card key={data.id} id={data.id} title={data.title || data.name} poster={data.poster_path} date={data.first_air_date || data.release_date} type="tv" vote={data.vote_average} />
                 </Suspense>
               );
             }
@@ -134,36 +77,14 @@ const Saved = () => {
           {watched?.map((data) => {
             if (data.title && type === 0) {
               return (
-                <Suspense
-                  key={data.id}
-                  fallback={<span className="skeleton"></span>}
-                >
-                  <Card
-                    key={data.id}
-                    id={data.id}
-                    title={data.title || data.name}
-                    poster={data.poster_path}
-                    date={data.first_air_date || data.release_date}
-                    type="movie"
-                    vote={data.vote_average}
-                  />
+                <Suspense key={data.id} fallback={<span className="skeleton"></span>} >
+                  <Card key={data.id} id={data.id} title={data.title || data.name} poster={data.poster_path} date={data.first_air_date || data.release_date} type="movie" vote={data.vote_average} />
                 </Suspense>
               );
             } else if (data.name && type === 1) {
               return (
-                <Suspense
-                  key={data.id}
-                  fallback={<span className="skeleton"></span>}
-                >
-                  <Card
-                    key={data.id}
-                    id={data.id}
-                    title={data.title || data.name}
-                    poster={data.poster_path}
-                    date={data.first_air_date || data.release_date}
-                    type="tv"
-                    vote={data.vote_average}
-                  />
+                <Suspense key={data.id} fallback={<span className="skeleton"></span>} >
+                  <Card key={data.id} id={data.id} title={data.title || data.name} poster={data.poster_path} date={data.first_air_date || data.release_date} type="tv" vote={data.vote_average} />
                 </Suspense>
               );
             }

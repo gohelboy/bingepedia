@@ -7,8 +7,10 @@ import {
   addToWatchlist,
   removeFromWatchlist,
   addToWatched,
-  removeFromWatched,
+  removeFromWatched
 } from "../../redux/features/saveSlice";
+
+import { BASE_URL } from "../../redux/features/saveSlice";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -41,12 +43,11 @@ const style = {
 const ContentDetailModal = ({ children, type, id }) => {
   const dispatch = useDispatch();
   const { watchlist, watched } = useSelector((state) => state.saveReducer);
-
-  const [open, setOpen] = useState(false);
+  const [modelOpen, setModelOpen] = useState(false);
   const [content, setContent] = useState();
   const [video, setVideo] = useState();
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => setModelOpen(true);
+  const handleClose = () => setModelOpen(false);
 
   const fetchdata = async () => {
     const { data } = await axios.get(
@@ -66,7 +67,7 @@ const ContentDetailModal = ({ children, type, id }) => {
   };
 
   const saveToWatchList = async (data) => {
-    const res = await fetch('http://localhost:5000/api/watchlist/add', {
+    const res = await fetch(BASE_URL + '/watchlist/add', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -75,10 +76,16 @@ const ContentDetailModal = ({ children, type, id }) => {
       body: JSON.stringify({ data: data })
     })
     const resData = await res.json();
+
+    if (resData.status === 0) {
+
+    } else if (resData.status === 1) {
+
+    }
   }
 
   const removeFromSavedWatchlist = async (id) => {
-    const res = await fetch('http://localhost:5000/api/watchlist/remove', {
+    const res = await fetch(BASE_URL + '/watchlist/remove', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -87,9 +94,14 @@ const ContentDetailModal = ({ children, type, id }) => {
       body: JSON.stringify({ id: id }),
     })
     const resData = await res.json();
+    if (resData.status === 0) {
+
+    } else if (resData.status === 1) {
+
+    }
   }
   const saveToWatched = async (data) => {
-    const res = await fetch('http://localhost:5000/api/watched/add', {
+    const res = await fetch(BASE_URL + '/watched/add', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -98,10 +110,15 @@ const ContentDetailModal = ({ children, type, id }) => {
       body: JSON.stringify({ data: data })
     })
     const resData = await res.json();
+    if (resData.status === 0) {
+
+    } else if (resData.status === 1) {
+
+    }
   }
 
   const removeFromSavedWatched = async (id) => {
-    const res = await fetch('http://localhost:5000/api/watched/remove', {
+    const res = await fetch(BASE_URL + '/watched/remove', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -110,6 +127,11 @@ const ContentDetailModal = ({ children, type, id }) => {
       body: JSON.stringify({ id: id }),
     })
     const resData = await res.json();
+    if (resData.status === 0) {
+
+    } else if (resData.status === 1) {
+
+    }
   }
 
   let alreadyWatchlisted = watchlist.find((o) => o.id === id);
@@ -150,73 +172,29 @@ const ContentDetailModal = ({ children, type, id }) => {
         {children}
       </div>
 
-      <Modal open={open} onClose={handleClose}>
+      <Modal open={modelOpen} onClose={handleClose}>
         <Box sx={style}>
           {content && (
             <div className="ContentDetailModel">
               <div className="content_poster">
-                <img
-                  className="portrait"
-                  src={
-                    content.poster_path
-                      ? `${img_300}${content.poster_path}`
-                      : unavialable
-                  }
-                  alt={content.name || content.title}
-                />
-                <img
-                  className="landscape"
-                  src={
-                    content.poster_path
-                      ? `${img_500}${content.backdrop_path}`
-                      : unavialableL
-                  }
-                  alt={content.name || content.title}
-                />
+                <img className="portrait" src={content.poster_path ? `${img_300}${content.poster_path}` : unavialable} alt={content.name || content.title} />
+                <img className="landscape" src={content.poster_path ? `${img_500}${content.backdrop_path}` : unavialableL} alt={content.name || content.title} />
               </div>
               <div className="about-movie">
-                <span className="content_title">
-                  {content.name || content.title}(
-                  {(
-                    content.first_air_date ||
-                    content.release_date ||
-                    "-----"
-                  ).substring(0, 4)}
-                  )
-                </span>
-                {content.tagline && (
-                  <i className="content_tagline">{content.tagline}</i>
-                )}
+                <span className="content_title"> {content.name || content.title}( {(content.first_air_date || content.release_date || "-----").substring(0, 4)} ) </span>
+                {content.tagline && (<i className="content_tagline">{content.tagline}</i>)}
                 <span className="content_discription">{content.overview}</span>
-
                 <div className="model-buttons">
                   <Button
-                    className="btn-width"
-                    variant="contained"
-                    color="error"
-                    startIcon={<YouTube />}
-                    href={`https://www.youtube.com/watch?v=${video}`}
-                  >
+                    className="btn-width" variant="contained" color="error" startIcon={<YouTube />} href={`https://www.youtube.com/watch?v=${video}`}>
                     Watch Trailer
                   </Button>
-                  <Button
-                    className="btn-width"
-                    variant="contained"
-                    color="success"
-                    startIcon={<PlaylistAdd />}
-                    onClick={() => AddorRemoveWatchlist(content)}
-                  >
+                  <Button className="btn-width" variant="contained" color="success" startIcon={<PlaylistAdd />} onClick={() => AddorRemoveWatchlist(content)}>
                     {watchlistDisabled
                       ? "Remove from watchlist"
                       : "Add to watchlist"}
                   </Button>
-                  <Button
-                    className="btn-width"
-                    variant="contained"
-                    color="primary"
-                    startIcon={<LibraryAddCheck />}
-                    onClick={() => AddorRemoveWatched(content)}
-                  >
+                  <Button className="btn-width" variant="contained" color="primary" startIcon={<LibraryAddCheck />} onClick={() => AddorRemoveWatched(content)} >
                     {watchedDisabled ? "Remove from watched" : "Watched"}
                   </Button>
                 </div>

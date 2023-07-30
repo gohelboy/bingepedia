@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getLocalData, setLocalData } from "../../helper/quickeFunctions";
 
-var user = getLocalData('user');
+export const user = await JSON.parse(getLocalData('user'));
 
 var initialValues = {
   user: user,
@@ -17,7 +17,7 @@ let authSlice = createSlice({
       setLocalData('token', token);
       setLocalData('user', JSON.stringify(user));
     },
-    logout: (state, payload) => {
+    logout: (state, action) => {
       state.user = null;
       localStorage.clear();
     },
@@ -25,6 +25,5 @@ let authSlice = createSlice({
 });
 
 export const selectUser = (state) => state.auth.user;
-
 export const { register, loggedin, logout } = authSlice.actions;
 export default authSlice.reducer;

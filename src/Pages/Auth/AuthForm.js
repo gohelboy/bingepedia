@@ -12,9 +12,9 @@ import {
 import "./AuthForm.css";
 import { useFormik } from "formik";
 import SnackbarToast from "../../components/Snackbar/SnackbarToast";
-import { useDispatch } from "react-redux";
-import { loggedin } from "../../redux/features/authSlice";
-
+import { useDispatch, useSelector } from "react-redux";
+import { loggedin, selectUser } from "../../redux/features/authSlice";
+import { BASE_URL, getAllUserList, getWatched, getWatchlist } from "../../redux/features/saveSlice";
 const AuthForm = () => {
   const [userData, setUserData] = useState({
     username: '',
@@ -31,6 +31,13 @@ const AuthForm = () => {
 
 const Login = ({ setFormType, initialValues, setInitialvalues }) => {
   const dispatch = useDispatch();
+  const getData = async (id) => {
+    console.log("start")
+    const watchlist = await getWatchlist(id);
+    const watched = await getWatched(id);
+    dispatch(getAllUserList({ watchlist: watchlist, watched: watched }))
+    console.log("end")
+  }
   const [requestData, setRequestData] = useState({
     data: null,
     isLoading: false,
@@ -39,7 +46,6 @@ const Login = ({ setFormType, initialValues, setInitialvalues }) => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [open, setOpen] = useState(false);
-
 
   const formik = useFormik({
     initialValues,
@@ -57,7 +63,7 @@ const Login = ({ setFormType, initialValues, setInitialvalues }) => {
       isLoading: true,
     });
 
-    const res = await fetch("http://localhost:5000/api/user/login", {
+    const res = await fetch(BASE_URL + "/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -92,8 +98,8 @@ const Login = ({ setFormType, initialValues, setInitialvalues }) => {
         message: resData.message,
         severity: "success",
       });
-
       setOpen(true);
+      await getData(resData.data.id);
       dispatch(loggedin(resData.data));
     }
   };
@@ -203,7 +209,7 @@ const Register = ({ setFormType, initialValues, setInitialvalues }) => {
       isLoading: true,
       ...requestData,
     })
-    const res = await fetch("http://localhost:5000/api/user/register", {
+    const res = await fetch(BASE_URL + "/user/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -370,7 +376,7 @@ const VerifyUser = ({ setFormType, initialValues }) => {
       ...requestData,
     })
 
-    const res = await fetch('http://localhost:5000/api/user/verify-user', {
+    const res = await fetch(BASE_URL + '/user/verify-user', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
