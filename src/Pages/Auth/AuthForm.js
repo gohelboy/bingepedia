@@ -32,11 +32,9 @@ const AuthForm = () => {
 const Login = ({ setFormType, initialValues, setInitialvalues }) => {
   const dispatch = useDispatch();
   const getData = async (id) => {
-    console.log("start")
     const watchlist = await getWatchlist(id);
     const watched = await getWatched(id);
     dispatch(getAllUserList({ watchlist: watchlist, watched: watched }))
-    console.log("end")
   }
   const [requestData, setRequestData] = useState({
     data: null,
@@ -206,9 +204,10 @@ const Register = ({ setFormType, initialValues, setInitialvalues }) => {
 
   const RegisterUser = async () => {
     setRequestData({
-      isLoading: true,
       ...requestData,
-    })
+      isLoading: true,
+    });
+
     const res = await fetch(BASE_URL + "/user/register", {
       method: "POST",
       headers: {
@@ -216,8 +215,8 @@ const Register = ({ setFormType, initialValues, setInitialvalues }) => {
       },
       body: JSON.stringify(formik.values),
     });
-
     const resData = await res.json();
+
     if (resData.status === 0) {
       setRequestData({
         isLoading: false,
@@ -252,7 +251,6 @@ const Register = ({ setFormType, initialValues, setInitialvalues }) => {
       setOpen(true);
       setFormType(2);
     }
-
   }
 
   return (
@@ -326,9 +324,10 @@ const Register = ({ setFormType, initialValues, setInitialvalues }) => {
           {/* <Link underline="always">Forget password</Link> */}
         </div>
         <div className="btn">
-          <Button type="submit">
+          <Button type="submit" loading={requestData.isLoading}>
             Continue <East />
           </Button>
+
           <div className="devider"></div>
           <Link
             underline="always"
@@ -372,9 +371,9 @@ const VerifyUser = ({ setFormType, initialValues }) => {
   const verify = async () => {
 
     setRequestData({
-      isLoading: true,
       ...requestData,
-    })
+      isLoading: true,
+    });
 
     const res = await fetch(BASE_URL + '/user/verify-user', {
       method: 'POST',
@@ -429,7 +428,7 @@ const VerifyUser = ({ setFormType, initialValues }) => {
           <Link underline="always">Resend OTP</Link>
         </div>
         <div className="btn">
-          <Button type="submit">
+          <Button type="submit" loading={requestData.isLoading}>
             Verify <East />
           </Button>
         </div>
