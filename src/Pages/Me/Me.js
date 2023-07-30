@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import AuthForm from '../Auth/AuthForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser, logout } from '../../redux/features/authSlice';
@@ -9,21 +9,11 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Saved from '../Saved/Saved';
-import { getAllUserList, getWatched, getWatchlist, removeAllUsersList } from '../../redux/features/saveSlice';
+import { removeAllUsersList } from '../../redux/features/saveSlice';
 
 const Me = ({ openUserMenu, setOpenUserMenu }) => {
     const dispatch = useDispatch();
     const user = useSelector(selectUser);
-
-    /* const getData = async () => {
-        const watchlist = await getWatchlist(user?.id);
-        const watched = await getWatched(user?.id);
-        dispatch(getAllUserList({ watchlist: watchlist, watched: watched }))
-    }
-
-    useEffect(() => {
-        if (user) getData();
-    }, [user]); */
 
     if (!user) {
         return <AuthForm />;

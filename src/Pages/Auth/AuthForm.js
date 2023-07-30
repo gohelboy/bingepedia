@@ -12,8 +12,8 @@ import {
 import "./AuthForm.css";
 import { useFormik } from "formik";
 import SnackbarToast from "../../components/Snackbar/SnackbarToast";
-import { useDispatch, useSelector } from "react-redux";
-import { loggedin, selectUser } from "../../redux/features/authSlice";
+import { useDispatch } from "react-redux";
+import { loggedin } from "../../redux/features/authSlice";
 import { BASE_URL, getAllUserList, getWatched, getWatchlist } from "../../redux/features/saveSlice";
 const AuthForm = () => {
   const [userData, setUserData] = useState({
