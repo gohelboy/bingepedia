@@ -1,20 +1,19 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { getLocalData } from "../../helper/quickeFunctions"
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addToWatchlist,
-  removeFromWatchlist,
-  addToWatched,
-  removeFromWatched
+  AsyncAddToWatchlist,
+  AsyncRemoveFromWatchlist,
+  AsyncAddToWatched,
+  AsyncRemoveFromWatched,
+  selectWatchedLoading,
+  selectWatchlistLoading,
 } from "../../redux/features/saveSlice";
-
-import { BASE_URL } from "../../redux/features/saveSlice";
-
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
+import { LoadingButton } from '@mui/lab';
 import { YouTube, LibraryAddCheck } from "@mui/icons-material";
 import PlaylistAdd from "@mui/icons-material/PlaylistAdd";
 
@@ -26,6 +25,8 @@ import {
   unavialable,
   unavialableL,
 } from "../../config/config";
+import { selectUser } from "../../redux/features/authSlice";
+import { useNavigate } from "react-router-dom/dist";
 
 const style = {
   position: "absolute",
@@ -41,7 +42,11 @@ const style = {
 };
 
 const ContentDetailModal = ({ children, type, id }) => {
+  const navigate = useNavigate()
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const watchlistLoading = useSelector(selectWatchlistLoading)
+  const watchedLoading = useSelector(selectWatchedLoading)
   const { watchlist, watched } = useSelector((state) => state.saveReducer);
   const [modelOpen, setModelOpen] = useState(false);
   const [content, setContent] = useState();
@@ -66,74 +71,6 @@ const ContentDetailModal = ({ children, type, id }) => {
     );
   };
 
-  const saveToWatchList = async (data) => {
-    const res = await fetch(BASE_URL + '/watchlist/add', {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": getLocalData('token'),
-      },
-      body: JSON.stringify({ data: data })
-    })
-    const resData = await res.json();
-
-    if (resData.status === 0) {
-
-    } else if (resData.status === 1) {
-
-    }
-  }
-
-  const removeFromSavedWatchlist = async (id) => {
-    const res = await fetch(BASE_URL + '/watchlist/remove', {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": getLocalData('token'),
-      },
-      body: JSON.stringify({ id: id }),
-    })
-    const resData = await res.json();
-    if (resData.status === 0) {
-
-    } else if (resData.status === 1) {
-
-    }
-  }
-  const saveToWatched = async (data) => {
-    const res = await fetch(BASE_URL + '/watched/add', {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": getLocalData('token'),
-      },
-      body: JSON.stringify({ data: data })
-    })
-    const resData = await res.json();
-    if (resData.status === 0) {
-
-    } else if (resData.status === 1) {
-
-    }
-  }
-
-  const removeFromSavedWatched = async (id) => {
-    const res = await fetch(BASE_URL + '/watched/remove', {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": getLocalData('token'),
-      },
-      body: JSON.stringify({ id: id }),
-    })
-    const resData = await res.json();
-    if (resData.status === 0) {
-
-    } else if (resData.status === 1) {
-
-    }
-  }
-
   let alreadyWatchlisted = watchlist.find((o) => o.id === id);
   const watchlistDisabled = alreadyWatchlisted ? true : false;
 
@@ -142,23 +79,22 @@ const ContentDetailModal = ({ children, type, id }) => {
 
   async function AddorRemoveWatchlist(content) {
     if (!watchlistDisabled) {
-      await saveToWatchList(content);
-      dispatch(addToWatchlist(content));
+      dispatch(AsyncAddToWatchlist(content));
     } else {
-      await removeFromSavedWatchlist(content.id)
-      dispatch(removeFromWatchlist(content));
+      dispatch(AsyncRemoveFromWatchlist(content))
     }
   }
 
   async function AddorRemoveWatched(content) {
     if (!watchedDisabled) {
-      await saveToWatched(content)
-      dispatch(addToWatched(content));
+      dispatch(AsyncAddToWatched(content));
     } else {
-      await removeFromSavedWatched(content.id)
-      dispatch(removeFromWatched(content));
+      dispatch(AsyncRemoveFromWatched(content));
     }
   }
+
+
+  // useEffect(() => { !isLoading && setOpen(true) }, [status, isLoading, message]);
 
   useEffect(() => {
     fetchdata();
@@ -186,17 +122,17 @@ const ContentDetailModal = ({ children, type, id }) => {
                 <span className="content_discription">{content.overview}</span>
                 <div className="model-buttons">
                   <Button
-                    className="btn-width" variant="contained" color="error" startIcon={<YouTube />} href={`https://www.youtube.com/watch?v=${video}`}>
+                    className="btn red" variant="contained" color="error" startIcon={<YouTube />} target="_blank" href={`https://www.youtube.com/watch?v=${video}`}>
                     Watch Trailer
                   </Button>
-                  <Button className="btn-width" variant="contained" color="success" startIcon={<PlaylistAdd />} onClick={() => AddorRemoveWatchlist(content)}>
-                    {watchlistDisabled
-                      ? "Remove from watchlist"
-                      : "Add to watchlist"}
-                  </Button>
-                  <Button className="btn-width" variant="contained" color="primary" startIcon={<LibraryAddCheck />} onClick={() => AddorRemoveWatched(content)} >
+                  <LoadingButton loading={watchlistLoading} className="btn green" variant="contained" color="success" startIcon={<PlaylistAdd />} onClick={() => {
+                    !user ? navigate('/me') : AddorRemoveWatchlist(content)
+                  }} >
+                    {watchlistDisabled ? "Remove from watchlist" : "Add to watchlist"}
+                  </LoadingButton>
+                  <LoadingButton loading={watchedLoading} className="btn blue" variant="contained" color="primary" startIcon={<LibraryAddCheck />} onClick={() => AddorRemoveWatched(content)} >
                     {watchedDisabled ? "Remove from watched" : "Watched"}
-                  </Button>
+                  </LoadingButton>
                 </div>
                 <Carousel type={type} id={id} />
               </div>

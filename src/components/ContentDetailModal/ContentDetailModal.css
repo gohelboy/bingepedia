@@ -3,7 +3,7 @@
     width: 100%;
     display: flex;
     text-align: center;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .content_poster {
@@ -57,13 +57,36 @@
 
 .model-buttons {
     width: 100%;
+    gap: 1rem;
     display: flex;
+    align-items: center;
     justify-content: space-between;
 }
 
-.btn-width {
+
+
+.model-buttons .btn{
     width: 30%;
+    cursor: pointer;
+    padding: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: var(--background-color-secondary);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    transition: all 200ms ease;
 }
+
+.model-buttons .red:hover{
+   background: rgba(255, 0, 0, 0.5);
+}
+.model-buttons .blue:hover{
+   background: rgba(0, 0, 255, 0.5);
+}
+.model-buttons .green:hover{
+   background: rgba(0, 128, 0, 0.7);
+}
+
 
 @media (max-width: 480px) {
 

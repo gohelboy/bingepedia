@@ -15,8 +15,7 @@ const Search = () => {
 
   const fetchSearch = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/search/${type ? "tv" : "movie"}?api_key=${
-        process.env.REACT_APP_API_KEY
+      `https://api.themoviedb.org/3/search/${type ? "tv" : "movie"}?api_key=${process.env.REACT_APP_API_KEY
       }&language=en-US&query=${searchText}&page=${page}&include_adult=false`
     );
     setMovie(data.results);
@@ -25,19 +24,15 @@ const Search = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchSearch();
+    const searchTimeout = setTimeout(() => { fetchSearch(); }, 500);
+    return () => clearTimeout(searchTimeout)
     // eslint-disable-next-line
   }, [page, type, searchText]);
 
   return (
     <div>
       <div
-        style={{
-          width: "100%",
-          display: "flex",
-          margin: "14px 0",
-        }}
-      >
+        style={{ width: "100%", display: "flex", margin: "14px 0", }} >
         <input
           type={"text"}
           name={"search"}
@@ -61,11 +56,7 @@ const Search = () => {
           }}
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <Button
-          variant="contained"
-          style={{ backgroundColor: "#2C394B" }}
-          onClick={fetchSearch}
-        >
+        <Button variant="contained" style={{ backgroundColor: "#2C394B" }} onClick={fetchSearch} >
           <SearchRounded />
         </Button>
       </div>
@@ -105,9 +96,7 @@ const Search = () => {
             );
           })}
       </div>
-      {noOfPage > 1 && (
-        <CustomPagination setPage={setPage} NoOfPage={noOfPage} />
-      )}
+      {noOfPage > 1 && (<CustomPagination setPage={setPage} NoOfPage={noOfPage} />)}
     </div>
   );
 };
