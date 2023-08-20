@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { user } from "./authSlice";
 import { getLocalData } from "../../helper/quickeFunctions";
 
-export const BASE_URL = process.env.REACT_APP_BACKEND_LOCAL_BASE_URL;
+export const BASE_URL = process.env.REACT_APP_BACKEND_BASE_URL;
 
 export const getWatched = async (id) => {
   const res = await fetch(BASE_URL + '/watched/get', {
