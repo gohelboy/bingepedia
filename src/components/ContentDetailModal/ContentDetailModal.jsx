@@ -26,6 +26,7 @@ import {
 } from "../../config/config";
 import { selectUser } from "../../redux/features/authSlice";
 import { useNavigate } from "react-router-dom/dist";
+import { getSuperEmbedUrl } from "../../helper/superEmbedUrl";
 
 const style = {
   position: "absolute",
@@ -50,24 +51,27 @@ const ContentDetailModal = ({ children, type, id }) => {
   const [modelOpen, setModelOpen] = useState(false);
   const [content, setContent] = useState();
   const [video, setVideo] = useState();
+  const [showPlayer, setShowPlayer] = useState(false);
+  const [selectedSeason, setSelectedSeason] = useState(1);
+  const [selectedEpisode, setSelectedEpisode] = useState(1);
 
   const handleOpen = () => setModelOpen(true);
   const handleClose = () => setModelOpen(false);
 
   const fetchdata = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/${type}/${id}?api_key=${import.meta.env.VITE_API_KEY}&language=en-US`
+      `https://api.themoviedb.org/3/${type}/${id}?api_key=${import.meta.env.VITE_API_KEY}&language=en-US`,
     );
     setContent(data);
   };
 
   const fetchvideo = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${import.meta.env.VITE_API_KEY}&language=en-US`
+      `https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${import.meta.env.VITE_API_KEY}&language=en-US`,
     );
 
     setVideo(
-      data.results[0]?.key || data.results[1]?.key || data.results[2]?.key
+      data.results[0]?.key || data.results[1]?.key || data.results[2]?.key,
     );
   };
 
@@ -98,6 +102,15 @@ const ContentDetailModal = ({ children, type, id }) => {
     fetchvideo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const superEmbedUrl = showPlayer
+    ? getSuperEmbedUrl({
+        type,
+        tmdbId: id,
+        season: type === "tv" ? selectedSeason : undefined,
+        episode: type === "tv" ? selectedEpisode : undefined,
+      })
+    : null;
 
   return (
     <div>
@@ -132,7 +145,8 @@ const ContentDetailModal = ({ children, type, id }) => {
               <div className="about-movie">
                 <span className="content_title">
                   {content.name || content.title}(
-                  {(content.first_air_date ||
+                  {(
+                    content.first_air_date ||
                     content.release_date ||
                     "-----"
                   ).substring(0, 4)}
@@ -178,6 +192,77 @@ const ContentDetailModal = ({ children, type, id }) => {
                     {watchedDisabled ? "Remove from watched" : "Watched"}
                   </LoadingButton>
                 </div>
+                {import.meta.env.VITE_ENABLE_SUPEREMBED === "true" && (
+                  <div className="superembed-section">
+                    {type === "tv" && (
+                      <div className="superembed-controls">
+                        <label>
+                          Season:
+                          <select
+                            value={selectedSeason}
+                            onChange={(e) =>
+                              setSelectedSeason(Number(e.target.value) || 1)
+                            }
+                          >
+                            {Array.from({ length: 10 }, (_, i) => i + 1).map(
+                              (s) => (
+                                <option key={s} value={s}>
+                                  {s}
+                                </option>
+                              ),
+                            )}
+                          </select>
+                        </label>
+                        <label>
+                          Episode:
+                          <select
+                            value={selectedEpisode}
+                            onChange={(e) =>
+                              setSelectedEpisode(Number(e.target.value) || 1)
+                            }
+                          >
+                            {Array.from({ length: 20 }, (_, i) => i + 1).map(
+                              (ep) => (
+                                <option key={ep} value={ep}>
+                                  {ep}
+                                </option>
+                              ),
+                            )}
+                          </select>
+                        </label>
+                      </div>
+                    )}
+                    <Button
+                      className="btn superembed-btn"
+                      variant="contained"
+                      color="primary"
+                      onClick={() => setShowPlayer(true)}
+                      disabled={!superEmbedUrl && showPlayer}
+                    >
+                      {type === "tv"
+                        ? "Play episode (SuperEmbed)"
+                        : "Play (SuperEmbed)"}
+                    </Button>
+                    {showPlayer && superEmbedUrl && (
+                      <div className="superembed-player">
+                        <div className="superembed-aspect">
+                          <iframe
+                            src={superEmbedUrl}
+                            title="SuperEmbed Player"
+                            allowFullScreen
+                            loading="lazy"
+                            referrerPolicy="no-referrer"
+                            // sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                          />
+                        </div>
+                        <p className="superembed-disclaimer">
+                          Streams provided by external service (SuperEmbed).
+                          Bingepedia does not host or control the content.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                )}
                 <Carousel type={type} id={id} />
               </div>
             </div>
@@ -189,4 +274,3 @@ const ContentDetailModal = ({ children, type, id }) => {
 };
 
 export default ContentDetailModal;
-
