@@ -103,14 +103,12 @@ const ContentDetailModal = ({ children, type, id }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const superEmbedUrl = showPlayer
-    ? getSuperEmbedUrl({
-        type,
-        tmdbId: id,
-        season: type === "tv" ? selectedSeason : undefined,
-        episode: type === "tv" ? selectedEpisode : undefined,
-      })
-    : null;
+  const superEmbedUrl = getSuperEmbedUrl({
+    type,
+    tmdbId: id,
+    season: type === "tv" ? selectedSeason : undefined,
+    episode: type === "tv" ? selectedEpisode : undefined,
+  });
 
   return (
     <div>
@@ -236,8 +234,18 @@ const ContentDetailModal = ({ children, type, id }) => {
                       className="btn superembed-btn"
                       variant="contained"
                       color="primary"
-                      onClick={() => setShowPlayer(true)}
-                      disabled={!superEmbedUrl && showPlayer}
+                      onClick={() => {
+                        if (!superEmbedUrl) return;
+                        if (
+                          typeof window !== "undefined" &&
+                          window.location.hostname === "localhost"
+                        ) {
+                          setShowPlayer(true);
+                        } else {
+                          window.open(superEmbedUrl, "_blank", "noopener,noreferrer");
+                        }
+                      }}
+                      disabled={!superEmbedUrl}
                     >
                       {type === "tv"
                         ? "Play episode (SuperEmbed)"
