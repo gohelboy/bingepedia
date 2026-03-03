@@ -77,3 +77,52 @@
     gap: 8px;
 }
 
+.edit-profile-form {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.edit-input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: var(--background-color-secondary);
+    color: #ffffff;
+}
+
+.edit-error {
+    color: #ff6b6b;
+    font-size: 0.85rem;
+}
+
+.edit-success {
+    color: #4caf50;
+    font-size: 0.85rem;
+}
+
+.edit-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.edit-actions button {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+.edit-actions button[type="button"] {
+    background-color: #555;
+    color: #fff;
+}
+
+.edit-actions button[type="submit"] {
+    background-color: #1976d2;
+    color: #fff;
+}
+

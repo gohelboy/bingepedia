@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { user } from "./authSlice";
 import { getLocalData } from "../../helper/quickeFunctions";
 
-export const BASE_URL = process.env.REACT_APP_BACKEND_BASE_URL;
+export const BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
 
 export const getWatched = async (id) => {
   const res = await fetch(BASE_URL + '/watched/get', {
@@ -69,7 +68,7 @@ export const AsyncAddToWatched = createAsyncThunk('watched/add', async (data) =>
   return resData;
 })
 
-export const AsyncRemoveFromWatched = createAsyncThunk('wacthed/remove', async (data) => {
+export const AsyncRemoveFromWatched = createAsyncThunk('watched/remove', async (data) => {
   const response = await fetch(BASE_URL + '/watched/remove', {
     method: 'POST',
     headers: {
@@ -82,9 +81,25 @@ export const AsyncRemoveFromWatched = createAsyncThunk('wacthed/remove', async (
   return resData;
 })
 
+export const initializeUserLists = createAsyncThunk(
+  "save/initializeUserLists",
+  async (_, { getState }) => {
+    const state = getState();
+    const user = state.auth?.user;
+    if (!user?.id) {
+      return { watchlist: [], watched: [] };
+    }
+    const [watchlist, watched] = await Promise.all([
+      getWatchlist(user.id),
+      getWatched(user.id),
+    ]);
+    return { watchlist, watched };
+  }
+);
+
 let initialState = {
-  watchlist: await getWatchlist(user?.id),
-  watched: await getWatched(user?.id),
+  watchlist: [],
+  watched: [],
   watchlistLoading: false,
   watchedLoading: false,
   message: null,
@@ -131,7 +146,7 @@ const saveSlice = createSlice({
         state.message = action.payload.message;
       } else {
         state.message = action.payload.message;
-        state.watched = [action.payload.data, ...state.watchlist]
+        state.watched = [action.payload.data, ...state.watched]
       }
     }).addCase(AsyncRemoveFromWatched.pending, (state, action) => {
       state.watchedLoading = true;
@@ -142,8 +157,16 @@ const saveSlice = createSlice({
         state.message = action.payload.message;
       } else {
         state.message = action.payload.message;
-        state.watched = state.watchlist.filter((element) => element.id !== action.payload.data)
+        state.watched = state.watched.filter((element) => element.id !== action.payload.data)
       }
+    }).addCase(initializeUserLists.pending, (state) => {
+      state.watchlistLoading = true;
+      state.watchedLoading = true;
+    }).addCase(initializeUserLists.fulfilled, (state, action) => {
+      state.watchlistLoading = false;
+      state.watchedLoading = false;
+      state.watchlist = action.payload.watchlist || [];
+      state.watched = action.payload.watched || [];
     })
   }
 });

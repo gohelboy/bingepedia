@@ -1,12 +1,12 @@
 import { Badge } from "@mui/material";
 import { img_300, unavialable } from "../../config/config";
 import "./Card.css";
-/* import ContentDetailModal from "../ContentDetailModal/ContentDetailModal"; */
 import { lazy, Suspense } from "react";
 
 const ContentDetailModal = lazy(() =>
   import("../ContentDetailModal/ContentDetailModal")
 );
+
 const Card = ({ id, title, date, poster, type, vote }) => {
   return (
     <Suspense key={id} fallback={<span className="skeleton"></span>}>
@@ -31,4 +31,6 @@ const Card = ({ id, title, date, poster, type, vote }) => {
     </Suspense>
   );
 };
+
 export default Card;
+

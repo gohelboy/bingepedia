@@ -1,5 +1,4 @@
 import { Chip } from "@mui/material";
-
 import axios from "axios";
 import { useEffect } from "react";
 
@@ -13,7 +12,7 @@ const GenreChip = ({
 }) => {
   const fetchGenres = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/genre/${type}/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
+      `https://api.themoviedb.org/3/genre/${type}/list?api_key=${import.meta.env.VITE_API_KEY}&language=en-US`
     );
 
     setGenres(data.genres);
@@ -34,15 +33,17 @@ const GenreChip = ({
   useEffect(() => {
     fetchGenres();
     return () => {
-      setGenres({});
+      setGenres([]);
     };
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const safeSelected = Array.isArray(selectedGenres) ? selectedGenres : [];
+  const safeGenres = Array.isArray(genres) ? genres : [];
 
   return (
     <div style={{ margin: "14px 0px" }}>
-      {selectedGenres &&
-        selectedGenres.map((ge) => (
+      {safeSelected.map((ge) => (
           <Chip
             size="small"
             label={ge.name}
@@ -53,8 +54,7 @@ const GenreChip = ({
             onDelete={() => handleRemoveGenre(ge)}
           />
         ))}
-      {genres &&
-        genres.map((g) => (
+      {safeGenres.map((g) => (
           <Chip
             size="small"
             label={g.name}
@@ -71,3 +71,4 @@ const GenreChip = ({
 };
 
 export default GenreChip;
+

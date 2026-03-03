@@ -1,7 +1,6 @@
 import { Pagination } from "@mui/material";
 
-const CustomPagination = ({ setPage, NoOfPage }) => {
-  // change page behaviour
+const CustomPagination = ({ setPage, noOfPage }) => {
   const handlePageChange = (page) => {
     setPage(page);
     window.scrollTo(0, 0);
@@ -19,7 +18,7 @@ const CustomPagination = ({ setPage, NoOfPage }) => {
     >
       <Pagination
         sx={{ button: { color: "#ffffff" } }}
-        count={NoOfPage}
+        count={noOfPage}
         shape="rounded"
         color="primary"
         onChange={(event) => {
@@ -31,3 +30,4 @@ const CustomPagination = ({ setPage, NoOfPage }) => {
 };
 
 export default CustomPagination;
+

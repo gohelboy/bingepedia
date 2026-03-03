@@ -12,14 +12,38 @@ const Search = () => {
   const [searchText, setSearchText] = useState("");
   const [noOfPage, setNoOfPage] = useState();
   const [movie, setMovie] = useState();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const fetchSearch = async () => {
-    const { data } = await axios.get(
-      `https://api.themoviedb.org/3/search/${type ? "tv" : "movie"}?api_key=${process.env.REACT_APP_API_KEY
-      }&language=en-US&query=${searchText}&page=${page}&include_adult=false`
-    );
-    setMovie(data.results);
-    setNoOfPage(data.total_pages);
+    if (!import.meta.env.VITE_API_KEY) {
+      setError("API key missing. Please configure VITE_API_KEY.");
+      setMovie([]);
+      setNoOfPage(0);
+      return;
+    }
+    if (!searchText) {
+      setMovie([]);
+      setNoOfPage(0);
+      setError("");
+      return;
+    }
+    try {
+      setLoading(true);
+      setError("");
+      const { data } = await axios.get(
+        `https://api.themoviedb.org/3/search/${type ? "tv" : "movie"}?api_key=${import.meta.env.VITE_API_KEY
+        }&language=en-US&query=${searchText}&page=${page}&include_adult=false`
+      );
+      setMovie(data.results);
+      setNoOfPage(data.total_pages);
+    } catch (e) {
+      setError("Failed to search. Please try again.");
+      setMovie([]);
+      setNoOfPage(0);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -36,7 +60,7 @@ const Search = () => {
         <input
           type={"text"}
           name={"search"}
-          placeholder={"Search Movie, Seriese, TV..."}
+          placeholder={"Search Movie, Series, TV..."}
           autoComplete="off"
           style={{
             flex: 1,
@@ -75,6 +99,8 @@ const Search = () => {
         <Tab label={"TV Series"} style={{ width: "50%" }} />
       </Tabs>
 
+      {loading && <div className="loader"></div>}
+      {error && !loading && <div style={{ margin: "1rem 0", color: "#ff6b6b" }}>{error}</div>}
       <div className="movie_tv_list">
         {movie &&
           movie.map((m) => {
@@ -96,7 +122,7 @@ const Search = () => {
             );
           })}
       </div>
-      {noOfPage > 1 && (<CustomPagination setPage={setPage} NoOfPage={noOfPage} />)}
+      {noOfPage > 1 && (<CustomPagination setPage={setPage} noOfPage={noOfPage} />)}
     </div>
   );
 };

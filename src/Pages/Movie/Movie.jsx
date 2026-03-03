@@ -1,25 +1,44 @@
 import axios from "axios";
 import { useState, useEffect, lazy, Suspense } from "react";
-import useGenres from "../../hooks/useGenres";
-import GenreChip from "../../components/GenreChip/GenreChip";
+
 import CustomPagination from "../../components/Pagination/CustomPagination";
+import GenreChip from "../../components/GenreChip/GenreChip";
+import useGenres from "../../hooks/useGenres";
 const Card = lazy(async () => await import("../../components/Card/Card"));
 
-const Series = () => {
+const Movie = () => {
   const [movie, setMovie] = useState([]);
   const [page, setPage] = useState(1);
   const [noOfPage, setNoOfPage] = useState();
   const [selectedGenre, setSelectedGenre] = useState([]);
   const [genre, setGenre] = useState([]);
   const genreforURL = useGenres(selectedGenre);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   //&with_genres=${genreforURL}
   const fetchMovie = async () => {
-    const { data } = await axios.get(
-      `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}`
-    );
-    setMovie(data.results);
-    setNoOfPage(data.total_pages);
+    if (!import.meta.env.VITE_API_KEY) {
+      setError("API key missing. Please configure VITE_API_KEY.");
+      setMovie([]);
+      setNoOfPage(0);
+      return;
+    }
+    try {
+      setLoading(true);
+      setError("");
+      const { data } = await axios.get(
+        `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}`
+      );
+      setMovie(data.results);
+      setNoOfPage(data.total_pages);
+    } catch (e) {
+      setError("Failed to load movies. Please try again.");
+      setMovie([]);
+      setNoOfPage(0);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -29,7 +48,7 @@ const Series = () => {
 
   return (
     <div>
-      <h1 className="pageTitle">TV Series</h1>
+      <h1 className="pageTitle">Movies</h1>
 
       <GenreChip
         type="movie"
@@ -41,6 +60,8 @@ const Series = () => {
       />
 
       <div className="movie_tv_list">
+        {loading && <div className="loader"></div>}
+        {error && !loading && <div style={{ margin: "1rem 0", color: "#ff6b6b" }}>{error}</div>}
         {movie &&
           movie.map((m) => {
             return (
@@ -54,7 +75,7 @@ const Series = () => {
                   title={m.title || m.name}
                   poster={m.poster_path}
                   date={m.first_air_date || m.release_date}
-                  type="tv"
+                  type="movie"
                   vote={m.vote_average}
                 />
               </Suspense>
@@ -63,10 +84,10 @@ const Series = () => {
       </div>
       <CustomPagination
         setPage={setPage}
-        NoOfPage={noOfPage > 500 ? 500 : noOfPage}
+        noOfPage={noOfPage > 500 ? 500 : noOfPage}
       />
     </div>
   );
 };
 
-export default Series;
+export default Movie;

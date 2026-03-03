@@ -1,7 +1,6 @@
 import axios from "axios";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Carousel.css";
-import { useState, useEffect } from "react";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import { img_300, noPicture } from "../../config/config";
@@ -12,7 +11,7 @@ const Carousel = ({ type, id }) => {
   const [credit, setcredit] = useState();
 
   const items = credit?.map((c) => (
-    <div className="carouselItem">
+    <div className="carouselItem" key={c.id || c.cast_id}>
       <img
         src={c.profile_path ? `${img_300}/${c.profile_path}` : noPicture}
         alt={c?.name}
@@ -37,14 +36,14 @@ const Carousel = ({ type, id }) => {
 
   const fetchcredits = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/${type}/${id}/credits?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
+      `https://api.themoviedb.org/3/${type}/${id}/credits?api_key=${import.meta.env.VITE_API_KEY}&language=en-US`
     );
     setcredit(data.cast);
   };
 
   useEffect(() => {
     fetchcredits();
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -62,3 +61,4 @@ const Carousel = ({ type, id }) => {
 };
 
 export default Carousel;
+

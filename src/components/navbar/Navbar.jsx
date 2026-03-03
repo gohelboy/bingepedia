@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
@@ -7,32 +7,34 @@ import LiveTvIcon from "@mui/icons-material/LiveTv";
 import SearchIcon from "@mui/icons-material/Search";
 import Person from "@mui/icons-material/Person";
 import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/features/authSlice"
+import { selectUser } from "../../redux/features/authSlice";
 
-export default function SimpleBottomNavigation({ setOpenUserMenu }) {
-  const user = useSelector(selectUser)
+const Navbar = ({ setOpenUserMenu }) => {
+  const user = useSelector(selectUser);
   const navigate = useNavigate();
   const initialPathname = window.location.pathname;
   const [value, setValue] = useState(() => {
-    if (initialPathname === '/') return 0;
-    if (initialPathname === '/movie') return 1;
-    if (initialPathname === '/series') return 2;
-    if (initialPathname === '/search') return 3;
-    if (initialPathname === '/me') return 4;
+    if (initialPathname === "/") return 0;
+    if (initialPathname === "/movie") return 1;
+    if (initialPathname === "/series") return 2;
+    if (initialPathname === "/search") return 3;
+    if (initialPathname === "/me") return 4;
     return 0;
   });
+
+  const handleChange = (_, newValue) => {
+    setValue(newValue);
+    if (newValue === 0) navigate("/");
+    else if (newValue === 1) navigate("/movie");
+    else if (newValue === 2) navigate("/series");
+    else if (newValue === 3) navigate("/search");
+    else if (newValue === 4) navigate("/me");
+  };
 
   return (
     <BottomNavigation
       value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-        if (newValue === 0) navigate("/");
-        else if (newValue === 1) navigate("/movie");
-        else if (newValue === 2) navigate("/series");
-        else if (newValue === 3) navigate("/search");
-        else if (newValue === 4) navigate("/me");
-      }}
+      onChange={handleChange}
       style={{
         width: "100%",
         height: "10vh",
@@ -75,8 +77,11 @@ export default function SimpleBottomNavigation({ setOpenUserMenu }) {
         style={{ color: "white" }}
         label={user ? user.username : "Me"}
         icon={<Person />}
-        onClick={() => setOpenUserMenu('me')}
+        onClick={() => setOpenUserMenu("me")}
       />
     </BottomNavigation>
   );
-}
+};
+
+export default Navbar;
+

@@ -16,24 +16,23 @@ const SnackbarToast = ({ open, setopen, message, severity }) => {
   };
 
   return (
-    <>
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        TransitionComponent={Slide}
-        open={open}
-        autoHideDuration={4000}
+    <Snackbar
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      TransitionComponent={Slide}
+      open={open}
+      autoHideDuration={4000}
+      onClose={handleClose}
+    >
+      <Alert
         onClose={handleClose}
+        severity={severity || "success"}
+        sx={{ width: "100%" }}
       >
-        <Alert
-          onClose={handleClose}
-          severity={severity || "success"}
-          sx={{ width: "100%" }}
-        >
-          {message || "error"}
-        </Alert>
-      </Snackbar>
-    </>
+        {message || "error"}
+      </Alert>
+    </Snackbar>
   );
 };
 
 export default SnackbarToast;
+

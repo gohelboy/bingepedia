@@ -1,10 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getLocalData, setLocalData } from "../../helper/quickeFunctions";
 
-export const user = await JSON.parse(getLocalData('user'));
+let storedUser = null;
+try {
+  const rawUser = getLocalData("user");
+  storedUser = rawUser ? JSON.parse(rawUser) : null;
+} catch (e) {
+  storedUser = null;
+}
 
-var initialValues = {
-  user: user,
+const initialValues = {
+  user: storedUser,
 };
 
 let authSlice = createSlice({

@@ -14,19 +14,62 @@ import { useFormik } from "formik";
 import SnackbarToast from "../../components/Snackbar/SnackbarToast";
 import { useDispatch } from "react-redux";
 import { loggedin } from "../../redux/features/authSlice";
-import { BASE_URL, getAllUserList, getWatched, getWatchlist } from "../../redux/features/saveSlice";
+import {
+  BASE_URL,
+  getAllUserList,
+  getWatched,
+  getWatchlist,
+} from "../../redux/features/saveSlice";
+
 const AuthForm = () => {
   const [userData, setUserData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    otp: '',
+    username: "",
+    email: "",
+    password: "",
+    otp: "",
   });
 
   const [form, setForm] = useState(0);
-  if (form === 0) return <Login setFormType={setForm} initialValues={userData} setInitialvalues={setUserData} />;
-  if (form === 1) return <Register setFormType={setForm} initialValues={userData} setInitialvalues={setUserData} />;
-  if (form === 2) return <VerifyUser setFormType={setForm} initialValues={userData} setInitialvalues={setUserData} />;
+  if (form === 0)
+    return (
+      <Login
+        setFormType={setForm}
+        initialValues={userData}
+        setInitialvalues={setUserData}
+      />
+    );
+  if (form === 1)
+    return (
+      <Register
+        setFormType={setForm}
+        initialValues={userData}
+        setInitialvalues={setUserData}
+      />
+    );
+  if (form === 2)
+    return (
+      <VerifyUser
+        setFormType={setForm}
+        initialValues={userData}
+        setInitialvalues={setUserData}
+      />
+    );
+  if (form === 3)
+    return (
+      <ForgotPassword
+        setFormType={setForm}
+        initialValues={userData}
+        setInitialvalues={setUserData}
+      />
+    );
+  if (form === 4)
+    return (
+      <ResetPassword
+        setFormType={setForm}
+        initialValues={userData}
+        setInitialvalues={setUserData}
+      />
+    );
 };
 
 const Login = ({ setFormType, initialValues, setInitialvalues }) => {
@@ -34,8 +77,8 @@ const Login = ({ setFormType, initialValues, setInitialvalues }) => {
   const getData = async (id) => {
     const watchlist = await getWatchlist(id);
     const watched = await getWatched(id);
-    dispatch(getAllUserList({ watchlist: watchlist, watched: watched }))
-  }
+    dispatch(getAllUserList({ watchlist: watchlist, watched: watched }));
+  };
   const [requestData, setRequestData] = useState({
     data: null,
     isLoading: false,
@@ -54,7 +97,6 @@ const Login = ({ setFormType, initialValues, setInitialvalues }) => {
     },
   });
 
-  // make user login
   const loginUser = async (values) => {
     setRequestData({
       ...requestData,
@@ -101,7 +143,6 @@ const Login = ({ setFormType, initialValues, setInitialvalues }) => {
       dispatch(loggedin(resData.data));
     }
   };
-
 
   return (
     <div className="auth">
@@ -155,7 +196,14 @@ const Login = ({ setFormType, initialValues, setInitialvalues }) => {
               )
             }
           />
-          <Link underline="always">Forget password</Link>
+          <Link
+            underline="always"
+            onClick={() => {
+              setFormType(3);
+            }}
+          >
+            Forget password
+          </Link>
         </div>
         <div className="btn">
           <Button type="submit" loading={requestData.isLoading}>
@@ -184,7 +232,6 @@ const Login = ({ setFormType, initialValues, setInitialvalues }) => {
 };
 
 const Register = ({ setFormType, initialValues, setInitialvalues }) => {
-
   const [requestData, setRequestData] = useState({
     isLoading: false,
     message: "",
@@ -199,7 +246,7 @@ const Register = ({ setFormType, initialValues, setInitialvalues }) => {
     onSubmit: () => {
       setInitialvalues(formik.values);
       RegisterUser();
-    }
+    },
   });
 
   const RegisterUser = async () => {
@@ -221,37 +268,34 @@ const Register = ({ setFormType, initialValues, setInitialvalues }) => {
       setRequestData({
         isLoading: false,
         message: resData.message,
-        severity: 'error',
-      })
+        severity: "error",
+      });
       setOpen(true);
-    }
-    else if (resData.status === 1 && resData.data?.isVerified === false) {
+    } else if (resData.status === 1 && resData.data?.isVerified === false) {
       setRequestData({
         isLoading: false,
         message: resData.message,
-        severity: 'warning',
-      })
+        severity: "warning",
+      });
       setOpen(true);
       setFormType(2);
-    }
-    else if (resData.status === 1 && resData.data?.isVerified === true) {
+    } else if (resData.status === 1 && resData.data?.isVerified === true) {
       setRequestData({
         isLoading: false,
         message: resData.message,
         severity: "info",
-      })
+      });
       setOpen(true);
-    }
-    else if (resData.status === 1) {
+    } else if (resData.status === 1) {
       setRequestData({
         isLoading: false,
         message: resData.message,
-        severity: 'success',
-      })
+        severity: "success",
+      });
       setOpen(true);
       setFormType(2);
     }
-  }
+  };
 
   return (
     <div className="auth">
@@ -259,7 +303,7 @@ const Register = ({ setFormType, initialValues, setInitialvalues }) => {
         <div className="title">
           <h1>Register</h1>
         </div>
-        <div className="inputfields" >
+        <div className="inputfields">
           <Input
             style={{
               backgroundColor: "black",
@@ -283,7 +327,7 @@ const Register = ({ setFormType, initialValues, setInitialvalues }) => {
               width: "100%",
             }}
             startDecorator={<Email style={{ color: "#73738C" }} />}
-            name='email'
+            name="email"
             placeholder="Email"
             type="email"
             required
@@ -321,7 +365,6 @@ const Register = ({ setFormType, initialValues, setInitialvalues }) => {
             onChange={formik.handleChange}
             value={formik.values.password}
           />
-          {/* <Link underline="always">Forget password</Link> */}
         </div>
         <div className="btn">
           <Button type="submit" loading={requestData.isLoading}>
@@ -334,7 +377,8 @@ const Register = ({ setFormType, initialValues, setInitialvalues }) => {
             className="link"
             onClick={() => {
               setFormType(0);
-            }}>
+            }}
+          >
             Already have an account? Signin
           </Link>
         </div>
@@ -350,7 +394,6 @@ const Register = ({ setFormType, initialValues, setInitialvalues }) => {
 };
 
 const VerifyUser = ({ setFormType, initialValues }) => {
-
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
@@ -365,42 +408,83 @@ const VerifyUser = ({ setFormType, initialValues }) => {
     enableReinitialize: true,
     onSubmit: () => {
       verify();
-    }
+    },
   });
 
   const verify = async () => {
-
     setRequestData({
       ...requestData,
       isLoading: true,
     });
 
-    const res = await fetch(BASE_URL + '/user/verify-user', {
-      method: 'POST',
+    const res = await fetch(BASE_URL + "/user/verify-user", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email: formik.values.email, otp: formik.values.otp }),
-    })
+      body: JSON.stringify({
+        email: formik.values.email,
+        otp: formik.values.otp,
+      }),
+    });
     const resData = await res.json();
     if (resData.status === 0) {
       setRequestData({
         isLoading: false,
         message: resData.message,
         severity: "error",
-      })
+      });
       setOpen(true);
-    }
-    else if (resData.status === 1 && resData.data?.isVerified === true) {
+    } else if (resData.status === 1 && resData.data?.isVerified === true) {
       setRequestData({
         isLoading: false,
         message: resData.message,
         severity: "success",
-      })
+      });
       setOpen(true);
       dispatch(loggedin(resData.data));
     }
-  }
+  };
+
+  const resendOtp = async () => {
+    if (!formik.values.email || requestData.isLoading) return;
+    setRequestData({
+      ...requestData,
+      isLoading: true,
+    });
+
+    const res = await fetch(BASE_URL + "/user/resend-otp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: formik.values.email }),
+    });
+    const resData = await res.json();
+
+    if (resData.status === 0) {
+      setRequestData({
+        isLoading: false,
+        message: resData.message,
+        severity: "error",
+      });
+      setOpen(true);
+    } else if (resData.status === 1) {
+      setRequestData({
+        isLoading: false,
+        message: resData.message,
+        severity: "success",
+      });
+      setOpen(true);
+    } else {
+      setRequestData({
+        isLoading: false,
+        message: "Something went wrong while resending OTP.",
+        severity: "error",
+      });
+      setOpen(true);
+    }
+  };
 
   return (
     <div className="auth">
@@ -415,7 +499,7 @@ const VerifyUser = ({ setFormType, initialValues }) => {
               color: "white",
               width: "100%",
             }}
-            name='otp'
+            name="otp"
             placeholder="OTP"
             type="number"
             variant="plain"
@@ -425,7 +509,9 @@ const VerifyUser = ({ setFormType, initialValues }) => {
             value={formik.values.otp}
             required
           />
-          <Link underline="always">Resend OTP</Link>
+          <Link underline="always" onClick={resendOtp}>
+            Resend OTP
+          </Link>
         </div>
         <div className="btn">
           <Button type="submit" loading={requestData.isLoading}>
@@ -443,4 +529,269 @@ const VerifyUser = ({ setFormType, initialValues }) => {
   );
 };
 
+const ForgotPassword = ({ setFormType, initialValues, setInitialvalues }) => {
+  const [requestData, setRequestData] = useState({
+    isLoading: false,
+    message: "",
+    severity: "",
+  });
+  const [open, setOpen] = useState(false);
+
+  const formik = useFormik({
+    initialValues,
+    enableReinitialize: true,
+    onSubmit: () => {
+      setInitialvalues(formik.values);
+      requestReset();
+    },
+  });
+
+  const requestReset = async () => {
+    setRequestData({
+      ...requestData,
+      isLoading: true,
+    });
+
+    const res = await fetch(BASE_URL + "/user/forgot-password", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: formik.values.email }),
+    });
+    const resData = await res.json();
+
+    if (resData.status === 0) {
+      setRequestData({
+        isLoading: false,
+        message: resData.message,
+        severity: "error",
+      });
+      setOpen(true);
+    } else if (resData.status === 1) {
+      setRequestData({
+        isLoading: false,
+        message: resData.message,
+        severity: "success",
+      });
+      setOpen(true);
+      setFormType(4);
+    } else {
+      setRequestData({
+        isLoading: false,
+        message: "Something went wrong while requesting reset.",
+        severity: "error",
+      });
+      setOpen(true);
+    }
+  };
+
+  return (
+    <div className="auth">
+      <form className="form-container" onSubmit={formik.handleSubmit}>
+        <div className="title">
+          <h1>Forgot Password</h1>
+        </div>
+        <div className="inputfields">
+          <Input
+            style={{
+              backgroundColor: "black",
+              color: "white",
+              width: "100%",
+            }}
+            name="email"
+            placeholder="Email"
+            type="email"
+            required
+            variant="plain"
+            size="lg"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            startDecorator={<Email style={{ color: "#73738C" }} />}
+          />
+        </div>
+        <div className="btn">
+          <Button type="submit" loading={requestData.isLoading}>
+            Send reset code <East />
+          </Button>
+          <div className="devider"></div>
+          <Link
+            underline="always"
+            className="link"
+            onClick={() => {
+              setFormType(0);
+            }}
+          >
+            Back to login
+          </Link>
+        </div>
+        <SnackbarToast
+          open={open}
+          setopen={setOpen}
+          message={requestData.message}
+          severity={requestData.severity}
+        />
+      </form>
+    </div>
+  );
+};
+
+const ResetPassword = ({ setFormType, initialValues, setInitialvalues }) => {
+  const [requestData, setRequestData] = useState({
+    isLoading: false,
+    message: "",
+    severity: "",
+  });
+  const [showPassword, setShowPassword] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const formik = useFormik({
+    initialValues,
+    enableReinitialize: true,
+    onSubmit: () => {
+      setInitialvalues(formik.values);
+      resetPassword();
+    },
+  });
+
+  const resetPassword = async () => {
+    setRequestData({
+      ...requestData,
+      isLoading: true,
+    });
+
+    const res = await fetch(BASE_URL + "/user/reset-password", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: formik.values.email,
+        otp: formik.values.otp,
+        password: formik.values.password,
+      }),
+    });
+    const resData = await res.json();
+
+    if (resData.status === 0) {
+      setRequestData({
+        isLoading: false,
+        message: resData.message,
+        severity: "error",
+      });
+      setOpen(true);
+    } else if (resData.status === 1) {
+      setRequestData({
+        isLoading: false,
+        message: resData.message,
+        severity: "success",
+      });
+      setOpen(true);
+      setFormType(0);
+    } else {
+      setRequestData({
+        isLoading: false,
+        message: "Something went wrong while resetting password.",
+        severity: "error",
+      });
+      setOpen(true);
+    }
+  };
+
+  return (
+    <div className="auth">
+      <form className="form-container" onSubmit={formik.handleSubmit}>
+        <div className="title">
+          <h1>Reset Password</h1>
+        </div>
+        <div className="inputfields">
+          <Input
+            style={{
+              backgroundColor: "black",
+              color: "white",
+              width: "100%",
+            }}
+            name="email"
+            placeholder="Email"
+            type="email"
+            required
+            variant="plain"
+            size="lg"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            startDecorator={<Email style={{ color: "#73738C" }} />}
+          />
+          <Input
+            style={{
+              backgroundColor: "black",
+              color: "white",
+              width: "100%",
+            }}
+            name="otp"
+            placeholder="Reset code"
+            type="number"
+            required
+            variant="plain"
+            size="lg"
+            value={formik.values.otp}
+            onChange={formik.handleChange}
+            startDecorator={<Pin style={{ color: "#73738C" }} />}
+          />
+          <Input
+            style={{
+              backgroundColor: "black",
+              color: "white",
+              width: "100%",
+            }}
+            name="password"
+            placeholder="New password"
+            type={showPassword ? "text" : "password"}
+            required
+            variant="plain"
+            size="lg"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            startDecorator={<Key style={{ color: "#73738C" }} />}
+            endDecorator={
+              !showPassword ? (
+                <Visibility
+                  style={{ color: "#73738C" }}
+                  onClick={() => setShowPassword(true)}
+                />
+              ) : (
+                <VisibilityOff
+                  style={{ color: "#73738C" }}
+                  onClick={() => setShowPassword(false)}
+                />
+              )
+            }
+          />
+        </div>
+        <div className="btn">
+          <Button type="submit" loading={requestData.isLoading}>
+            Reset password <East />
+          </Button>
+          <div className="devider"></div>
+          <Link
+            underline="always"
+            className="link"
+            onClick={() => {
+              setFormType(0);
+            }}
+          >
+            Back to login
+          </Link>
+        </div>
+        <SnackbarToast
+          open={open}
+          setopen={setOpen}
+          message={requestData.message}
+          severity={requestData.severity}
+        />
+      </form>
+    </div>
+  );
+};
+
 export default AuthForm;
+
