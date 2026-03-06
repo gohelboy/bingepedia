@@ -18,6 +18,7 @@ import PlaylistAdd from "@mui/icons-material/PlaylistAdd";
 
 import "./ContentDetailModal.css";
 import Carousel from "../Carousel/Carousel";
+import AdsterraSlot from "../ads/AdsterraSlot";
 import {
   img_300,
   img_500,
@@ -272,6 +273,7 @@ const ContentDetailModal = ({ children, type, id }) => {
                   </div>
                 )}
                 <Carousel type={type} id={id} />
+                <AdsterraSlot />
               </div>
             </div>
           )}
