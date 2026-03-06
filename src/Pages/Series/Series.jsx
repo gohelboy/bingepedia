@@ -3,6 +3,8 @@ import { useState, useEffect, lazy, Suspense } from "react";
 import useGenres from "../../hooks/useGenres";
 import GenreChip from "../../components/GenreChip/GenreChip";
 import CustomPagination from "../../components/Pagination/CustomPagination";
+import AdTop728x90 from "../../components/ads/AdTop728x90";
+import AdBottom468x60 from "../../components/ads/AdBottom468x60";
 const Card = lazy(async () => await import("../../components/Card/Card"));
 
 const Series = () => {
@@ -27,7 +29,7 @@ const Series = () => {
       setLoading(true);
       setError("");
       const { data } = await axios.get(
-        `https://api.themoviedb.org/3/discover/tv?api_key=${import.meta.env.VITE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}`
+        `https://api.themoviedb.org/3/discover/tv?api_key=${import.meta.env.VITE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}`,
       );
       setMovie(data.results);
       setNoOfPage(data.total_pages);
@@ -48,6 +50,7 @@ const Series = () => {
   return (
     <div>
       <h1 className="pageTitle">TV Series</h1>
+      <AdTop728x90 />
 
       <GenreChip
         type="movie"
@@ -60,7 +63,9 @@ const Series = () => {
 
       <div className="movie_tv_list">
         {loading && <div className="loader"></div>}
-        {error && !loading && <div style={{ margin: "1rem 0", color: "#ff6b6b" }}>{error}</div>}
+        {error && !loading && (
+          <div style={{ margin: "1rem 0", color: "#ff6b6b" }}>{error}</div>
+        )}
         {movie &&
           movie.map((m) => {
             return (
@@ -81,6 +86,7 @@ const Series = () => {
             );
           })}
       </div>
+      <AdBottom468x60 />
       <CustomPagination
         setPage={setPage}
         noOfPage={noOfPage > 500 ? 500 : noOfPage}

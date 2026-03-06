@@ -4,6 +4,8 @@ import { Button } from "@mui/material";
 import { useState, useEffect, Suspense, lazy } from "react";
 import axios from "axios";
 import CustomPagination from "../../components/Pagination/CustomPagination";
+import AdTop728x90 from "../../components/ads/AdTop728x90";
+import AdBottom468x60 from "../../components/ads/AdBottom468x60";
 const Card = lazy(async () => await import("../../components/Card/Card"));
 
 const Search = () => {
@@ -99,6 +101,7 @@ const Search = () => {
         <Tab label={"TV Series"} style={{ width: "50%" }} />
       </Tabs>
 
+      <AdTop728x90 />
       {loading && <div className="loader"></div>}
       {error && !loading && <div style={{ margin: "1rem 0", color: "#ff6b6b" }}>{error}</div>}
       <div className="movie_tv_list">
@@ -122,6 +125,7 @@ const Search = () => {
             );
           })}
       </div>
+      <AdBottom468x60 />
       {noOfPage > 1 && (<CustomPagination setPage={setPage} noOfPage={noOfPage} />)}
     </div>
   );

@@ -4,6 +4,8 @@ import { useState, useEffect, lazy, Suspense } from "react";
 import CustomPagination from "../../components/Pagination/CustomPagination";
 import GenreChip from "../../components/GenreChip/GenreChip";
 import useGenres from "../../hooks/useGenres";
+import AdTop728x90 from "../../components/ads/AdTop728x90";
+import AdBottom468x60 from "../../components/ads/AdBottom468x60";
 const Card = lazy(async () => await import("../../components/Card/Card"));
 
 const Movie = () => {
@@ -49,6 +51,7 @@ const Movie = () => {
   return (
     <div>
       <h1 className="pageTitle">Movies</h1>
+      <AdTop728x90 />
 
       <GenreChip
         type="movie"
@@ -82,6 +85,7 @@ const Movie = () => {
             );
           })}
       </div>
+      <AdBottom468x60 />
       <CustomPagination
         setPage={setPage}
         noOfPage={noOfPage > 500 ? 500 : noOfPage}

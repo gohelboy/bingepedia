@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState, lazy, Suspense } from "react";
 import CustomPagination from "../../components/Pagination/CustomPagination";
+import AdTop728x90 from "../../components/ads/AdTop728x90";
+import AdBottom468x60 from "../../components/ads/AdBottom468x60";
 const Card = lazy(async () => await import("../../components/Card/Card"));
 
 const Trending = () => {
@@ -42,6 +44,7 @@ const Trending = () => {
   return (
     <div>
       <h1 className="pageTitle">Trending</h1>
+      <AdTop728x90 />
       {loading && <div className="loader"></div>}
       {error && !loading && <div style={{ margin: "1rem 0", color: "#ff6b6b" }}>{error}</div>}
       <div className="movie_tv_list">
@@ -61,6 +64,7 @@ const Trending = () => {
           );
         })}
       </div>
+      <AdBottom468x60 />
       <CustomPagination
         setPage={setPage}
         noOfPage={noOfPage > 1000 ? 1000 : noOfPage}
