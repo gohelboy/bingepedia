@@ -5,10 +5,16 @@ import MovieIcon from "@mui/icons-material/Movie";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
 import { useSelector } from "react-redux";
 import { selectWatched, selectWatchlist } from "../../redux/features/saveSlice";
+import { useSeo } from "../../hooks/useSeo";
 const Card = lazy(async () => await import("../../components/Card/Card"));
 const ContentDetailModal = lazy(() => import("../../components/ContentDetailModal/ContentDetailModal"));
 
 const Saved = () => {
+  useSeo({
+    title: "Your Saved Watchlist",
+    description:
+      "View and manage your saved watchlist and watched movies and TV series on Bingepedia.",
+  });
   const [searchParams, setSearchParams] = useSearchParams();
   const detailId = searchParams.get("detail");
   const detailType = searchParams.get("type");

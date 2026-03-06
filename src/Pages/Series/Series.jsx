@@ -6,10 +6,18 @@ import GenreChip from "../../components/GenreChip/GenreChip";
 import CustomPagination from "../../components/Pagination/CustomPagination";
 import AdTop728x90 from "../../components/ads/AdTop728x90";
 import AdBottom468x60 from "../../components/ads/AdBottom468x60";
+import { useSeo } from "../../hooks/useSeo";
 const Card = lazy(async () => await import("../../components/Card/Card"));
-const ContentDetailModal = lazy(() => import("../../components/ContentDetailModal/ContentDetailModal"));
+const ContentDetailModal = lazy(
+  () => import("../../components/ContentDetailModal/ContentDetailModal"),
+);
 
 const Series = () => {
+  useSeo({
+    title: "Discover TV Series",
+    description:
+      "Find the best TV series to binge by genre and popularity. Track your favorite shows on Bingepedia.",
+  });
   const [searchParams, setSearchParams] = useSearchParams();
   const detailId = searchParams.get("detail");
   const detailType = searchParams.get("type");

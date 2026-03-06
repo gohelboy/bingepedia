@@ -11,6 +11,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import Saved from "../Saved/Saved";
 import { removeAllUsersList, BASE_URL } from "../../redux/features/saveSlice";
 import { getLocalData } from "../../helper/quickeFunctions";
+import { useSeo } from "../../hooks/useSeo";
 
 const Me = ({ openUserMenu, setOpenUserMenu }) => {
   const dispatch = useDispatch();
@@ -21,6 +22,13 @@ const Me = ({ openUserMenu, setOpenUserMenu }) => {
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  useSeo({
+    title: user ? "Your Profile & Saved List" : "Login / Sign up",
+    description: user
+      ? "Manage your Bingepedia profile, edit your details, and browse your saved watchlist and watched items."
+      : "Log in or create a Bingepedia account to sync your watchlist and watched movies and series.",
+  });
 
   if (!user) {
     return <AuthForm />;

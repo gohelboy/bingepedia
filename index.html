@@ -5,10 +5,66 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#000000" />
-    <meta name="description" content="Developed by Gohelboy" />
+
+    <!-- Primary SEO -->
+    <title>Bingepedia – Discover Movies & TV Shows to Binge</title>
+    <meta
+      name="description"
+      content="Bingepedia helps you discover trending movies and TV series, track your watchlist, and find your next binge-worthy show using TMDB data."
+    />
+    <meta
+      name="keywords"
+      content="Bingepedia, movies, tv shows, series, watchlist, trending, TMDB, binge watch"
+    />
+
+    <!-- Canonical & robots -->
+    <link rel="canonical" href="https://bingepedia.vercel.app/" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://bingepedia.vercel.app/" />
+    <meta
+      property="og:title"
+      content="Bingepedia – Discover Movies & TV Shows to Binge"
+    />
+    <meta
+      property="og:description"
+      content="Discover trending movies and TV series, manage your watchlist, and never run out of binge ideas."
+    />
+    <meta property="og:image" content="https://bingepedia.vercel.app/logo512.png" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://bingepedia.vercel.app/" />
+    <meta
+      name="twitter:title"
+      content="Bingepedia – Discover Movies & TV Shows to Binge"
+    />
+    <meta
+      name="twitter:description"
+      content="Discover trending movies and TV series, manage your watchlist, and never run out of binge ideas."
+    />
+    <meta name="twitter:image" content="https://bingepedia.vercel.app/logo512.png" />
+
+    <!-- PWA -->
     <link rel="apple-touch-icon" href="/logo192.png" />
     <link rel="manifest" href="/manifest.json" />
-    <title>Bingepedia</title>
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Bingepedia",
+        "url": "https://bingepedia.vercel.app/",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://bingepedia.vercel.app/search?query={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

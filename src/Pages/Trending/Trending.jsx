@@ -4,10 +4,17 @@ import { useSearchParams } from "react-router-dom";
 import CustomPagination from "../../components/Pagination/CustomPagination";
 import AdTop728x90 from "../../components/ads/AdTop728x90";
 import AdBottom468x60 from "../../components/ads/AdBottom468x60";
+import AdsterraSlot from "../../components/ads/AdsterraSlot";
+import { useSeo } from "../../hooks/useSeo";
 const Card = lazy(async () => await import("../../components/Card/Card"));
 const ContentDetailModal = lazy(() => import("../../components/ContentDetailModal/ContentDetailModal"));
 
 const Trending = () => {
+  useSeo({
+    title: "Trending Movies & TV Shows",
+    description:
+      "See what’s trending today across movies and TV shows. Discover popular titles and pick your next binge on Bingepedia.",
+  });
   const [searchParams, setSearchParams] = useSearchParams();
   const detailId = searchParams.get("detail");
   const detailType = searchParams.get("type");

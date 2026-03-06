@@ -6,10 +6,18 @@ import GenreChip from "../../components/GenreChip/GenreChip";
 import useGenres from "../../hooks/useGenres";
 import AdTop728x90 from "../../components/ads/AdTop728x90";
 import AdBottom468x60 from "../../components/ads/AdBottom468x60";
+import { useSeo } from "../../hooks/useSeo";
 const Card = lazy(async () => await import("../../components/Card/Card"));
-const ContentDetailModal = lazy(() => import("../../components/ContentDetailModal/ContentDetailModal"));
+const ContentDetailModal = lazy(
+  () => import("../../components/ContentDetailModal/ContentDetailModal"),
+);
 
 const Movie = () => {
+  useSeo({
+    title: "Discover Movies",
+    description:
+      "Browse popular movies by genre, rating and popularity. Build your movie watchlist with Bingepedia.",
+  });
   const [searchParams, setSearchParams] = useSearchParams();
   const detailId = searchParams.get("detail");
   const detailType = searchParams.get("type");
@@ -43,7 +51,7 @@ const Movie = () => {
       setLoading(true);
       setError("");
       const { data } = await axios.get(
-        `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}`
+        `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}`,
       );
       setMovie(data.results);
       setNoOfPage(data.total_pages);
@@ -87,7 +95,9 @@ const Movie = () => {
 
       <div className="movie_tv_list">
         {loading && <div className="loader"></div>}
-        {error && !loading && <div style={{ margin: "1rem 0", color: "#ff6b6b" }}>{error}</div>}
+        {error && !loading && (
+          <div style={{ margin: "1rem 0", color: "#ff6b6b" }}>{error}</div>
+        )}
         {movie &&
           movie.map((m) => {
             return (

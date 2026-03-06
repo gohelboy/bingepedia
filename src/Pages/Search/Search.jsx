@@ -7,10 +7,18 @@ import axios from "axios";
 import CustomPagination from "../../components/Pagination/CustomPagination";
 import AdTop728x90 from "../../components/ads/AdTop728x90";
 import AdBottom468x60 from "../../components/ads/AdBottom468x60";
+import { useSeo } from "../../hooks/useSeo";
 const Card = lazy(async () => await import("../../components/Card/Card"));
-const ContentDetailModal = lazy(() => import("../../components/ContentDetailModal/ContentDetailModal"));
+const ContentDetailModal = lazy(
+  () => import("../../components/ContentDetailModal/ContentDetailModal"),
+);
 
 const Search = () => {
+  useSeo({
+    title: "Search Movies & TV Shows",
+    description:
+      "Search across movies and TV series by title and quickly find what you want to watch next.",
+  });
   const [searchParams, setSearchParams] = useSearchParams();
   const detailId = searchParams.get("detail");
   const detailType = searchParams.get("type");
@@ -48,8 +56,9 @@ const Search = () => {
       setLoading(true);
       setError("");
       const { data } = await axios.get(
-        `https://api.themoviedb.org/3/search/${type ? "tv" : "movie"}?api_key=${import.meta.env.VITE_API_KEY
-        }&language=en-US&query=${searchText}&page=${page}&include_adult=false`
+        `https://api.themoviedb.org/3/search/${type ? "tv" : "movie"}?api_key=${
+          import.meta.env.VITE_API_KEY
+        }&language=en-US&query=${searchText}&page=${page}&include_adult=false`,
       );
       setMovie(data.results);
       setNoOfPage(data.total_pages);
@@ -64,25 +73,28 @@ const Search = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const searchTimeout = setTimeout(() => { fetchSearch(); }, 500);
-    return () => clearTimeout(searchTimeout)
+    const searchTimeout = setTimeout(() => {
+      fetchSearch();
+    }, 500);
+    return () => clearTimeout(searchTimeout);
     // eslint-disable-next-line
   }, [page, type, searchText]);
 
   return (
     <div>
-      {detailId && detailType && (detailType === "movie" || detailType === "tv") && (
-        <Suspense fallback={null}>
-          <ContentDetailModal
-            id={detailId}
-            type={detailType}
-            open
-            onClose={closeDetail}
-          />
-        </Suspense>
-      )}
-      <div
-        style={{ width: "100%", display: "flex", margin: "14px 0", }} >
+      {detailId &&
+        detailType &&
+        (detailType === "movie" || detailType === "tv") && (
+          <Suspense fallback={null}>
+            <ContentDetailModal
+              id={detailId}
+              type={detailType}
+              open
+              onClose={closeDetail}
+            />
+          </Suspense>
+        )}
+      <div style={{ width: "100%", display: "flex", margin: "14px 0" }}>
         <input
           type={"text"}
           name={"search"}
@@ -106,7 +118,11 @@ const Search = () => {
           }}
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <Button variant="contained" style={{ backgroundColor: "#2C394B" }} onClick={fetchSearch} >
+        <Button
+          variant="contained"
+          style={{ backgroundColor: "#2C394B" }}
+          onClick={fetchSearch}
+        >
           <SearchRounded />
         </Button>
       </div>
@@ -127,7 +143,9 @@ const Search = () => {
 
       <AdTop728x90 />
       {loading && <div className="loader"></div>}
-      {error && !loading && <div style={{ margin: "1rem 0", color: "#ff6b6b" }}>{error}</div>}
+      {error && !loading && (
+        <div style={{ margin: "1rem 0", color: "#ff6b6b" }}>{error}</div>
+      )}
       <div className="movie_tv_list">
         {movie &&
           movie.map((m) => {
@@ -150,7 +168,9 @@ const Search = () => {
           })}
       </div>
       <AdBottom468x60 />
-      {noOfPage > 1 && (<CustomPagination setPage={setPage} noOfPage={noOfPage} />)}
+      {noOfPage > 1 && (
+        <CustomPagination setPage={setPage} noOfPage={noOfPage} />
+      )}
     </div>
   );
 };
