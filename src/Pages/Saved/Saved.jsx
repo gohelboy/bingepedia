@@ -1,12 +1,26 @@
 import { useState, Suspense, lazy } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Tab, Tabs } from "@mui/material";
 import MovieIcon from "@mui/icons-material/Movie";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
 import { useSelector } from "react-redux";
 import { selectWatched, selectWatchlist } from "../../redux/features/saveSlice";
 const Card = lazy(async () => await import("../../components/Card/Card"));
+const ContentDetailModal = lazy(() => import("../../components/ContentDetailModal/ContentDetailModal"));
 
 const Saved = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const detailId = searchParams.get("detail");
+  const detailType = searchParams.get("type");
+  const closeDetail = () => {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.delete("detail");
+      next.delete("type");
+      return next;
+    });
+  };
+
   const watchlist = useSelector(selectWatchlist);
   const watched = useSelector(selectWatched);
   const [list, setList] = useState(0);
@@ -26,6 +40,16 @@ const Saved = () => {
 
   return (
     <div>
+      {detailId && detailType && (detailType === "movie" || detailType === "tv") && (
+        <Suspense fallback={null}>
+          <ContentDetailModal
+            id={detailId}
+            type={detailType}
+            open
+            onClose={closeDetail}
+          />
+        </Suspense>
+      )}
       <Tabs
         sx={{ button: { color: "#808080" } }} centered indicatorColor="primary" value={list} onChange={(event, newValue) => { setList(newValue); }} >
         <Tab label="Watchlist" style={{ width: "50%" }} />

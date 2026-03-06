@@ -2,13 +2,27 @@ import { Tab, Tabs } from "@mui/material";
 import { SearchRounded } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { useState, useEffect, Suspense, lazy } from "react";
+import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import CustomPagination from "../../components/Pagination/CustomPagination";
 import AdTop728x90 from "../../components/ads/AdTop728x90";
 import AdBottom468x60 from "../../components/ads/AdBottom468x60";
 const Card = lazy(async () => await import("../../components/Card/Card"));
+const ContentDetailModal = lazy(() => import("../../components/ContentDetailModal/ContentDetailModal"));
 
 const Search = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const detailId = searchParams.get("detail");
+  const detailType = searchParams.get("type");
+  const closeDetail = () => {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.delete("detail");
+      next.delete("type");
+      return next;
+    });
+  };
+
   const [type, setType] = useState(0);
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState("");
@@ -57,6 +71,16 @@ const Search = () => {
 
   return (
     <div>
+      {detailId && detailType && (detailType === "movie" || detailType === "tv") && (
+        <Suspense fallback={null}>
+          <ContentDetailModal
+            id={detailId}
+            type={detailType}
+            open
+            onClose={closeDetail}
+          />
+        </Suspense>
+      )}
       <div
         style={{ width: "100%", display: "flex", margin: "14px 0", }} >
         <input

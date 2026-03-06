@@ -1,33 +1,34 @@
-import React, { useState, useEffect } from "react";
+import { LibraryAddCheck, YouTube } from "@mui/icons-material";
+import PlaylistAdd from "@mui/icons-material/PlaylistAdd";
+import { LoadingButton } from "@mui/lab";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  AsyncAddToWatchlist,
-  AsyncRemoveFromWatchlist,
   AsyncAddToWatched,
+  AsyncAddToWatchlist,
   AsyncRemoveFromWatched,
+  AsyncRemoveFromWatchlist,
   selectWatchedLoading,
   selectWatchlistLoading,
 } from "../../redux/features/saveSlice";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import Button from "@mui/material/Button";
-import { LoadingButton } from "@mui/lab";
-import { YouTube, LibraryAddCheck } from "@mui/icons-material";
-import PlaylistAdd from "@mui/icons-material/PlaylistAdd";
 
-import "./ContentDetailModal.css";
-import Carousel from "../Carousel/Carousel";
-import AdsterraSlot from "../ads/AdsterraSlot";
+import { useNavigate } from "react-router-dom";
 import {
   img_300,
   img_500,
   unavialable,
   unavialableL,
 } from "../../config/config";
-import { selectUser } from "../../redux/features/authSlice";
-import { useNavigate } from "react-router-dom/dist";
 import { getSuperEmbedUrl } from "../../helper/superEmbedUrl";
+import { selectUser } from "../../redux/features/authSlice";
+import Carousel from "../Carousel/Carousel";
+import AdBottom468x60 from "../ads/AdBottom468x60";
+import AdsterraSlot from "../ads/AdsterraSlot";
+import "./ContentDetailModal.css";
 
 const style = {
   position: "absolute",
@@ -42,22 +43,27 @@ const style = {
   p: 2,
 };
 
-const ContentDetailModal = ({ children, type, id }) => {
+const ContentDetailModal = ({
+  type,
+  id,
+  open: openProp,
+  onClose: onCloseProp,
+}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const watchlistLoading = useSelector(selectWatchlistLoading);
   const watchedLoading = useSelector(selectWatchedLoading);
   const { watchlist, watched } = useSelector((state) => state.saveReducer);
-  const [modelOpen, setModelOpen] = useState(false);
   const [content, setContent] = useState();
   const [video, setVideo] = useState();
   const [showPlayer, setShowPlayer] = useState(false);
   const [selectedSeason, setSelectedSeason] = useState(1);
   const [selectedEpisode, setSelectedEpisode] = useState(1);
 
-  const handleOpen = () => setModelOpen(true);
-  const handleClose = () => setModelOpen(false);
+  const isControlled = openProp !== undefined && onCloseProp !== undefined;
+  const open = isControlled ? openProp : false;
+  const handleClose = isControlled ? onCloseProp : () => {};
 
   const fetchdata = async () => {
     const { data } = await axios.get(
@@ -76,10 +82,10 @@ const ContentDetailModal = ({ children, type, id }) => {
     );
   };
 
-  const alreadyWatchlisted = watchlist.find((o) => o.id === id);
+  const alreadyWatchlisted = watchlist.find((o) => String(o.id) === String(id));
   const watchlistDisabled = !!alreadyWatchlisted;
 
-  const alreadyWatched = watched.find((o) => o.id === id);
+  const alreadyWatched = watched.find((o) => String(o.id) === String(id));
   const watchedDisabled = !!alreadyWatched;
 
   const AddorRemoveWatchlist = async (contentItem) => {
@@ -99,10 +105,19 @@ const ContentDetailModal = ({ children, type, id }) => {
   };
 
   useEffect(() => {
+    if (!id || !type) return;
     fetchdata();
     fetchvideo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id, type]);
+
+  useEffect(() => {
+    if (!open) {
+      setShowPlayer(false);
+      setSelectedSeason(1);
+      setSelectedEpisode(1);
+    }
+  }, [open]);
 
   const superEmbedUrl = getSuperEmbedUrl({
     type,
@@ -112,174 +127,173 @@ const ContentDetailModal = ({ children, type, id }) => {
   });
 
   return (
-    <div>
-      <div className="card" onClick={handleOpen}>
-        {children}
-      </div>
-
-      <Modal open={modelOpen} onClose={handleClose}>
-        <Box sx={style}>
-          {content && (
-            <div className="ContentDetailModel">
-              <div className="content_poster">
-                <img
-                  className="portrait"
-                  src={
-                    content.poster_path
-                      ? `${img_300}${content.poster_path}`
-                      : unavialable
-                  }
-                  alt={content.name || content.title}
-                />
-                <img
-                  className="landscape"
-                  src={
-                    content.poster_path
-                      ? `${img_500}${content.backdrop_path}`
-                      : unavialableL
-                  }
-                  alt={content.name || content.title}
-                />
+    <Modal open={open} onClose={handleClose}>
+      <Box sx={style}>
+        {content && (
+          <div className="ContentDetailModel">
+            <div className="content_poster">
+              <img
+                className="portrait"
+                src={
+                  content.poster_path
+                    ? `${img_300}${content.poster_path}`
+                    : unavialable
+                }
+                alt={content.name || content.title}
+              />
+              <img
+                className="landscape"
+                src={
+                  content.poster_path
+                    ? `${img_500}${content.backdrop_path}`
+                    : unavialableL
+                }
+                alt={content.name || content.title}
+              />
+            </div>
+            <div className="about-movie">
+              <span className="content_title">
+                {content.name || content.title}(
+                {(
+                  content.first_air_date ||
+                  content.release_date ||
+                  "-----"
+                ).substring(0, 4)}
+                )
+              </span>
+              <AdBottom468x60 />
+              {content.tagline && (
+                <i className="content_tagline">{content.tagline}</i>
+              )}
+              <span className="content_discription">{content.overview}</span>
+              <div className="model-buttons">
+                <Button
+                  className="btn red"
+                  variant="contained"
+                  color="error"
+                  startIcon={<YouTube />}
+                  target="_blank"
+                  href={`https://www.youtube.com/watch?v=${video}`}
+                >
+                  Watch Trailer
+                </Button>
+                <LoadingButton
+                  loading={watchlistLoading}
+                  className="btn green"
+                  variant="contained"
+                  color="success"
+                  startIcon={<PlaylistAdd />}
+                  onClick={() => {
+                    !user ? navigate("/me") : AddorRemoveWatchlist(content);
+                  }}
+                >
+                  {watchlistDisabled
+                    ? "Remove from watchlist"
+                    : "Add to watchlist"}
+                </LoadingButton>
+                <LoadingButton
+                  loading={watchedLoading}
+                  className="btn blue"
+                  variant="contained"
+                  color="primary"
+                  startIcon={<LibraryAddCheck />}
+                  onClick={() => AddorRemoveWatched(content)}
+                >
+                  {watchedDisabled ? "Remove from watched" : "Watched"}
+                </LoadingButton>
               </div>
-              <div className="about-movie">
-                <span className="content_title">
-                  {content.name || content.title}(
-                  {(
-                    content.first_air_date ||
-                    content.release_date ||
-                    "-----"
-                  ).substring(0, 4)}
-                  )
-                </span>
-                {content.tagline && (
-                  <i className="content_tagline">{content.tagline}</i>
-                )}
-                <span className="content_discription">{content.overview}</span>
-                <div className="model-buttons">
+              {import.meta.env.VITE_ENABLE_SUPEREMBED === "true" && (
+                <div className="superembed-section">
+                  {type === "tv" && (
+                    <div className="superembed-controls">
+                      <label>
+                        Season:
+                        <select
+                          value={selectedSeason}
+                          onChange={(e) =>
+                            setSelectedSeason(Number(e.target.value) || 1)
+                          }
+                        >
+                          {Array.from({ length: 10 }, (_, i) => i + 1).map(
+                            (s) => (
+                              <option key={s} value={s}>
+                                {s}
+                              </option>
+                            ),
+                          )}
+                        </select>
+                      </label>
+                      <label>
+                        Episode:
+                        <select
+                          value={selectedEpisode}
+                          onChange={(e) =>
+                            setSelectedEpisode(Number(e.target.value) || 1)
+                          }
+                        >
+                          {Array.from({ length: 20 }, (_, i) => i + 1).map(
+                            (ep) => (
+                              <option key={ep} value={ep}>
+                                {ep}
+                              </option>
+                            ),
+                          )}
+                        </select>
+                      </label>
+                    </div>
+                  )}
                   <Button
-                    className="btn red"
-                    variant="contained"
-                    color="error"
-                    startIcon={<YouTube />}
-                    target="_blank"
-                    href={`https://www.youtube.com/watch?v=${video}`}
-                  >
-                    Watch Trailer
-                  </Button>
-                  <LoadingButton
-                    loading={watchlistLoading}
-                    className="btn green"
-                    variant="contained"
-                    color="success"
-                    startIcon={<PlaylistAdd />}
-                    onClick={() => {
-                      !user ? navigate("/me") : AddorRemoveWatchlist(content);
-                    }}
-                  >
-                    {watchlistDisabled
-                      ? "Remove from watchlist"
-                      : "Add to watchlist"}
-                  </LoadingButton>
-                  <LoadingButton
-                    loading={watchedLoading}
-                    className="btn blue"
+                    className="btn superembed-btn"
                     variant="contained"
                     color="primary"
-                    startIcon={<LibraryAddCheck />}
-                    onClick={() => AddorRemoveWatched(content)}
+                    onClick={() => {
+                      if (!superEmbedUrl) return;
+                      if (
+                        typeof window !== "undefined" &&
+                        window.location.hostname === "localhost"
+                      ) {
+                        setShowPlayer(true);
+                      } else {
+                        window.open(
+                          superEmbedUrl,
+                          "_blank",
+                          "noopener,noreferrer",
+                        );
+                      }
+                    }}
+                    disabled={!superEmbedUrl}
                   >
-                    {watchedDisabled ? "Remove from watched" : "Watched"}
-                  </LoadingButton>
+                    {type === "tv"
+                      ? "Play episode (SuperEmbed)"
+                      : "Play (SuperEmbed)"}
+                  </Button>
+                  {showPlayer && superEmbedUrl && (
+                    <div className="superembed-player">
+                      <div className="superembed-aspect">
+                        <iframe
+                          src={superEmbedUrl}
+                          title="SuperEmbed Player"
+                          allowFullScreen
+                          loading="lazy"
+                          referrerPolicy="no-referrer"
+                          // sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                        />
+                      </div>
+                      <p className="superembed-disclaimer">
+                        Streams provided by external service (SuperEmbed).
+                        Bingepedia does not host or control the content.
+                      </p>
+                    </div>
+                  )}
                 </div>
-                {import.meta.env.VITE_ENABLE_SUPEREMBED === "true" && (
-                  <div className="superembed-section">
-                    {type === "tv" && (
-                      <div className="superembed-controls">
-                        <label>
-                          Season:
-                          <select
-                            value={selectedSeason}
-                            onChange={(e) =>
-                              setSelectedSeason(Number(e.target.value) || 1)
-                            }
-                          >
-                            {Array.from({ length: 10 }, (_, i) => i + 1).map(
-                              (s) => (
-                                <option key={s} value={s}>
-                                  {s}
-                                </option>
-                              ),
-                            )}
-                          </select>
-                        </label>
-                        <label>
-                          Episode:
-                          <select
-                            value={selectedEpisode}
-                            onChange={(e) =>
-                              setSelectedEpisode(Number(e.target.value) || 1)
-                            }
-                          >
-                            {Array.from({ length: 20 }, (_, i) => i + 1).map(
-                              (ep) => (
-                                <option key={ep} value={ep}>
-                                  {ep}
-                                </option>
-                              ),
-                            )}
-                          </select>
-                        </label>
-                      </div>
-                    )}
-                    <Button
-                      className="btn superembed-btn"
-                      variant="contained"
-                      color="primary"
-                      onClick={() => {
-                        if (!superEmbedUrl) return;
-                        if (
-                          typeof window !== "undefined" &&
-                          window.location.hostname === "localhost"
-                        ) {
-                          setShowPlayer(true);
-                        } else {
-                          window.open(superEmbedUrl, "_blank", "noopener,noreferrer");
-                        }
-                      }}
-                      disabled={!superEmbedUrl}
-                    >
-                      {type === "tv"
-                        ? "Play episode (SuperEmbed)"
-                        : "Play (SuperEmbed)"}
-                    </Button>
-                    {showPlayer && superEmbedUrl && (
-                      <div className="superembed-player">
-                        <div className="superembed-aspect">
-                          <iframe
-                            src={superEmbedUrl}
-                            title="SuperEmbed Player"
-                            allowFullScreen
-                            loading="lazy"
-                            referrerPolicy="no-referrer"
-                            // sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-                          />
-                        </div>
-                        <p className="superembed-disclaimer">
-                          Streams provided by external service (SuperEmbed).
-                          Bingepedia does not host or control the content.
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                )}
-                <Carousel type={type} id={id} />
-                <AdsterraSlot />
-              </div>
+              )}
+              <Carousel type={type} id={id} />
+              <AdsterraSlot />
             </div>
-          )}
-        </Box>
-      </Modal>
-    </div>
+          </div>
+        )}
+      </Box>
+    </Modal>
   );
 };
 

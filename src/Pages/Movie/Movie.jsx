@@ -1,14 +1,27 @@
 import axios from "axios";
 import { useState, useEffect, lazy, Suspense } from "react";
-
+import { useSearchParams } from "react-router-dom";
 import CustomPagination from "../../components/Pagination/CustomPagination";
 import GenreChip from "../../components/GenreChip/GenreChip";
 import useGenres from "../../hooks/useGenres";
 import AdTop728x90 from "../../components/ads/AdTop728x90";
 import AdBottom468x60 from "../../components/ads/AdBottom468x60";
 const Card = lazy(async () => await import("../../components/Card/Card"));
+const ContentDetailModal = lazy(() => import("../../components/ContentDetailModal/ContentDetailModal"));
 
 const Movie = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const detailId = searchParams.get("detail");
+  const detailType = searchParams.get("type");
+  const closeDetail = () => {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.delete("detail");
+      next.delete("type");
+      return next;
+    });
+  };
+
   const [movie, setMovie] = useState([]);
   const [page, setPage] = useState(1);
   const [noOfPage, setNoOfPage] = useState();
@@ -50,6 +63,16 @@ const Movie = () => {
 
   return (
     <div>
+      {detailId && detailType === "movie" && (
+        <Suspense fallback={null}>
+          <ContentDetailModal
+            id={detailId}
+            type="movie"
+            open
+            onClose={closeDetail}
+          />
+        </Suspense>
+      )}
       <h1 className="pageTitle">Movies</h1>
       <AdTop728x90 />
 

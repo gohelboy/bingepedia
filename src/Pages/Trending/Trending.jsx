@@ -1,11 +1,25 @@
 import axios from "axios";
 import { useEffect, useState, lazy, Suspense } from "react";
+import { useSearchParams } from "react-router-dom";
 import CustomPagination from "../../components/Pagination/CustomPagination";
 import AdTop728x90 from "../../components/ads/AdTop728x90";
 import AdBottom468x60 from "../../components/ads/AdBottom468x60";
 const Card = lazy(async () => await import("../../components/Card/Card"));
+const ContentDetailModal = lazy(() => import("../../components/ContentDetailModal/ContentDetailModal"));
 
 const Trending = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const detailId = searchParams.get("detail");
+  const detailType = searchParams.get("type");
+  const closeDetail = () => {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.delete("detail");
+      next.delete("type");
+      return next;
+    });
+  };
+
   const [page, setPage] = useState(1);
   const [movie, setMovie] = useState([]);
   const [noOfPage, setNoOfPage] = useState();
@@ -43,6 +57,16 @@ const Trending = () => {
 
   return (
     <div>
+      {detailId && detailType && (detailType === "movie" || detailType === "tv") && (
+        <Suspense fallback={null}>
+          <ContentDetailModal
+            id={detailId}
+            type={detailType}
+            open
+            onClose={closeDetail}
+          />
+        </Suspense>
+      )}
       <h1 className="pageTitle">Trending</h1>
       <AdTop728x90 />
       {loading && <div className="loader"></div>}
